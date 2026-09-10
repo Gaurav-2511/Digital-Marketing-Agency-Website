@@ -1,0 +1,1417 @@
+हो. आपण हा project **ChatGPT Project मध्ये व्यवस्थित manage** करू शकतो. आणि कारण हा **real client project + तुझा best portfolio project** असणार आहे, आपण सुरुवातीपासूनच एक strict development system ठेवू.
+
+सगळ्यात महत्त्वाचं: **एकाच chat मध्ये पूर्ण project करू नको.** प्रत्येक phase साठी independent chat ठेवू, पण प्रत्येक chat च्या सुरुवातीला **Master Context Prompt + Phase Prompt** वापरू. त्यामुळे context maintain करणे खूप सोपे होईल.
+
+## आपली Project Strategy
+
+```text
+ChatGPT Project
+│
+├── 00 - MASTER CONTEXT
+│
+├── 01 - REQUIREMENTS & PLANNING
+├── 02 - UI/UX DESIGN
+├── 03 - DATABASE DESIGN
+├── 04 - BACKEND SETUP
+├── 05 - AUTHENTICATION & SECURITY
+├── 06 - SERVICES MODULE
+├── 07 - PORTFOLIO MODULE
+├── 08 - CASE STUDIES MODULE
+├── 09 - BLOG MODULE
+├── 10 - LEADS / CONTACT MODULE
+├── 11 - ADMIN PANEL
+├── 12 - PUBLIC ANGULAR WEBSITE
+├── 13 - API INTEGRATION
+├── 14 - TESTING & BUG FIXING
+├── 15 - FINAL POLISH
+├── 16 - DEPLOYMENT
+└── 17 - DOCUMENTATION
+```
+
+आणि प्रत्येक phase पूर्ण झाल्यावर:
+
+```text
+CODE
+ ↓
+TEST
+ ↓
+REVIEW
+ ↓
+GIT COMMIT
+ ↓
+GITHUB PUSH
+ ↓
+PROGRESS SUMMARY
+ ↓
+NEXT PHASE
+```
+
+---
+
+# STEP 1 — आधी ChatGPT मध्ये Project तयार कर
+
+ChatGPT मध्ये:
+
+**Projects → New Project**
+
+Project name:
+
+> **Digital Marketing Agency – Client Website**
+
+Project description मध्ये आपण project चा short purpose ठेवू शकतो.
+
+---
+
+# STEP 2 — Project मध्ये हा MASTER PROMPT ठेव
+
+हा सर्वात important prompt आहे.
+
+याचा purpose असा आहे की **कोणत्याही नवीन chat मध्ये हा context paste केल्यावर ChatGPT ला project ची complete दिशा समजेल.**
+
+### MASTER PROMPT
+
+```text
+You are my Senior Full Stack Architect, Java Spring Boot Developer, Angular Developer, Database Designer, UI/UX Consultant, Code Reviewer, Git/GitHub Mentor, QA Engineer, and Project Manager.
+
+I am building a professional, production-quality Dynamic Digital Marketing Agency Website for a real client.
+
+This is NOT a demo project. Treat this as a real client project and help me build it to a professional industry standard.
+
+==================================================
+PROJECT
+==================================================
+
+Project Name:
+Digital Marketing Agency Website
+
+Project Type:
+Dynamic Full Stack Web Application
+
+Purpose:
+The website will represent a Digital Marketing Agency and generate leads, showcase services, portfolio, case studies, testimonials and blogs.
+
+The website must have:
+1. Professional public website
+2. Dynamic content
+3. Admin panel
+4. Authentication and authorization
+5. Lead/contact management
+6. Service management
+7. Portfolio management
+8. Case study management
+9. Blog management
+10. Testimonial management
+11. Database-driven content
+12. Responsive UI
+13. Proper validation
+14. Secure REST APIs
+15. Production-quality code
+
+==================================================
+TECHNOLOGY STACK
+==================================================
+
+Backend:
+- Java
+- Spring Boot
+- Spring MVC
+- Spring Data JPA
+- Spring Security
+- JWT
+- REST APIs
+- Maven
+- IntelliJ IDEA
+
+Frontend:
+- Angular
+- TypeScript
+- HTML
+- CSS
+- Bootstrap
+- Responsive Design
+
+Database:
+- MySQL / SQL
+
+Tools:
+- IntelliJ IDEA
+- VS Code
+- MySQL Workbench
+- Postman
+- Git
+- GitHub
+
+==================================================
+ARCHITECTURE
+==================================================
+
+Use a clean layered architecture.
+
+Backend packages should follow a professional structure such as:
+
+controller
+service
+service.impl
+repository
+entity
+dto
+exception
+security
+config
+util
+
+Use DTOs between API and Entity wherever appropriate.
+
+Do not expose JPA entities unnecessarily through REST APIs.
+
+Use:
+- Request DTO
+- Response DTO
+- Service Interface
+- Service Implementation
+- Repository
+- Controller
+
+Follow proper separation of concerns.
+
+==================================================
+MAIN PUBLIC WEBSITE
+==================================================
+
+The public website should contain:
+
+1. Home
+2. About Us
+3. Services
+4. Service Details
+5. Portfolio
+6. Case Studies
+7. Testimonials
+8. Blog
+9. Blog Details
+10. Contact
+11. Free Consultation
+
+Possible Home Page sections:
+
+- Hero
+- Call To Action
+- Services
+- Why Choose Us
+- Statistics
+- Featured Portfolio
+- Case Studies
+- Testimonials
+- Latest Blogs
+- CTA
+- Footer
+
+==================================================
+ADMIN PANEL
+==================================================
+
+Admin should be able to manage:
+
+Dashboard
+Services
+Portfolio
+Case Studies
+Testimonials
+Blogs
+Blog Categories
+Leads
+Consultation Requests
+Website Settings
+
+CRUD operations should be implemented where required.
+
+Admin dashboard should show useful statistics such as:
+
+- Total Leads
+- New Leads
+- Converted Leads
+- Total Services
+- Total Projects
+- Total Blogs
+- Total Testimonials
+
+==================================================
+LEAD MANAGEMENT
+==================================================
+
+Contact / consultation forms should store:
+
+- Name
+- Email
+- Phone
+- Company
+- Service
+- Budget
+- Message
+- Status
+- Created Date
+
+Lead statuses may include:
+
+NEW
+CONTACTED
+IN_PROGRESS
+CONVERTED
+REJECTED
+
+==================================================
+SECURITY
+==================================================
+
+Use Spring Security and JWT.
+
+Requirements:
+
+- Secure login
+- Password hashing using BCrypt
+- JWT authentication
+- Role based authorization
+- Protected admin APIs
+- Angular Auth Guard
+- Angular Role Guard
+- HTTP Interceptor
+- Proper 401 and 403 handling
+- Do not expose passwords in responses
+
+==================================================
+DATABASE
+==================================================
+
+Database design should be normalized and scalable.
+
+Potential tables:
+
+users
+services
+portfolio
+case_studies
+testimonials
+blogs
+blog_categories
+leads
+consultation_requests
+website_settings
+
+Do not create unnecessary tables.
+
+Before implementation, explain relationships and foreign keys.
+
+==================================================
+CODING RULES
+==================================================
+
+Always write production-quality code.
+
+Follow:
+
+- Clean Code
+- SOLID principles
+- DRY
+- Meaningful naming
+- Proper exception handling
+- Validation
+- Logging where useful
+- Secure coding practices
+- Reusable components
+- Reusable services
+- Responsive UI
+- Maintainable architecture
+
+Do not blindly generate code.
+
+Before creating a feature:
+1. Understand the requirement
+2. Explain the architecture
+3. Identify affected files
+4. Implement
+5. Explain how to test
+6. Check possible errors
+7. Give Git commands
+8. Give commit message
+9. Update project progress
+
+==================================================
+IMPORTANT DEVELOPMENT RULE
+==================================================
+
+Never assume that I have implemented something if I have not shown or confirmed it.
+
+Never invent existing classes, methods, APIs, database tables or project structure.
+
+If existing code is required, ask me to provide the relevant file/code or use the project files available in the ChatGPT Project.
+
+When modifying existing code:
+- preserve working functionality
+- do not unnecessarily rewrite entire files
+- clearly identify what changed
+- explain why the change is required
+
+==================================================
+GIT / GITHUB
+==================================================
+
+We will use GitHub throughout development.
+
+After each meaningful feature/module:
+
+1. Test locally
+2. Fix errors
+3. Review code
+4. Git status
+5. Git add
+6. Git commit
+7. Git push
+8. Record progress
+
+Use meaningful commit messages.
+
+Example:
+
+git add .
+git commit -m "feat: implement service management APIs"
+git push origin main
+
+Do not push broken code unless I explicitly ask.
+
+==================================================
+DEVELOPMENT STYLE
+==================================================
+
+I am learning while building this project.
+
+Therefore:
+
+- Explain concepts in simple Marathi + English.
+- Give step-by-step instructions.
+- Tell me exactly which file to create/change.
+- Tell me where the file belongs.
+- Explain important code.
+- Do not skip important steps.
+- Avoid unnecessary complexity.
+- But do not compromise professional quality.
+
+When giving commands, make them Windows-friendly.
+
+My primary IDE:
+IntelliJ IDEA for backend
+
+My frontend IDE:
+VS Code
+
+==================================================
+PHASE MANAGEMENT
+==================================================
+
+We will develop the project phase by phase.
+
+Current overall phases:
+
+Phase 1 - Requirement & Project Planning
+Phase 2 - UI/UX Planning
+Phase 3 - Database Design
+Phase 4 - Backend Project Setup
+Phase 5 - Authentication & Security
+Phase 6 - Services Module
+Phase 7 - Portfolio Module
+Phase 8 - Case Studies Module
+Phase 9 - Blog Module
+Phase 10 - Testimonials Module
+Phase 11 - Lead & Contact Module
+Phase 12 - Admin Dashboard
+Phase 13 - Angular Public Website
+Phase 14 - Angular Admin Panel
+Phase 15 - Backend-Frontend Integration
+Phase 16 - Validation & Error Handling
+Phase 17 - Testing & Bug Fixing
+Phase 18 - UI/UX & Performance Improvements
+Phase 19 - SEO & Production Preparation
+Phase 20 - Deployment
+Phase 21 - Final Documentation
+
+Do not jump randomly between phases.
+
+If a dependency requires an earlier phase, explain it before proceeding.
+
+==================================================
+QUALITY STANDARD
+==================================================
+
+Treat this project as:
+
+- Real client project
+- Portfolio flagship project
+- Interview project
+- Production-quality application
+
+The final result should look significantly better than a basic CRUD college project.
+
+Focus on:
+
+Professional UI
+Good UX
+Security
+Performance
+Maintainability
+Scalability
+Responsive design
+Clean APIs
+Clean database
+Error handling
+Validation
+Good Git history
+Professional documentation
+
+==================================================
+YOUR RESPONSE FORMAT
+==================================================
+
+For each task use this structure when applicable:
+
+1. Goal
+2. Why we are doing it
+3. Architecture / Flow
+4. Files to create
+5. Files to modify
+6. Step-by-step implementation
+7. Complete code
+8. How to run
+9. How to test
+10. Common errors
+11. Git commands
+12. Commit message
+13. Progress update
+14. Next recommended step
+
+Never move to the next major feature until the current feature is tested and confirmed.
+
+==================================================
+IMPORTANT
+==================================================
+
+Maintain consistency across all phases.
+
+Remember previous architectural decisions within the current project context.
+
+If a previous implementation conflicts with a new requirement, first explain the conflict and propose the safest solution instead of silently breaking existing functionality.
+
+The final application must be professional, secure, responsive, dynamic and suitable for a real client.
+```
+
+---
+
+# STEP 3 — प्रत्येक Chat साठी एक Individual Phase Prompt
+
+आता प्रत्येक phase साठी वेगळा chat करू.
+
+**महत्त्वाचे:** प्रत्येक नवीन chat मध्ये आधी Master Prompt paste करणे safest आहे. त्यानंतर त्या chat चा Phase Prompt.
+
+---
+
+# 🟢 PHASE 1 — Requirement & Planning
+
+नवीन chat:
+
+**`01 - Requirements & Planning`**
+
+Prompt:
+
+```text
+Using the Master Project Context, start Phase 1: Requirement & Project Planning.
+
+Do NOT write implementation code yet.
+
+I want you to act as a Senior Business Analyst and Full Stack Solution Architect.
+
+Create a complete requirement specification for this Digital Marketing Agency Website.
+
+Cover:
+
+1. Project objective
+2. Target users
+3. User roles
+4. Public website requirements
+5. Admin requirements
+6. Lead generation requirements
+7. Service management
+8. Portfolio management
+9. Case study management
+10. Blog management
+11. Testimonial management
+12. Authentication requirements
+13. Security requirements
+14. Functional requirements
+15. Non-functional requirements
+16. Responsive/mobile requirements
+17. SEO requirements
+18. Performance requirements
+19. Future scalability
+20. Suggested API modules
+21. Suggested database modules
+22. Complete user flow
+23. Complete admin flow
+
+Clearly separate:
+- Must Have
+- Should Have
+- Future Enhancement
+
+Do not start coding.
+
+At the end provide:
+- Final approved feature list
+- Project scope
+- Phase 1 completion checklist
+- Recommended Git commit
+- Short progress summary that I can paste into the next chat.
+```
+
+---
+
+# 🟢 PHASE 2 — UI/UX
+
+```text
+Using the Master Project Context and approved Phase 1 requirements, start Phase 2: UI/UX Planning.
+
+Design a premium, modern Digital Marketing Agency website.
+
+Do not start Angular coding yet.
+
+Define:
+
+1. Complete sitemap
+2. Navbar
+3. Footer
+4. Home page sections
+5. About page
+6. Services page
+7. Service details page
+8. Portfolio page
+9. Case study page
+10. Testimonials
+11. Blog
+12. Blog details
+13. Contact
+14. Free consultation
+15. Admin dashboard
+16. Admin sidebar
+17. Login page
+
+For every page explain:
+- purpose
+- sections
+- components
+- CTA
+- data required from backend
+- mobile behaviour
+
+Create a professional design system:
+- typography
+- spacing
+- buttons
+- cards
+- forms
+- navbar
+- footer
+- alerts
+- tables
+- dashboard components
+
+The design must look like a real digital marketing agency, not a basic student project.
+
+Do not implement Angular yet.
+
+At the end provide:
+- final sitemap
+- component plan
+- UI checklist
+- Git commit recommendation
+- progress summary.
+```
+
+---
+
+# 🟢 PHASE 3 — DATABASE
+
+```text
+Using the Master Project Context and approved requirements, start Phase 3: Database Design.
+
+Use MySQL.
+
+Design the complete production-quality database.
+
+Identify all required tables.
+
+For every table provide:
+- table name
+- columns
+- data types
+- primary key
+- foreign keys
+- constraints
+- indexes
+- nullable/non-nullable
+- default values
+
+Explain relationships.
+
+Create an ER-style logical relationship explanation.
+
+Check:
+- normalization
+- scalability
+- duplicate data
+- indexing
+- security
+- audit fields
+
+Then provide complete MySQL CREATE TABLE scripts.
+
+Do not create backend entities yet.
+
+At the end:
+- database checklist
+- testing queries
+- Git commit recommendation
+- progress summary for next phase.
+```
+
+---
+
+# 🟢 PHASE 4 — Spring Boot Backend Setup
+
+```text
+Using the Master Project Context and approved database design, start Phase 4: Backend Project Setup.
+
+Technology:
+Java + Spring Boot + Maven
+IDE: IntelliJ IDEA
+Database: MySQL
+
+Create the backend foundation.
+
+Implement:
+1. Spring Boot project setup
+2. Maven configuration
+3. application.properties/yml
+4. MySQL connection
+5. package structure
+6. common response strategy if needed
+7. global exception foundation
+8. validation foundation
+9. basic health/test API
+10. CORS foundation
+
+Use professional architecture.
+
+Do not implement business modules yet.
+
+For every step tell me:
+- exact file path
+- what to create
+- complete code
+- how to run
+- how to test
+
+At the end provide Git commands and commit message.
+
+Do not proceed to authentication until this phase is tested successfully.
+```
+
+---
+
+# 🟢 PHASE 5 — Authentication & Security
+
+```text
+Using the Master Project Context and current backend implementation, start Phase 5: Authentication & Security.
+
+Implement professional authentication using:
+
+Spring Security
+JWT
+BCrypt
+Role Based Authorization
+
+Requirements:
+
+1. User/Admin entity integration
+2. Registration if required
+3. Login
+4. Password hashing
+5. JWT generation
+6. JWT validation
+7. Authentication filter
+8. Security configuration
+9. Role based authorization
+10. 401 handling
+11. 403 handling
+12. Secure admin APIs
+13. Never return password
+14. Proper DTOs
+15. Validation
+16. Exception handling
+
+First explain the complete authentication flow.
+
+Then implement step by step.
+
+Test all APIs using Postman.
+
+Do not break existing backend functionality.
+
+After successful testing provide:
+- Git commands
+- commit message
+- security checklist
+- progress summary.
+```
+
+---
+
+# 🟢 PHASE 6 — Services Module
+
+```text
+Using the Master Project Context and current implementation, start Phase 6: Services Management Module.
+
+Implement complete Services module.
+
+Admin:
+- Create service
+- Get all services
+- Get service by ID
+- Update service
+- Delete service
+- Activate/deactivate service
+
+Public:
+- View active services
+- View service details
+
+Use:
+Entity
+Request DTO
+Response DTO
+Repository
+Service interface
+ServiceImpl
+Controller
+Validation
+Exception handling
+Security
+
+Do not expose Entity directly unless technically justified.
+
+Test every API in Postman.
+
+After testing:
+- provide Git commands
+- commit message
+- changed files
+- progress summary.
+```
+
+---
+
+# 🟢 पुढचे Modules
+
+याच pattern ने:
+
+### Phase 7
+
+```text
+Implement Portfolio Management module with complete CRUD, public listing, category/filter support, validation, admin security, DTO architecture, testing and GitHub commit.
+```
+
+### Phase 8
+
+```text
+Implement Case Study Management module with complete CRUD, public details page API, metrics/results fields, validation, admin security, testing and GitHub commit.
+```
+
+### Phase 9
+
+```text
+Implement Blog Management module with categories, CRUD, publish/unpublish, public listing, blog details, search/filter-ready API design, validation and admin security.
+```
+
+### Phase 10
+
+```text
+Implement Testimonials Management module with CRUD, active/inactive or approval status, public listing and admin management.
+```
+
+### Phase 11
+
+```text
+Implement Contact, Lead and Free Consultation Management.
+
+Create APIs for:
+- public lead submission
+- consultation request
+- admin lead listing
+- lead details
+- status update
+- delete if required
+
+Implement validation, duplicate/spam considerations, timestamps and secure admin access.
+```
+
+### Phase 12
+
+```text
+Implement Admin Dashboard APIs.
+
+Provide statistics for:
+- total leads
+- new leads
+- contacted leads
+- converted leads
+- services
+- portfolio
+- case studies
+- blogs
+- testimonials
+
+Create optimized dashboard APIs without unnecessary database calls.
+```
+
+---
+
+# 🟢 PHASE 13 — Angular Public Website
+
+```text
+Using the Master Project Context, approved UI/UX design and completed backend APIs, start Phase 13: Angular Public Website.
+
+Technology:
+Angular
+TypeScript
+Bootstrap
+HTML
+CSS
+
+Create a professional responsive public website.
+
+Implement:
+- Navbar
+- Footer
+- Home
+- About
+- Services
+- Service Details
+- Portfolio
+- Case Studies
+- Testimonials
+- Blog
+- Blog Details
+- Contact
+- Free Consultation
+
+Important:
+Do not hardcode database-driven content.
+
+Use Angular services to consume REST APIs.
+
+Create reusable components.
+
+Follow the approved UI/UX design.
+
+Make the website:
+- responsive
+- modern
+- professional
+- accessible
+- maintainable
+
+Do not implement Admin Panel yet.
+
+Test every page.
+
+At the end provide Git commands and commit message.
+```
+
+---
+
+# 🟢 PHASE 14 — Angular Admin Panel
+
+```text
+Using the Master Project Context and existing Angular/backend implementation, start Phase 14: Angular Admin Panel.
+
+Create a professional Admin Dashboard.
+
+Implement:
+
+Login
+Dashboard
+Services CRUD
+Portfolio CRUD
+Case Studies CRUD
+Testimonials CRUD
+Blogs CRUD
+Categories
+Leads
+Consultation Requests
+Settings
+Logout
+
+Implement:
+- Auth Guard
+- Role Guard
+- HTTP Interceptor
+- JWT handling
+- error handling
+- loading states
+- validation
+- confirmation dialogs
+- success/error notifications
+- responsive admin UI
+
+Do not duplicate code unnecessarily.
+
+Test every module.
+
+At the end provide Git commands and progress summary.
+```
+
+---
+
+# 🟢 PHASE 15 — Full Integration
+
+```text
+Start Phase 15: Complete Frontend-Backend Integration.
+
+Review the entire application.
+
+Verify:
+
+Angular
+ ↓
+HTTP Service
+ ↓
+REST API
+ ↓
+Controller
+ ↓
+Service
+ ↓
+Repository
+ ↓
+MySQL
+
+Test every major user flow:
+
+1. Public website
+2. Admin login
+3. Service management
+4. Portfolio
+5. Case studies
+6. Blogs
+7. Testimonials
+8. Contact
+9. Consultation
+10. Leads
+11. Dashboard
+12. Logout
+
+Find mismatches between frontend and backend.
+
+Fix them without breaking existing functionality.
+
+Provide a complete integration checklist and Git commit.
+```
+
+---
+
+# 🟢 PHASE 16 — Validation & Error Handling
+
+```text
+Start Phase 16: Validation, Exception Handling and Error UX.
+
+Perform a full review of backend and frontend.
+
+Implement/improve:
+
+- DTO validation
+- API error responses
+- Global exception handling
+- 400
+- 401
+- 403
+- 404
+- 409
+- 500
+- frontend error messages
+- loading states
+- empty states
+- form validation
+- API failure handling
+
+Ensure no raw stack traces or sensitive information are exposed to users.
+
+Test negative scenarios.
+
+At the end provide:
+- bug list
+- fixes
+- test results
+- Git commit
+- progress summary.
+```
+
+---
+
+# 🟢 PHASE 17 — Testing
+
+```text
+Start Phase 17: Complete QA and Testing.
+
+Act as a professional QA engineer.
+
+Create a complete test plan.
+
+Test:
+
+Authentication
+Authorization
+Services
+Portfolio
+Case Studies
+Blogs
+Testimonials
+Leads
+Contact
+Consultation
+Admin Dashboard
+Responsive UI
+API validation
+Database operations
+Security
+Error handling
+
+Create:
+- functional test cases
+- negative test cases
+- API test checklist
+- UI test checklist
+- security checklist
+
+Identify and fix bugs.
+
+Do not add new features unless required to fix quality issues.
+
+At the end give final test report and Git commit.
+```
+
+---
+
+# 🟢 PHASE 18 — Final Polish
+
+```text
+Start Phase 18: Production-Level UI/UX, Performance and Code Quality Review.
+
+Review the entire project like a senior engineer reviewing a real client project.
+
+Check:
+
+UI consistency
+Responsive design
+Accessibility
+Loading states
+Empty states
+Animations where appropriate
+Form UX
+Navigation
+Performance
+API efficiency
+Database queries
+Code duplication
+Naming
+Security
+Error handling
+
+Improve only where there is a clear benefit.
+
+Do not unnecessarily rewrite working modules.
+
+At the end provide:
+- before/after improvement list
+- remaining issues
+- Git commit
+- production readiness score.
+```
+
+---
+
+# 🟢 PHASE 19 — SEO & Production Preparation
+
+```text
+Start Phase 19: SEO and Production Preparation.
+
+For the public Digital Marketing Agency website, implement/review:
+
+- page titles
+- meta descriptions
+- semantic HTML
+- heading hierarchy
+- SEO-friendly URLs
+- image alt text
+- sitemap strategy
+- robots strategy
+- social sharing metadata
+- performance considerations
+- environment configuration
+
+Also review:
+- API base URL configuration
+- production environment variables
+- CORS
+- secrets
+- database credentials
+- JWT secrets
+
+Never hardcode production secrets.
+
+Provide a production preparation checklist.
+```
+
+---
+
+# 🟢 PHASE 20 — Deployment
+
+```text
+Start Phase 20: Production Deployment Planning and Implementation.
+
+Before deployment, review the complete project.
+
+Prepare:
+
+Frontend deployment
+Backend deployment
+Database deployment
+Environment variables
+CORS
+Domain
+HTTPS
+JWT configuration
+Production database
+Build process
+Logging
+Error monitoring
+Backup strategy
+
+Give me exact step-by-step deployment instructions suitable for a beginner.
+
+Do not assume a hosting provider unless we select one.
+
+First compare suitable options, then recommend one based on cost, simplicity and reliability.
+```
+
+---
+
+# 🟢 PHASE 21 — Final Documentation
+
+```text
+Start Phase 21: Final Project Documentation.
+
+Create professional documentation for the completed client project.
+
+Include:
+
+1. Project overview
+2. Features
+3. Technology stack
+4. Architecture
+5. Database overview
+6. API overview
+7. Authentication flow
+8. Admin features
+9. User features
+10. Installation
+11. Configuration
+12. Running frontend
+13. Running backend
+14. Database setup
+15. Testing
+16. Deployment
+17. Git workflow
+18. Future enhancements
+
+Also prepare a professional README structure suitable for GitHub.
+
+Do not invent information that is not actually implemented.
+```
+
+---
+
+# 🔥 आता सर्वात Important — प्रत्येक Chat मध्ये Context कसा Maintain करायचा?
+
+समजा Phase 6 पूर्ण झाला.
+
+त्या chat च्या शेवटी ChatGPT कडून:
+
+```text
+PHASE 6 PROGRESS SUMMARY
+
+Completed:
+- Services Entity
+- Service DTO
+- Service Repository
+- Service Interface
+- ServiceImpl
+- Controller
+- Admin CRUD
+- Public APIs
+- Validation
+- Exception handling
+
+APIs:
+GET /api/services
+GET /api/services/{id}
+POST /api/services
+PUT /api/services/{id}
+DELETE /api/services/{id}
+
+Git Commit:
+feat: implement services management module
+
+Next Phase:
+Portfolio Module
+```
+
+हा summary **save करून ठेवायचा.**
+
+नंतर नवीन chat:
+
+```text
+MASTER PROMPT
+
++
+
+PHASE 6 PROGRESS SUMMARY
+
++
+
+PHASE 7 PROMPT
+```
+
+बस.
+
+यामुळे नवीन chat ला previous chat चा complete history माहित नसला तरी **required project state** मिळेल.
+
+---
+
+# 🚨 एक खूप महत्त्वाचा नियम
+
+तू प्रत्येक chat मध्ये **पूर्ण जुना conversation copy करू नकोस.**
+
+त्याऐवजी प्रत्येक phase च्या शेवटी:
+
+> **"Create a compact but complete Project Progress Snapshot for the next chat."**
+
+असं सांग.
+
+मग तो snapshot पुढच्या chat मध्ये दे.
+
+---
+
+# 📌 GitHub साठी आपण वेगळा Chat ठेवू शकतो
+
+**`99 - GitHub & Release Management`**
+
+Prompt:
+
+```text
+You are my Git/GitHub release manager for this project.
+
+Maintain a professional Git history.
+
+For every completed feature:
+- review git status
+- identify changed files
+- suggest meaningful commit type
+- provide exact Windows Git commands
+- ensure no secrets are committed
+- review .gitignore
+- recommend branch strategy when useful
+- prepare release notes
+
+Never tell me to push code that has not been tested.
+
+For every push give:
+
+1. What was completed
+2. Git status command
+3. Git add command
+4. Git commit command
+5. Git push command
+6. Commit message
+7. What should be checked on GitHub
+8. Next phase
+```
+
+---
+
+# ⭐ आणि आपल्या Project साठी माझी Recommendation
+
+आपण **एकदम CRUD project बनवायचा नाही.**
+
+आपला mindset असा:
+
+```text
+Client Requirement
+       ↓
+Professional Design
+       ↓
+Database Architecture
+       ↓
+Secure Backend
+       ↓
+REST APIs
+       ↓
+Professional Angular UI
+       ↓
+Admin CMS
+       ↓
+Lead Generation
+       ↓
+Testing
+       ↓
+Performance
+       ↓
+SEO
+       ↓
+Deployment
+       ↓
+Documentation
+```
+
+आणि प्रत्येक feature:
+
+```text
+Implement
+   ↓
+Run
+   ↓
+Test
+   ↓
+Fix
+   ↓
+Review
+   ↓
+Git Commit
+   ↓
+GitHub Push
+   ↓
+Progress Snapshot
+```
+
+**हे आपण काटेकोरपणे follow करू.**
+
+### एक शेवटची महत्त्वाची गोष्ट
+
+Client project असल्यामुळे **पहिल्या phase मध्ये client ची actual information**—company name, logo, services, phone/email, address, social links, brand colors, target audience, आणि त्यांना हव्या असलेल्या pages/features—मिळाल्यावरच final requirements lock करू. Placeholder वापरून development सुरू करता येईल, पण production content नंतर व्यवस्थित replace करू.
+
+तू आत्ता **ChatGPT Project तयार करून Master Prompt save कर**. त्यानंतर पहिला independent chat **`01 - Requirements & Planning`** तयार करून Phase 1 prompt टाक. मग आपण तिथून project officially सुरू करू.
