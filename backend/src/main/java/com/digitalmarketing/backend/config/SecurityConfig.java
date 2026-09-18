@@ -13,6 +13,8 @@ import com.digitalmarketing.backend.security.CustomUserDetailsService;
 import com.digitalmarketing.backend.security.JwtAuthenticationFilter;
 import com.digitalmarketing.backend.util.JwtUtil;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @Configuration
 public class SecurityConfig {
 
@@ -31,7 +33,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public SecurityFilterChain  securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		http.csrf(csrf -> csrf.disable())
 
@@ -39,21 +41,30 @@ public class SecurityConfig {
 
 				.authorizeHttpRequests(auth -> auth
 
-						.requestMatchers("/api/health", "/api/auth/**").permitAll()
+						.requestMatchers("/api/health", "/api/auth/**", "/api/services/**").permitAll()
 
 						.requestMatchers("/api/admin/**").hasRole("ADMIN")
 
 						.anyRequest().authenticated())
 
+				.exceptionHandling(exception -> exception
+
+						.authenticationEntryPoint((request, response, authException) -> {
+							response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+						})
+
+						.accessDeniedHandler((request, response, accessDeniedException) -> {
+							response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+						}))
+
 				.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
-	
-	@Bean
-	public AuthenticationManager authenticationManager(
-	        AuthenticationConfiguration configuration) throws Exception {
 
-	    return configuration.getAuthenticationManager();
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+
+		return configuration.getAuthenticationManager();
 	}
 }
