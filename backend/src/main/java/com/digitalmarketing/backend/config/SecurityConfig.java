@@ -35,27 +35,36 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http.csrf(csrf -> csrf.disable())
+		http
+	    .csrf(csrf -> csrf.disable())
+	    .sessionManagement(session ->
+	        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+	    .authorizeHttpRequests(auth -> auth
+	        .requestMatchers(
+	        	    "/api/health",
+	        	    "/api/auth/**",
+	        	    "/api/services/**",
+	        	    "/api/portfolio/**",
+	        	    "/error"
+	        ).permitAll()
+	        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+	        .anyRequest().authenticated())
+	    .exceptionHandling(exception -> exception
+	        .authenticationEntryPoint((request, response, authException) -> {
 
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+	            response.sendError(
+	                HttpServletResponse.SC_UNAUTHORIZED,
+	                "Unauthorized"
+	            );
+	        })
+	        .accessDeniedHandler((request, response, accessDeniedException) -> {
 
-				.authorizeHttpRequests(auth -> auth
 
-						.requestMatchers("/api/health", "/api/auth/**", "/api/services/**").permitAll()
-
-						.requestMatchers("/api/admin/**").hasRole("ADMIN")
-
-						.anyRequest().authenticated())
-
-				.exceptionHandling(exception -> exception
-
-						.authenticationEntryPoint((request, response, authException) -> {
-							response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-						})
-
-						.accessDeniedHandler((request, response, accessDeniedException) -> {
-							response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
-						}))
+	            response.sendError(
+	                HttpServletResponse.SC_FORBIDDEN,
+	                "Forbidden"
+	            );
+	        }))
 
 				.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 

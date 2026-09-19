@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
                 if (jwtUtil.isTokenValid(token)) {
-
+  
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
                                     userDetails,
@@ -79,9 +79,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (Exception exception) {
 
             // Invalid JWT token - continue without authentication
+            exception.printStackTrace();
 
         }
-
         filterChain.doFilter(request, response);
     }
 }
