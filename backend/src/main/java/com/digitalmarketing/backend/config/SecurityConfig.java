@@ -45,6 +45,7 @@ public class SecurityConfig {
 	        	    "/api/auth/**",
 	        	    "/api/services/**",
 	        	    "/api/portfolio/**",
+	        	    "/api/case-studies/**",
 	        	    "/error"
 	        ).permitAll()
 	        .requestMatchers("/api/admin/**").hasRole("ADMIN")
