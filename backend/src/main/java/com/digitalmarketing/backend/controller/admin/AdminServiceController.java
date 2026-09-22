@@ -1,4 +1,4 @@
-package com.digitalmarketing.backend.controller;
+package com.digitalmarketing.backend.controller.admin;
 
 import java.util.List;
 
@@ -23,11 +23,11 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/admin/services")
-public class ServiceController {
+public class AdminServiceController {
 
 	private final ServiceService serviceService;
 
-	public ServiceController(ServiceService serviceService) {
+	public AdminServiceController(ServiceService serviceService) {
 		this.serviceService = serviceService;
 	}
 

@@ -1,4 +1,4 @@
-package com.digitalmarketing.backend.controller;
+package com.digitalmarketing.backend.controller.admin;
 
 import java.util.List;
 

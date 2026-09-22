@@ -1,4 +1,4 @@
-package com.digitalmarketing.backend.controller;
+package com.digitalmarketing.backend.controller.admin;
 
 import java.util.List;
 
@@ -23,11 +23,11 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/api/admin/portfolio")
-public class PortfolioController {
+public class AdminPortfolioController {
 
 	private final PortfolioService portfolioService;
 
-	public PortfolioController(PortfolioService portfolioService) {
+	public AdminPortfolioController(PortfolioService portfolioService) {
 		this.portfolioService = portfolioService;
 	}
 
