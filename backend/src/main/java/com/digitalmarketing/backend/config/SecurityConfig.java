@@ -41,12 +41,14 @@ public class SecurityConfig {
 	        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	    .authorizeHttpRequests(auth -> auth
 	        .requestMatchers(
-	        	    "/api/health",
-	        	    "/api/auth/**",
-	        	    "/api/services/**",
-	        	    "/api/portfolio/**",
-	        	    "/api/case-studies/**",
-	        	    "/error"
+	                "/api/health",
+	                "/api/auth/**",
+	                "/api/services/**",
+	                "/api/portfolio/**",
+	                "/api/case-studies/**",
+	               "/api/blog-categories/**",
+	               "/api/blogs/**",
+	                "/error"
 	        ).permitAll()
 	        .requestMatchers("/api/admin/**").hasRole("ADMIN")
 	        .anyRequest().authenticated())
