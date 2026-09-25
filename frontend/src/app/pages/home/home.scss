@@ -1,40 +1,549 @@
-.home-placeholder {
+/* =========================================================
+   Hero Section
+   ========================================================= */
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+
   min-height: calc(100vh - 76px);
 
   display: flex;
   align-items: center;
 
-  padding: 6rem 0;
+  padding: 6rem 0 5rem;
 
   background:
     radial-gradient(
-      circle at top right,
-      rgba(108, 99, 255, 0.12),
-      transparent 35%
+      circle at 10% 10%,
+      rgba(108, 99, 255, 0.1),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(245, 158, 11, 0.08),
+      transparent 28%
     ),
     var(--bg-primary);
-
-  h1 {
-    max-width: 850px;
-    margin: 1rem auto;
-
-    color: var(--text-primary);
-  }
-
-  p {
-    max-width: 650px;
-    margin: 0 auto 2rem;
-
-    font-size: 1.1rem;
-  }
 }
 
-.highlight {
+/* =========================================================
+   Hero Content
+   ========================================================= */
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+
+  margin-bottom: 1.25rem;
+
+  padding: 0.5rem 0.85rem;
+
+  border: 1px solid rgba(108, 99, 255, 0.18);
+  border-radius: 999px;
+
+  background-color: rgba(108, 99, 255, 0.06);
+
+  color: var(--brand-primary);
+
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.eyebrow-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background-color: var(--brand-primary);
+}
+
+.hero-title {
+  max-width: 760px;
+
+  margin-bottom: 1.5rem;
+
+  color: var(--text-primary);
+
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.hero-highlight {
+  display: block;
+
   color: var(--brand-primary);
 }
 
-@media (max-width: 576px) {
-  .home-placeholder {
+.hero-description {
+  max-width: 650px;
+
+  margin-bottom: 2rem;
+
+  color: var(--text-secondary);
+
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* =========================================================
+   Hero Buttons
+   ========================================================= */
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  margin-bottom: 3rem;
+}
+
+.hero-primary-btn,
+.hero-secondary-btn {
+  min-height: 52px;
+
+  padding-inline: 1.5rem;
+}
+
+.hero-primary-btn {
+  gap: 0.7rem;
+}
+
+/* =========================================================
+   Hero Trust Indicators
+   ========================================================= */
+
+.hero-trust {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.trust-item strong {
+  color: var(--text-primary);
+
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.trust-item span {
+  color: var(--text-secondary);
+
+  font-size: 0.8rem;
+}
+
+.trust-divider {
+  width: 1px;
+  height: 38px;
+
+  background-color: var(--border-color);
+}
+
+/* =========================================================
+   Hero Visual
+   ========================================================= */
+
+.hero-visual {
+  position: relative;
+
+  min-height: 520px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visual-glow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(2px);
+
+  pointer-events: none;
+}
+
+.visual-glow-one {
+  width: 300px;
+  height: 300px;
+
+  background-color: rgba(108, 99, 255, 0.12);
+}
+
+.visual-glow-two {
+  right: 0;
+  bottom: 30px;
+
+  width: 180px;
+  height: 180px;
+
+  background-color: rgba(245, 158, 11, 0.1);
+}
+
+/* =========================================================
+   Growth Card
+   ========================================================= */
+
+.growth-card {
+  position: relative;
+  z-index: 2;
+
+  width: min(100%, 430px);
+
+  padding: 2rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-xl);
+
+  background-color: rgba(255, 255, 255, 0.9);
+
+  box-shadow: var(--shadow-lg);
+
+  backdrop-filter: blur(15px);
+}
+
+.growth-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-bottom: 2rem;
+}
+
+.growth-label {
+  display: block;
+
+  margin-bottom: 0.5rem;
+
+  color: var(--text-secondary);
+
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.growth-card h3 {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.growth-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background-color: rgba(108, 99, 255, 0.1);
+
+  color: var(--brand-primary);
+
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+/* =========================================================
+   Chart
+   ========================================================= */
+
+.chart {
+  height: 180px;
+
+  display: flex;
+  align-items: flex-end;
+
+  padding: 1rem;
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 43px,
+      rgba(17, 24, 39, 0.05) 44px
+    );
+}
+
+.chart-line {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 0.5rem;
+}
+
+.chart-line span {
+  width: 12%;
+
+  border-radius: 999px 999px 4px 4px;
+
+  background:
+    linear-gradient(
+      to top,
+      var(--brand-primary-dark),
+      var(--brand-primary)
+    );
+}
+
+.chart-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 1rem;
+
+  color: var(--text-secondary);
+
+  font-size: 0.8rem;
+}
+
+.chart-footer strong {
+  color: #16a34a;
+}
+
+/* =========================================================
+   Floating Cards
+   ========================================================= */
+
+.floating-card {
+  position: absolute;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  padding: 0.85rem 1rem;
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+
+  background-color: rgba(255, 255, 255, 0.95);
+
+  box-shadow: var(--shadow-md);
+}
+
+.floating-card span {
+  display: block;
+
+  color: var(--text-secondary);
+
+  font-size: 0.7rem;
+}
+
+.floating-card strong {
+  display: block;
+
+  color: var(--text-primary);
+
+  font-size: 0.95rem;
+}
+
+.floating-icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background-color: rgba(108, 99, 255, 0.1);
+
+  color: var(--brand-primary);
+
+  font-weight: 800;
+}
+
+.lead-card {
+  top: 80px;
+  right: -15px;
+}
+
+.revenue-card {
+  bottom: 75px;
+  left: -15px;
+}
+
+/* =========================================================
+   Trust Bar
+   ========================================================= */
+
+.trust-bar {
+  padding: 1.5rem 0;
+
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+
+  background-color: var(--bg-secondary);
+}
+
+.trust-bar-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  color: var(--text-secondary);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.trust-dot {
+  color: var(--brand-primary);
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+  .hero-section {
+    min-height: auto;
+
+    padding: 5rem 0;
+  }
+
+  .hero-title {
+    font-size: clamp(2.7rem, 8vw, 4rem);
+  }
+
+  .hero-visual {
+    min-height: 480px;
+
+    margin-top: 1rem;
+  }
+
+  .lead-card {
+    right: 5%;
+  }
+
+  .revenue-card {
+    left: 5%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero-section {
     padding: 4rem 0;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 12vw, 3.5rem);
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .hero-trust {
+    gap: 1rem;
+  }
+
+  .hero-visual {
+    min-height: 430px;
+  }
+
+  .growth-card {
+    padding: 1.5rem;
+  }
+
+  .lead-card {
+    top: 45px;
+    right: 0;
+  }
+
+  .revenue-card {
+    bottom: 40px;
+    left: 0;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-primary-btn,
+  .hero-secondary-btn {
+    width: 100%;
+  }
+
+  .hero-trust {
+    justify-content: space-between;
+  }
+
+  .trust-divider {
+    height: 30px;
+  }
+
+  .trust-item strong {
+    font-size: 1.05rem;
+  }
+
+  .hero-visual {
+    min-height: 370px;
+  }
+
+  .growth-card {
+    width: 92%;
+  }
+
+  .growth-card h3 {
+    font-size: 2rem;
+  }
+
+  .chart {
+    height: 140px;
+  }
+
+  .floating-card {
+    padding: 0.7rem 0.8rem;
+  }
+
+  .floating-card span {
+    font-size: 0.65rem;
+  }
+
+  .floating-card strong {
+    font-size: 0.85rem;
+  }
+
+  .lead-card {
+    top: 25px;
+  }
+
+  .revenue-card {
+    bottom: 20px;
+  }
+
+  .trust-bar-content {
+    gap: 0.65rem;
+    font-size: 0.75rem;
   }
 }
