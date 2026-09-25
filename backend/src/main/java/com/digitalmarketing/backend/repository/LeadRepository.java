@@ -13,4 +13,5 @@ public interface LeadRepository extends JpaRepository<Lead, Long> {
 
     List<Lead> findByStatus(LeadStatus status);
 
+    long countByStatus(LeadStatus status);
 }
