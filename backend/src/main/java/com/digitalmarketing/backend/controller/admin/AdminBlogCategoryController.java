@@ -24,7 +24,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/admin/blog-categories")
-@PreAuthorize("hasRole('ADMIN')")
 public class AdminBlogCategoryController {
 
 	private final BlogCategoryService blogCategoryService;
