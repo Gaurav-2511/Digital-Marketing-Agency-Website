@@ -36,3 +36,5 @@ application-dev.properties
 *.tmp
 
 .txt
+
+frontend/
