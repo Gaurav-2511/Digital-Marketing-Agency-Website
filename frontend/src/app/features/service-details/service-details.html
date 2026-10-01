@@ -1,0 +1,161 @@
+<!-- =========================================================
+     SERVICE DETAILS PAGE
+     Dynamic data comes from Spring Boot API
+     ========================================================= -->
+
+<section class="service-details-page">
+  <!-- Loading State -->
+  @if (isLoading) {
+    <section class="service-details-state-section">
+      <div class="container">
+        <div class="service-details-state text-center">
+          <div class="spinner-border text-primary service-details-spinner" role="status">
+            <span class="visually-hidden"> Loading service details... </span>
+          </div>
+
+          <p class="service-details-state-text">Loading service details...</p>
+        </div>
+      </div>
+    </section>
+  }
+
+  <!-- Error State -->
+  @else if (hasError || !service) {
+    <section class="service-details-state-section">
+      <div class="container">
+        <div class="service-details-state text-center">
+          <div class="service-details-state-icon error-icon">
+            <i class="bi bi-exclamation-triangle"></i>
+          </div>
+
+          <h1 class="service-details-state-title">Service Not Found</h1>
+
+          <p class="service-details-state-text">
+            The service you are looking for could not be found. It may have been removed or is
+            currently unavailable.
+          </p>
+
+          <a routerLink="/services" class="btn btn-primary service-details-back-btn">
+            <i class="bi bi-arrow-left"></i>
+            Back to Services
+          </a>
+        </div>
+      </div>
+    </section>
+  }
+
+  <!-- Service Details -->
+  @else {
+    <section class="service-details-hero">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <!-- Content -->
+          <div class="col-lg-7">
+            @if (service.icon) {
+              <div class="service-details-icon">
+                <i [class]="service.icon"></i>
+              </div>
+            }
+
+            <span class="service-details-label"> OUR SERVICE </span>
+
+            <h1 class="service-details-title">
+              {{ service.title }}
+            </h1>
+
+            <p class="service-details-short-description">
+              {{ service.shortDescription }}
+            </p>
+
+            <div class="service-details-actions">
+              <a routerLink="/contact" class="btn btn-primary service-details-primary-btn">
+                Get Free Consultation
+                <i class="bi bi-arrow-right"></i>
+              </a>
+
+              <a routerLink="/services" class="service-details-secondary-link">
+                <i class="bi bi-arrow-left"></i>
+                All Services
+              </a>
+            </div>
+          </div>
+
+          <!-- Image -->
+          <div class="col-lg-5">
+            @if (service.imageUrl) {
+              <div class="service-details-image-wrapper">
+                <img [src]="service.imageUrl" [alt]="service.title" class="service-details-image" />
+              </div>
+
+            } @else {
+              <div class="service-details-image-placeholder">
+                @if (service.icon) {
+                  <i [class]="service.icon"></i>
+                } @else {
+                  <i class="bi bi-megaphone"></i>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Description -->
+    <section class="service-description-section py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="service-description-card">
+              <span class="service-content-label"> ABOUT THIS SERVICE </span>
+
+              <h2 class="service-content-title">
+                {{ service.title }}
+              </h2>
+
+              @if (service.description) {
+                <div class="service-full-description">
+                  {{ service.description }}
+                </div>
+
+              } @else {
+                <p class="service-content-empty">
+                  Detailed information about this service will be available soon.
+                </p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="service-details-cta-section">
+      <div class="container">
+        <div class="service-details-cta">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <span class="service-cta-label"> LET'S WORK TOGETHER </span>
+
+              <h2 class="service-cta-title">Ready to Grow Your Business?</h2>
+
+              <p class="service-cta-description">
+                Let's discuss your business goals and create a digital marketing strategy that
+                delivers meaningful results.
+              </p>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="service-cta-action">
+                <a routerLink="/contact" class="btn service-cta-btn">
+                  Get Free Consultation
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+</section>

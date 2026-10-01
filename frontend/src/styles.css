@@ -1,0 +1,12 @@
+/* Global styles for Digital Marketing Agency Website */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}

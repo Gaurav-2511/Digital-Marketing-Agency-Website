@@ -1,0 +1,113 @@
+<!-- =========================================================
+     SERVICES PAGE
+     Dynamic data comes from Spring Boot API
+     ========================================================= -->
+
+<section class="services-page">
+  <!-- Page Hero -->
+  <div class="services-hero">
+    <div class="container">
+      <div class="services-hero-content text-center">
+        <span class="services-hero-label"> WHAT WE DO </span>
+
+        <h1 class="services-hero-title">Digital Marketing Services</h1>
+
+        <p class="services-hero-description">
+          We provide result-driven digital marketing services designed to strengthen your online
+          presence, reach your target audience and grow your business.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services Listing -->
+  <section class="services-list-section py-5">
+    <div class="container">
+      <!-- Loading State -->
+      @if (isLoading) {
+        <div class="services-state text-center">
+          <div class="spinner-border text-primary services-spinner" role="status">
+            <span class="visually-hidden"> Loading services... </span>
+          </div>
+
+          <p class="services-state-text">Loading our services...</p>
+        </div>
+      }
+
+      <!-- Error State -->
+      @else if (hasError) {
+        <div class="services-state text-center">
+          <div class="services-state-icon error-icon">
+            <i class="bi bi-exclamation-triangle"></i>
+          </div>
+
+          <h2 class="services-state-title">Unable to Load Services</h2>
+
+          <p class="services-state-text">
+            We couldn't load our services right now. Please try again later.
+          </p>
+        </div>
+      }
+
+      <!-- Empty State -->
+      @else if (services.length === 0) {
+        <div class="services-state text-center">
+          <div class="services-state-icon">
+            <i class="bi bi-grid"></i>
+          </div>
+
+          <h2 class="services-state-title">Services Coming Soon</h2>
+
+          <p class="services-state-text">
+            Our services are currently being updated. Please check back soon.
+          </p>
+        </div>
+      }
+
+      <!-- Services -->
+      @else {
+        <div class="row g-4">
+          @for (service of services; track service.id) {
+            <div class="col-lg-4 col-md-6">
+              <article class="service-card h-100">
+                <!-- Service Image -->
+                @if (service.imageUrl) {
+                  <div class="service-image-wrapper">
+                    <img [src]="service.imageUrl" [alt]="service.title" class="service-image" />
+                  </div>
+                }
+
+                <!-- Service Content -->
+                <div class="service-content">
+                  <!-- Icon -->
+                  @if (service.icon) {
+                    <div class="service-icon">
+                      <i [class]="service.icon"></i>
+                    </div>
+                  }
+
+                  <!-- Title -->
+                  <h2 class="service-title">
+                    {{ service.title }}
+                  </h2>
+
+                  <!-- Description -->
+                  <p class="service-description">
+                    {{ service.shortDescription }}
+                  </p>
+
+                  <!-- Details -->
+                  <a [routerLink]="['/services', service.slug]" class="service-link">
+                    View Service
+
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </article>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </section>
+</section>

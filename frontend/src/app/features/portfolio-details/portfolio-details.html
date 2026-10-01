@@ -1,0 +1,180 @@
+<!-- =========================================================
+     PORTFOLIO DETAILS PAGE
+     Dynamic data comes from Spring Boot API
+     ========================================================= -->
+
+<section class="portfolio-details-page">
+  <!-- Loading State -->
+  @if (isLoading) {
+    <section class="portfolio-details-state-section">
+      <div class="container">
+        <div class="portfolio-details-state text-center">
+          <div class="spinner-border text-primary portfolio-details-spinner" role="status">
+            <span class="visually-hidden"> Loading portfolio details... </span>
+          </div>
+
+          <p class="portfolio-details-state-text">Loading project details...</p>
+        </div>
+      </div>
+    </section>
+  }
+
+  <!-- Error State -->
+  @else if (hasError || !portfolio) {
+    <section class="portfolio-details-state-section">
+      <div class="container">
+        <div class="portfolio-details-state text-center">
+          <div class="portfolio-details-state-icon error-icon">
+            <i class="bi bi-exclamation-triangle"></i>
+          </div>
+
+          <h1 class="portfolio-details-state-title">Project Not Found</h1>
+
+          <p class="portfolio-details-state-text">
+            The project you are looking for could not be found. It may have been removed or is
+            currently unavailable.
+          </p>
+
+          <a routerLink="/portfolio" class="btn btn-primary portfolio-details-back-btn">
+            <i class="bi bi-arrow-left"></i>
+
+            Back to Portfolio
+          </a>
+        </div>
+      </div>
+    </section>
+  }
+
+  <!-- Portfolio Details -->
+  @else {
+    <!-- Hero -->
+    <section class="portfolio-details-hero">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <!-- Content -->
+          <div class="col-lg-7">
+            @if (portfolio.category) {
+              <span class="portfolio-details-category">
+                {{ portfolio.category }}
+              </span>
+            }
+
+            <h1 class="portfolio-details-title">
+              {{ portfolio.title }}
+            </h1>
+
+            <p class="portfolio-details-short-description">
+              {{ portfolio.shortDescription }}
+            </p>
+
+            @if (portfolio.clientName) {
+              <div class="portfolio-details-client">
+                <i class="bi bi-building"></i>
+
+                <span>
+                  Client:
+                  <strong>{{ portfolio.clientName }}</strong>
+                </span>
+              </div>
+            }
+
+            <div class="portfolio-details-actions">
+              <a routerLink="/portfolio" class="portfolio-details-back-link">
+                <i class="bi bi-arrow-left"></i>
+
+                Back to Portfolio
+              </a>
+
+              @if (portfolio.projectUrl) {
+                <a
+                  [href]="portfolio.projectUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-primary portfolio-details-project-btn"
+                >
+                  Visit Project
+
+                  <i class="bi bi-box-arrow-up-right"></i>
+                </a>
+              }
+            </div>
+          </div>
+
+          <!-- Image -->
+          <div class="col-lg-5">
+            @if (portfolio.imageUrl) {
+              <div class="portfolio-details-image-wrapper">
+                <img
+                  [src]="portfolio.imageUrl"
+                  [alt]="portfolio.title"
+                  class="portfolio-details-image"
+                />
+              </div>
+
+            } @else {
+              <div class="portfolio-details-image-placeholder">
+                <i class="bi bi-briefcase"></i>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Description -->
+    <section class="portfolio-description-section py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="portfolio-description-card">
+              <span class="portfolio-content-label"> PROJECT OVERVIEW </span>
+
+              <h2 class="portfolio-content-title">About This Project</h2>
+
+              @if (portfolio.description) {
+                <div class="portfolio-full-description">
+                  {{ portfolio.description }}
+                </div>
+
+              } @else {
+                <p class="portfolio-content-empty">
+                  Detailed information about this project will be available soon.
+                </p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="portfolio-details-cta-section">
+      <div class="container">
+        <div class="portfolio-details-cta">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <span class="portfolio-cta-label"> HAVE A PROJECT IN MIND? </span>
+
+              <h2 class="portfolio-cta-title">Ready to Start Your Next Project?</h2>
+
+              <p class="portfolio-cta-description">
+                Let's discuss your business goals and create a digital marketing strategy built
+                around your needs.
+              </p>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="portfolio-cta-action">
+                <a routerLink="/contact" class="btn portfolio-cta-btn">
+                  Get Free Consultation
+
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+</section>

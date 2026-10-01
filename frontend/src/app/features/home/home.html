@@ -1,0 +1,664 @@
+<!-- =========================================================
+     HOME PAGE - HERO SECTION
+     ========================================================= -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <!-- Hero Content -->
+      <div class="col-lg-6">
+        <span class="hero-label"> GROW YOUR BUSINESS ONLINE </span>
+
+        <h1 class="hero-title">
+          Digital Marketing That
+          <span>Drives Real Growth</span>
+        </h1>
+
+        <p class="hero-description">
+          We help businesses build a powerful online presence, reach the right audience and generate
+          measurable results through strategic digital marketing.
+        </p>
+
+        <!-- Hero Actions -->
+        <div class="hero-actions">
+          <a routerLink="/contact" class="btn btn-primary hero-primary-btn">
+            Get Free Consultation
+            <i class="bi bi-arrow-right"></i>
+          </a>
+
+          <a routerLink="/portfolio" class="btn hero-secondary-btn"> View Our Work </a>
+        </div>
+
+        <!-- Hero Trust Points -->
+        <div class="hero-trust">
+          <div class="trust-item">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Result Driven Strategies</span>
+          </div>
+
+          <div class="trust-item">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Experienced Professionals</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Image -->
+      <div class="col-lg-6">
+        <div class="hero-image-wrapper">
+          <img
+            src="https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&w=1000&q=80"
+            alt="Digital marketing team working on business growth"
+            class="hero-image"
+          />
+
+          <!-- Hero Floating Stat -->
+          <div class="hero-stat-card">
+            <div class="hero-stat-icon">
+              <i class="bi bi-graph-up-arrow"></i>
+            </div>
+
+            <div>
+              <strong>Growth Focused</strong>
+              <span>Digital Strategies</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     WHY CHOOSE US SECTION
+     ========================================================= -->
+<section class="why-choose-section py-5">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <!-- Why Choose Us Content -->
+      <div class="col-lg-5">
+        <span class="section-label"> WHY CHOOSE US </span>
+
+        <h2 class="why-title">We Focus on Growth, Not Just Marketing</h2>
+
+        <p class="why-description">
+          Every business is different. We combine strategy, creativity and data to create digital
+          marketing campaigns focused on meaningful business results.
+        </p>
+
+        <a routerLink="/about" class="btn btn-primary why-btn">
+          Learn More About Us
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+
+      <!-- Why Choose Us Cards -->
+      <div class="col-lg-7">
+        <div class="row g-4">
+          <!-- Result Driven -->
+          <div class="col-md-6">
+            <div class="why-card">
+              <div class="why-icon">
+                <i class="bi bi-bullseye"></i>
+              </div>
+
+              <h3>Result Driven</h3>
+
+              <p>
+                We focus on measurable outcomes and strategies that support your business goals.
+              </p>
+            </div>
+          </div>
+
+          <!-- Data Driven -->
+          <div class="col-md-6">
+            <div class="why-card">
+              <div class="why-icon">
+                <i class="bi bi-graph-up-arrow"></i>
+              </div>
+
+              <h3>Data Driven</h3>
+
+              <p>
+                We use analytics and performance insights to continuously improve marketing
+                campaigns.
+              </p>
+            </div>
+          </div>
+
+          <!-- Creative Strategies -->
+          <div class="col-md-6">
+            <div class="why-card">
+              <div class="why-icon">
+                <i class="bi bi-lightbulb"></i>
+              </div>
+
+              <h3>Creative Strategies</h3>
+
+              <p>
+                Creative ideas combined with strong strategy help your brand stand out in
+                competitive markets.
+              </p>
+            </div>
+          </div>
+
+          <!-- Client Focused -->
+          <div class="col-md-6">
+            <div class="why-card">
+              <div class="why-icon">
+                <i class="bi bi-people"></i>
+              </div>
+
+              <h3>Client Focused</h3>
+
+              <p>
+                We work closely with clients to understand their goals and build solutions around
+                their needs.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SERVICES SECTION
+     Dynamic data comes from Spring Boot API
+     ========================================================= -->
+<section class="services-section py-5">
+  <div class="container">
+    <!-- Services Heading -->
+    <div class="section-heading text-center mb-5">
+      <span class="section-label"> OUR SERVICES </span>
+
+      <h2 class="section-title">Digital Marketing Services That Drive Growth</h2>
+
+      <p class="section-description">
+        We help businesses build a stronger online presence, attract the right audience and generate
+        measurable results.
+      </p>
+    </div>
+
+    <!-- Services Cards -->
+    <div class="row g-4">
+      @for (service of services; track service.id) {
+        <div class="col-lg-3 col-md-6">
+          <div class="service-card h-100">
+            <!-- Service Icon -->
+            <div class="service-icon">
+              @if (service.icon) {
+                <i class="{{ service.icon }}"></i>
+              } @else {
+                <i class="bi bi-bar-chart"></i>
+              }
+            </div>
+
+            <!-- Service Title -->
+            <h3 class="service-title">
+              {{ service.title }}
+            </h3>
+
+            <!-- Service Description -->
+            <p class="service-description">
+              {{ service.shortDescription }}
+            </p>
+
+            <!-- Service Details -->
+            <a [routerLink]="['/services', service.slug]" class="service-link">
+              Learn More
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     STATISTICS / BUSINESS HIGHLIGHTS SECTION
+     ========================================================= -->
+<section class="stats-section">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Growth Focused -->
+      <div class="col-6 col-lg-3">
+        <div class="home-stat-box">
+          <div class="home-stat-icon">
+            <i class="bi bi-bullseye"></i>
+          </div>
+
+          <div class="home-stat-content">
+            <h3>100%</h3>
+            <p>Growth Focused</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Driven -->
+      <div class="col-6 col-lg-3">
+        <div class="home-stat-box">
+          <div class="home-stat-icon">
+            <i class="bi bi-bar-chart-line"></i>
+          </div>
+
+          <div class="home-stat-content">
+            <h3>Data</h3>
+            <p>Driven Strategies</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROI Focused -->
+      <div class="col-6 col-lg-3">
+        <div class="home-stat-box">
+          <div class="home-stat-icon">
+            <i class="bi bi-lightning-charge"></i>
+          </div>
+
+          <div class="home-stat-content">
+            <h3>ROI</h3>
+            <p>Focused Approach</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Digital Support -->
+      <div class="col-6 col-lg-3">
+        <div class="home-stat-box">
+          <div class="home-stat-icon">
+            <i class="bi bi-people"></i>
+          </div>
+
+          <div class="home-stat-content">
+            <h3>24/7</h3>
+            <p>Digital Support</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FEATURED PORTFOLIO SECTION
+     Dynamic data comes from Spring Boot API
+     ========================================================= -->
+<section class="featured-portfolio-section py-5">
+  <div class="container">
+    <!-- Section Heading -->
+    <div class="section-heading text-center mb-5">
+      <span class="section-label"> OUR WORK </span>
+
+      <h2 class="section-title">Featured Projects</h2>
+
+      <p class="section-description">
+        Explore some of the digital marketing projects and solutions we have delivered for
+        businesses.
+      </p>
+    </div>
+
+    <!-- Portfolio Cards -->
+    <div class="row g-4">
+      @for (portfolio of portfolios; track portfolio.id) {
+        <div class="col-lg-4 col-md-6">
+          <div class="portfolio-card h-100">
+            <!-- Portfolio Image -->
+            <div class="portfolio-image-wrapper">
+              <img [src]="portfolio.imageUrl" [alt]="portfolio.title" class="portfolio-image" />
+            </div>
+
+            <!-- Portfolio Content -->
+            <div class="portfolio-content">
+              <!-- Category -->
+              @if (portfolio.category) {
+                <span class="portfolio-category">
+                  {{ portfolio.category }}
+                </span>
+              }
+
+              <!-- Title -->
+              <h3 class="portfolio-title">
+                {{ portfolio.title }}
+              </h3>
+
+              <!-- Description -->
+              <p class="portfolio-description">
+                {{ portfolio.shortDescription }}
+              </p>
+
+              <!-- Client -->
+              @if (portfolio.clientName) {
+                <div class="portfolio-client">
+                  <i class="bi bi-building"></i>
+
+                  <span>
+                    {{ portfolio.clientName }}
+                  </span>
+                </div>
+              }
+
+              <!-- Portfolio Link -->
+              <a [routerLink]="['/portfolio', portfolio.slug]" class="portfolio-link">
+                View Project
+
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- View All Portfolio -->
+    <div class="text-center mt-5">
+      <a routerLink="/portfolio" class="btn btn-primary portfolio-view-all-btn">
+        View All Portfolio
+
+        <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FEATURED CASE STUDIES SECTION
+     Dynamic data comes from Spring Boot API
+     ========================================================= -->
+<section class="featured-case-studies-section py-5">
+  <div class="container">
+    <!-- Section Heading -->
+    <div class="section-heading text-center mb-5">
+      <span class="section-label"> CASE STUDIES </span>
+
+      <h2 class="section-title">Real Strategies, Measurable Results</h2>
+
+      <p class="section-description">
+        Explore how our digital marketing strategies help businesses solve challenges and achieve
+        meaningful growth.
+      </p>
+    </div>
+
+    <!-- Case Study Cards -->
+    <div class="row g-4">
+      @for (caseStudy of caseStudies; track caseStudy.id) {
+        <div class="col-lg-4 col-md-6">
+          <div class="case-study-card h-100">
+            <!-- Case Study Image -->
+            <div class="case-study-image-wrapper">
+              <img [src]="caseStudy.imageUrl" [alt]="caseStudy.title" class="case-study-image" />
+            </div>
+
+            <!-- Case Study Content -->
+            <div class="case-study-content">
+              <!-- Industry -->
+              @if (caseStudy.industry) {
+                <span class="case-study-industry">
+                  {{ caseStudy.industry }}
+                </span>
+              }
+
+              <!-- Title -->
+              <h3 class="case-study-title">
+                {{ caseStudy.title }}
+              </h3>
+
+              <!-- Short Description -->
+              <p class="case-study-description">
+                {{ caseStudy.shortDescription }}
+              </p>
+
+              <!-- Client -->
+              @if (caseStudy.clientName) {
+                <div class="case-study-client">
+                  <i class="bi bi-building"></i>
+
+                  <span>
+                    {{ caseStudy.clientName }}
+                  </span>
+                </div>
+              }
+
+              <!-- Results -->
+              @if (caseStudy.results) {
+                <div class="case-study-results">
+                  <i class="bi bi-graph-up-arrow"></i>
+
+                  <span>
+                    {{ caseStudy.results }}
+                  </span>
+                </div>
+              }
+
+              <!-- Details Link -->
+              <a [routerLink]="['/case-studies', caseStudy.slug]" class="case-study-link">
+                View Case Study
+
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- View All Case Studies -->
+    <div class="text-center mt-5">
+      <a routerLink="/case-studies" class="btn btn-primary case-study-view-all-btn">
+        View All Case Studies
+
+        <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     TESTIMONIALS SECTION
+     Dynamic data comes from Spring Boot API
+     ========================================================= -->
+<section class="testimonials-section py-5">
+  <div class="container">
+    <!-- Section Heading -->
+    <div class="section-heading text-center mb-5">
+      <span class="section-label"> TESTIMONIALS </span>
+
+      <h2 class="section-title">What Our Clients Say</h2>
+
+      <p class="section-description">
+        Hear from clients who have worked with us to improve their digital presence and business
+        growth.
+      </p>
+    </div>
+
+    <!-- Testimonials Cards -->
+    <div class="row g-4">
+      @for (testimonial of testimonials; track testimonial.id) {
+        <div class="col-lg-4 col-md-6">
+          <div class="testimonial-card h-100">
+            <!-- Rating -->
+            <div class="testimonial-rating" aria-label="Client rating">
+              @for (star of [1, 2, 3, 4, 5]; track star) {
+                @if (star <= testimonial.rating) {
+                  <i class="bi bi-star-fill"></i>
+                } @else {
+                  <i class="bi bi-star"></i>
+                }
+              }
+            </div>
+
+            <!-- Testimonial Content -->
+            <p class="testimonial-content">"{{ testimonial.content }}"</p>
+
+            <!-- Client -->
+            <div class="testimonial-client">
+              <!-- Client Image -->
+              <div class="testimonial-avatar">
+                @if (testimonial.imageUrl) {
+                  <img
+                    [src]="testimonial.imageUrl"
+                    [alt]="testimonial.clientName"
+                    class="testimonial-image"
+                  />
+                } @else {
+                  <i class="bi bi-person-fill"></i>
+                }
+              </div>
+
+              <!-- Client Information -->
+              <div class="testimonial-client-info">
+                <h3>
+                  {{ testimonial.clientName }}
+                </h3>
+
+                @if (testimonial.clientRole) {
+                  <p>
+                    {{ testimonial.clientRole }}
+                  </p>
+                }
+
+                @if (testimonial.companyName) {
+                  <span>
+                    {{ testimonial.companyName }}
+                  </span>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- View All Testimonials -->
+    <div class="text-center mt-5">
+      <a routerLink="/testimonials" class="btn btn-primary testimonial-view-all-btn">
+        View All Testimonials
+
+        <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     LATEST BLOGS SECTION
+     Dynamic data comes from Spring Boot API
+     ========================================================= -->
+<section class="latest-blogs-section py-5">
+  <div class="container">
+    <!-- Section Heading -->
+    <div class="section-heading text-center mb-5">
+      <span class="section-label"> OUR BLOG </span>
+
+      <h2 class="section-title">Latest Digital Marketing Insights</h2>
+
+      <p class="section-description">
+        Stay updated with practical digital marketing insights, strategies and trends to help grow
+        your business.
+      </p>
+    </div>
+
+    <!-- Blog Cards -->
+    <div class="row g-4">
+      @for (blog of blogs; track blog.id) {
+        <div class="col-lg-4 col-md-6">
+          <article class="blog-card h-100">
+            <!-- Blog Image -->
+            <div class="blog-image-wrapper">
+              <img [src]="blog.featuredImage" [alt]="blog.title" class="blog-image" />
+            </div>
+
+            <!-- Blog Content -->
+            <div class="blog-content">
+              <!-- Category -->
+              @if (blog.categoryName) {
+                <span class="blog-category">
+                  {{ blog.categoryName }}
+                </span>
+              }
+
+              <!-- Title -->
+              <h3 class="blog-title">
+                {{ blog.title }}
+              </h3>
+
+              <!-- Description -->
+              <p class="blog-description">
+                {{ blog.shortDescription }}
+              </p>
+
+              <!-- Meta -->
+              <div class="blog-meta">
+                @if (blog.author) {
+                  <span>
+                    <i class="bi bi-person"></i>
+                    {{ blog.author }}
+                  </span>
+                }
+
+                <span>
+                  <i class="bi bi-calendar3"></i>
+                  {{ blog.createdAt | date: 'mediumDate' }}
+                </span>
+              </div>
+
+              <!-- Read Article -->
+              <a [routerLink]="['/blog', blog.slug]" class="blog-link">
+                Read Article
+
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+      }
+    </div>
+
+    <!-- View All Blogs -->
+    <div class="text-center mt-5">
+      <a routerLink="/blog" class="btn btn-primary blog-view-all-btn">
+        View All Blogs
+
+        <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FINAL CTA SECTION
+     Leads users towards consultation/contact
+     ========================================================= -->
+<section class="final-cta-section py-5">
+  <div class="container">
+    <div class="final-cta-wrapper">
+      <div class="row align-items-center g-4">
+        <!-- CTA Content -->
+        <div class="col-lg-8">
+          <span class="final-cta-label"> LET'S GROW TOGETHER </span>
+
+          <h2 class="final-cta-title">Ready to Grow Your Business Online?</h2>
+
+          <p class="final-cta-description">
+            Let's build a powerful digital marketing strategy that helps your business reach the
+            right audience, generate more leads and achieve sustainable growth.
+          </p>
+        </div>
+
+        <!-- CTA Action -->
+        <div class="col-lg-4">
+          <div class="final-cta-actions">
+            <a routerLink="/contact" class="btn final-cta-primary-btn">
+              Get Free Consultation
+
+              <i class="bi bi-arrow-right"></i>
+            </a>
+
+            <a routerLink="/contact" class="final-cta-secondary-link"> Talk to Our Team </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

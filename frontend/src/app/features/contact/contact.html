@@ -1,0 +1,380 @@
+<!-- =========================================
+     CONTACT HERO
+========================================= -->
+
+<section class="contact-hero">
+  <div class="container">
+    <div class="hero-content text-center">
+      <span class="hero-label"> LET'S TALK </span>
+
+      <h1 class="hero-title">Let's Grow Your Business Together</h1>
+
+      <p class="hero-description">
+        Tell us about your business, your goals and your digital marketing requirements. Our team
+        will get back to you shortly.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     CONTACT SECTION
+========================================= -->
+
+<section class="contact-section py-5">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <!-- =====================================
+           CONTACT INFORMATION
+      ====================================== -->
+
+      <div class="col-lg-5">
+        <div class="contact-info">
+          <span class="section-label"> CONTACT US </span>
+
+          <h2>Let's Start a Conversation</h2>
+
+          <p class="contact-intro">
+            Whether you need SEO, social media marketing, performance marketing, website development
+            or a complete digital strategy, we're here to help.
+          </p>
+
+          <!-- Email -->
+
+          <div class="contact-info-item">
+            <div class="info-icon">
+              <i class="bi bi-envelope"></i>
+            </div>
+
+            <div>
+              <h5>Email Us</h5>
+
+              <p>info@digitalagency.com</p>
+            </div>
+          </div>
+
+          <!-- Phone -->
+
+          <div class="contact-info-item">
+            <div class="info-icon">
+              <i class="bi bi-telephone"></i>
+            </div>
+
+            <div>
+              <h5>Call Us</h5>
+
+              <p>+91 00000 00000</p>
+            </div>
+          </div>
+
+          <!-- Location -->
+
+          <div class="contact-info-item">
+            <div class="info-icon">
+              <i class="bi bi-geo-alt"></i>
+            </div>
+
+            <div>
+              <h5>Our Location</h5>
+
+              <p>Maharashtra, India</p>
+            </div>
+          </div>
+
+          <!-- Consultation -->
+
+          <div class="consultation-box">
+            <div class="consultation-icon">
+              <i class="bi bi-calendar-check"></i>
+            </div>
+
+            <div>
+              <h5>Need a Strategy Session?</h5>
+
+              <p>Request a free consultation and let's discuss your business goals.</p>
+
+              <a routerLink="/contact" class="consultation-link">
+                Get Free Consultation
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================
+           CONTACT FORM
+      ====================================== -->
+
+      <div class="col-lg-7">
+        <div class="contact-form-card">
+          <div class="form-header">
+            <span class="section-label"> FREE CONSULTATION </span>
+
+            <h2>Tell Us About Your Project</h2>
+
+            <p>Fill out the form below and our team will contact you soon.</p>
+          </div>
+
+          <!-- Success Message -->
+
+          @if (submitSuccess) {
+            <div class="alert alert-success d-flex align-items-start" role="alert">
+              <i class="bi bi-check-circle-fill me-2"></i>
+
+              <div>
+                <strong> Thank you! </strong>
+
+                Your inquiry has been submitted successfully. Our team will contact you shortly.
+              </div>
+            </div>
+          }
+
+          <!-- Error Message -->
+
+          @if (submitError) {
+            <div class="alert alert-danger d-flex align-items-start" role="alert">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+              <div>Something went wrong while submitting your inquiry. Please try again.</div>
+            </div>
+          }
+
+          <!-- Form -->
+
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+            <!-- Name + Email -->
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="name" class="form-label">
+                  Full Name
+                  <span>*</span>
+                </label>
+
+                <input
+                  id="name"
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  placeholder="Enter your full name"
+                  [class.is-invalid]="isFieldInvalid('name')"
+                />
+
+                @if (isFieldInvalid('name')) {
+                  <div class="invalid-feedback">
+                    @if (contactForm.controls.name.errors?.['required']) {
+                      Name is required.
+                    }
+
+                    @if (contactForm.controls.name.errors?.['minlength']) {
+                      Name must contain at least 2 characters.
+                    }
+
+                    @if (contactForm.controls.name.errors?.['maxlength']) {
+                      Name cannot exceed 100 characters.
+                    }
+                  </div>
+                }
+              </div>
+
+              <div class="col-md-6">
+                <label for="email" class="form-label">
+                  Email Address
+                  <span>*</span>
+                </label>
+
+                <input
+                  id="email"
+                  type="email"
+                  class="form-control"
+                  formControlName="email"
+                  placeholder="you@example.com"
+                  [class.is-invalid]="isFieldInvalid('email')"
+                />
+
+                @if (isFieldInvalid('email')) {
+                  <div class="invalid-feedback">
+                    @if (contactForm.controls.email.errors?.['required']) {
+                      Email is required.
+                    }
+
+                    @if (contactForm.controls.email.errors?.['email']) {
+                      Please enter a valid email address.
+                    }
+                  </div>
+                }
+              </div>
+
+              <!-- Phone + Company -->
+
+              <div class="col-md-6">
+                <label for="phone" class="form-label">
+                  Phone Number
+                  <span>*</span>
+                </label>
+
+                <input
+                  id="phone"
+                  type="tel"
+                  class="form-control"
+                  formControlName="phone"
+                  placeholder="9876543210"
+                  maxlength="10"
+                  [class.is-invalid]="isFieldInvalid('phone')"
+                />
+
+                @if (isFieldInvalid('phone')) {
+                  <div class="invalid-feedback">
+                    @if (contactForm.controls.phone.errors?.['required']) {
+                      Phone number is required.
+                    }
+
+                    @if (contactForm.controls.phone.errors?.['pattern']) {
+                      Enter a valid 10-digit Indian mobile number.
+                    }
+                  </div>
+                }
+              </div>
+
+              <div class="col-md-6">
+                <label for="company" class="form-label"> Company Name </label>
+
+                <input
+                  id="company"
+                  type="text"
+                  class="form-control"
+                  formControlName="company"
+                  placeholder="Your company name"
+                  [class.is-invalid]="isFieldInvalid('company')"
+                />
+
+                @if (isFieldInvalid('company')) {
+                  <div class="invalid-feedback">Company name cannot exceed 150 characters.</div>
+                }
+              </div>
+
+              <!-- Service -->
+
+              <div class="col-md-6">
+                <label for="service" class="form-label">
+                  Service Required
+                  <span>*</span>
+                </label>
+
+                <select
+                  id="service"
+                  class="form-select"
+                  formControlName="service"
+                  [class.is-invalid]="isFieldInvalid('service')"
+                >
+                  <option value="">Select a service</option>
+
+                  <option value="SEO">SEO</option>
+
+                  <option value="Social Media Marketing">Social Media Marketing</option>
+
+                  <option value="Google Ads">Google Ads</option>
+
+                  <option value="Content Marketing">Content Marketing</option>
+
+                  <option value="Web Development">Web Development</option>
+
+                  <option value="Performance Marketing">Performance Marketing</option>
+
+                  <option value="Other">Other</option>
+                </select>
+
+                @if (isFieldInvalid('service')) {
+                  <div class="invalid-feedback">Please select a service.</div>
+                }
+              </div>
+
+              <!-- Budget -->
+
+              <div class="col-md-6">
+                <label for="budget" class="form-label">
+                  Estimated Budget
+                  <span>*</span>
+                </label>
+
+                <select
+                  id="budget"
+                  class="form-select"
+                  formControlName="budget"
+                  [class.is-invalid]="isFieldInvalid('budget')"
+                >
+                  <option value="">Select your budget</option>
+
+                  <option value="Below ₹25,000">Below ₹25,000</option>
+
+                  <option value="₹25,000 - ₹50,000">₹25,000 - ₹50,000</option>
+
+                  <option value="₹50,000 - ₹1,00,000">₹50,000 - ₹1,00,000</option>
+
+                  <option value="₹1,00,000+">₹1,00,000+</option>
+
+                  <option value="Not Sure">Not Sure</option>
+                </select>
+
+                @if (isFieldInvalid('budget')) {
+                  <div class="invalid-feedback">Please select your estimated budget.</div>
+                }
+              </div>
+
+              <!-- Message -->
+
+              <div class="col-12">
+                <label for="message" class="form-label">
+                  Project Details
+                  <span>*</span>
+                </label>
+
+                <textarea
+                  id="message"
+                  rows="6"
+                  class="form-control"
+                  formControlName="message"
+                  placeholder="Tell us about your business, goals and requirements..."
+                  [class.is-invalid]="isFieldInvalid('message')"
+                ></textarea>
+
+                @if (isFieldInvalid('message')) {
+                  <div class="invalid-feedback">
+                    @if (contactForm.controls.message.errors?.['required']) {
+                      Project details are required.
+                    }
+
+                    @if (contactForm.controls.message.errors?.['minlength']) {
+                      Please enter at least 10 characters.
+                    }
+
+                    @if (contactForm.controls.message.errors?.['maxlength']) {
+                      Message cannot exceed 2000 characters.
+                    }
+                  </div>
+                }
+              </div>
+
+              <!-- Submit -->
+
+              <div class="col-12">
+                <button type="submit" class="btn submit-button" [disabled]="isSubmitting">
+                  @if (isSubmitting) {
+                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+
+                    Sending...
+                  } @else {
+                    Submit Inquiry
+
+                    <i class="bi bi-arrow-right ms-2"></i>
+                  }
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

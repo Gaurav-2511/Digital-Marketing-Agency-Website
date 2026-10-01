@@ -1,0 +1,147 @@
+<!-- Loading State -->
+@if (isLoading) {
+  <section class="details-state-section">
+    <div class="container">
+      <div class="state-wrapper">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden"> Loading... </span>
+        </div>
+
+        <h3>Loading Article...</h3>
+
+        <p>Please wait while we load the blog article.</p>
+      </div>
+    </div>
+  </section>
+}
+
+<!-- Error State -->
+@if (!isLoading && hasError) {
+  <section class="details-state-section">
+    <div class="container">
+      <div class="state-wrapper error-state">
+        <div class="state-icon">
+          <i class="bi bi-exclamation-triangle"></i>
+        </div>
+
+        <h3>Article Not Found</h3>
+
+        <p>We couldn't load this blog article. The article may no longer be available.</p>
+
+        <a routerLink="/blog" class="btn btn-primary">
+          <i class="bi bi-arrow-left me-2"></i>
+          Back to Blog
+        </a>
+      </div>
+    </div>
+  </section>
+}
+
+<!-- Blog Details -->
+@if (!isLoading && !hasError && blog) {
+  <article class="blog-details-page">
+    <!-- Article Header -->
+    <section class="article-hero">
+      <div class="container">
+        <div class="article-header">
+          @if (blog.categoryName) {
+            <span class="article-category">
+              {{ blog.categoryName }}
+            </span>
+          }
+
+          <h1 class="article-title">
+            {{ blog.title }}
+          </h1>
+
+          <p class="article-description">
+            {{ blog.shortDescription }}
+          </p>
+
+          <div class="article-meta">
+            @if (blog.author) {
+              <span>
+                <i class="bi bi-person"></i>
+                {{ blog.author }}
+              </span>
+            }
+
+            <span>
+              <i class="bi bi-calendar3"></i>
+              {{ blog.createdAt | date: 'longDate' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Image -->
+    <section class="article-image-section">
+      <div class="container">
+        @if (blog.featuredImage) {
+          <div class="article-image-wrapper">
+            <img [src]="blog.featuredImage" [alt]="blog.title" class="article-image" />
+          </div>
+        } @else {
+          <div class="article-image-placeholder">
+            <i class="bi bi-image"></i>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="article-content-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+            <div class="article-content">
+              <div class="content-label">ARTICLE</div>
+
+              <div class="content-text">
+                {{ blog.content }}
+              </div>
+            </div>
+
+            <!-- Article Footer -->
+            <div class="article-footer">
+              <a routerLink="/blog" class="back-to-blog">
+                <i class="bi bi-arrow-left"></i>
+                Back to Blog
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="article-cta-section">
+      <div class="container">
+        <div class="article-cta-wrapper">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <span class="cta-label"> READY TO GROW? </span>
+
+              <h2 class="cta-title">Let's Build Your Digital Growth Strategy</h2>
+
+              <p class="cta-description">
+                Turn digital marketing insights into real business results with a strategy built for
+                your goals.
+              </p>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="cta-action">
+                <a routerLink="/contact" class="btn cta-button">
+                  Get Free Consultation
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+}

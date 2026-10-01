@@ -1,0 +1,161 @@
+<!-- =========================================
+     Testimonials Hero
+========================================= -->
+
+<section class="testimonials-hero">
+  <div class="container">
+    <div class="hero-content text-center">
+      <span class="hero-label"> CLIENT SUCCESS STORIES </span>
+
+      <h1 class="hero-title">What Our Clients Say</h1>
+
+      <p class="hero-description">
+        Discover what our clients have to say about working with our digital marketing team and the
+        results we help them achieve.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     Testimonials Section
+========================================= -->
+
+<section class="testimonials-section py-5">
+  <div class="container">
+    <!-- Loading -->
+    @if (isLoading) {
+      <div class="state-wrapper">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden"> Loading... </span>
+        </div>
+
+        <h3>Loading Testimonials...</h3>
+
+        <p>Please wait while we load our client success stories.</p>
+      </div>
+    }
+
+    <!-- Error -->
+    @if (!isLoading && hasError) {
+      <div class="state-wrapper error-state">
+        <div class="state-icon">
+          <i class="bi bi-exclamation-triangle"></i>
+        </div>
+
+        <h3>Unable to Load Testimonials</h3>
+
+        <p>Something went wrong while loading client testimonials. Please try again later.</p>
+      </div>
+    }
+
+    <!-- Empty -->
+    @if (!isLoading && !hasError && testimonials.length === 0) {
+      <div class="state-wrapper">
+        <div class="state-icon">
+          <i class="bi bi-chat-quote"></i>
+        </div>
+
+        <h3>No Testimonials Available</h3>
+
+        <p>Client testimonials will appear here once they are published.</p>
+      </div>
+    }
+
+    <!-- Testimonials -->
+    @if (!isLoading && !hasError && testimonials.length > 0) {
+      <div class="row g-4">
+        @for (testimonial of testimonials; track testimonial.id) {
+          <div class="col-lg-4 col-md-6">
+            <article class="testimonial-card h-100">
+              <!-- Quote Icon -->
+              <div class="quote-icon">
+                <i class="bi bi-quote"></i>
+              </div>
+
+              <!-- Rating -->
+              <div class="rating">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                  @if (star <= testimonial.rating) {
+                    <i class="bi bi-star-fill"></i>
+                  } @else {
+                    <i class="bi bi-star"></i>
+                  }
+                }
+              </div>
+
+              <!-- Content -->
+              <p class="testimonial-content">"{{ testimonial.content }}"</p>
+
+              <!-- Client -->
+              <div class="client-info">
+                @if (testimonial.imageUrl) {
+                  <img
+                    [src]="testimonial.imageUrl"
+                    [alt]="testimonial.clientName"
+                    class="client-image"
+                  />
+                } @else {
+                  <div class="client-image-placeholder">
+                    <i class="bi bi-person"></i>
+                  </div>
+                }
+
+                <div class="client-details">
+                  <h3>
+                    {{ testimonial.clientName }}
+                  </h3>
+
+                  @if (testimonial.clientRole) {
+                    <span>
+                      {{ testimonial.clientRole }}
+                    </span>
+                  }
+
+                  @if (testimonial.companyName) {
+                    <small>
+                      {{ testimonial.companyName }}
+                    </small>
+                  }
+                </div>
+              </div>
+            </article>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- =========================================
+     CTA
+========================================= -->
+
+<section class="testimonials-cta-section">
+  <div class="container">
+    <div class="cta-wrapper">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <span class="cta-label"> READY TO GROW? </span>
+
+          <h2 class="cta-title">Let's Create Your Success Story</h2>
+
+          <p class="cta-description">
+            Partner with our digital marketing team and build a strategy designed to generate
+            meaningful growth for your business.
+          </p>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="cta-action">
+            <a routerLink="/contact" class="btn cta-button">
+              Get Free Consultation
+
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

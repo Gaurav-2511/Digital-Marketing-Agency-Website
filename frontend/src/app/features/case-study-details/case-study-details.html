@@ -1,0 +1,256 @@
+<!-- Loading State -->
+@if (isLoading) {
+  <section class="details-state-section">
+    <div class="container">
+      <div class="state-card">
+        <div class="spinner-border" role="status"></div>
+
+        <h3>Loading Case Study...</h3>
+
+        <p>Please wait while we load the case study details.</p>
+      </div>
+    </div>
+  </section>
+}
+
+<!-- Error State -->
+@if (!isLoading && hasError) {
+  <section class="details-state-section">
+    <div class="container">
+      <div class="state-card error-state">
+        <div class="state-icon">
+          <i class="bi bi-exclamation-triangle"></i>
+        </div>
+
+        <h3>Case Study Not Found</h3>
+
+        <p>
+          We could not load the requested case study. Please try again or browse our other case
+          studies.
+        </p>
+
+        <a routerLink="/case-studies" class="btn btn-primary">
+          <i class="bi bi-arrow-left"></i>
+          Back to Case Studies
+        </a>
+      </div>
+    </div>
+  </section>
+}
+
+<!-- Case Study Details -->
+@if (!isLoading && !hasError && caseStudy) {
+  <!-- Hero -->
+  <section class="case-study-hero">
+    <div class="container">
+      <div class="hero-content">
+        @if (caseStudy.industry) {
+          <span class="hero-label">
+            {{ caseStudy.industry }}
+          </span>
+        }
+
+        <h1 class="hero-title">
+          {{ caseStudy.title }}
+        </h1>
+
+        @if (caseStudy.shortDescription) {
+          <p class="hero-description">
+            {{ caseStudy.shortDescription }}
+          </p>
+        }
+
+        <div class="hero-meta">
+          @if (caseStudy.clientName) {
+            <div class="meta-item">
+              <i class="bi bi-building"></i>
+
+              <div>
+                <span class="meta-label">Client</span>
+                <strong>{{ caseStudy.clientName }}</strong>
+              </div>
+            </div>
+          }
+
+          @if (caseStudy.industry) {
+            <div class="meta-item">
+              <i class="bi bi-briefcase"></i>
+
+              <div>
+                <span class="meta-label">Industry</span>
+                <strong>{{ caseStudy.industry }}</strong>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="case-study-content-section py-5">
+    <div class="container">
+      <div class="row g-5">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+          <!-- Image -->
+          @if (caseStudy.imageUrl) {
+            <div class="case-study-image-wrapper">
+              <img [src]="caseStudy.imageUrl" [alt]="caseStudy.title" class="case-study-image" />
+            </div>
+          } @else {
+            <div class="case-study-image-placeholder">
+              <i class="bi bi-bar-chart-line"></i>
+
+              <span> Case Study </span>
+            </div>
+          }
+
+          <!-- Description -->
+          @if (caseStudy.description) {
+            <div class="content-block">
+              <span class="content-label"> OVERVIEW </span>
+
+              <h2>About This Project</h2>
+
+              <p class="content-text">
+                {{ caseStudy.description }}
+              </p>
+            </div>
+          }
+
+          <!-- Challenge -->
+          @if (caseStudy.challenge) {
+            <div class="content-block">
+              <span class="content-label"> THE CHALLENGE </span>
+
+              <h2>Understanding the Challenge</h2>
+
+              <p class="content-text">
+                {{ caseStudy.challenge }}
+              </p>
+            </div>
+          }
+
+          <!-- Solution -->
+          @if (caseStudy.solution) {
+            <div class="content-block">
+              <span class="content-label"> OUR APPROACH </span>
+
+              <h2>The Solution</h2>
+
+              <p class="content-text">
+                {{ caseStudy.solution }}
+              </p>
+            </div>
+          }
+
+          <!-- Results -->
+          @if (caseStudy.results) {
+            <div class="results-block">
+              <span class="content-label"> THE RESULTS </span>
+
+              <h2>Measurable Results</h2>
+
+              <p class="results-text">
+                {{ caseStudy.results }}
+              </p>
+            </div>
+          }
+
+          <!-- Project Link -->
+          @if (caseStudy.projectUrl) {
+            <div class="project-link-wrapper">
+              <a
+                [href]="caseStudy.projectUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-primary"
+              >
+                Visit Project
+                <i class="bi bi-arrow-up-right"></i>
+              </a>
+            </div>
+          }
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+          <aside class="case-study-sidebar">
+            <div class="sidebar-card">
+              <span class="sidebar-label"> PROJECT DETAILS </span>
+
+              <div class="sidebar-item">
+                <span>
+                  <i class="bi bi-person"></i>
+                  Client
+                </span>
+
+                <strong>
+                  {{ caseStudy.clientName || 'N/A' }}
+                </strong>
+              </div>
+
+              <div class="sidebar-item">
+                <span>
+                  <i class="bi bi-diagram-3"></i>
+                  Industry
+                </span>
+
+                <strong>
+                  {{ caseStudy.industry || 'N/A' }}
+                </strong>
+              </div>
+
+              @if (caseStudy.slug) {
+                <div class="sidebar-item">
+                  <span>
+                    <i class="bi bi-link-45deg"></i>
+                    Project Type
+                  </span>
+
+                  <strong> Digital Marketing </strong>
+                </div>
+              }
+            </div>
+
+            <!-- CTA -->
+            <div class="sidebar-cta">
+              <div class="cta-icon">
+                <i class="bi bi-rocket-takeoff"></i>
+              </div>
+
+              <h3>Want Similar Results?</h3>
+
+              <p>Let's discuss how our digital marketing strategies can help grow your business.</p>
+
+              <a routerLink="/contact" class="btn cta-btn">
+                Get Free Consultation
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom Navigation -->
+  <section class="case-study-navigation-section">
+    <div class="container">
+      <div class="navigation-wrapper">
+        <a routerLink="/case-studies" class="back-link">
+          <i class="bi bi-arrow-left"></i>
+
+          Back to All Case Studies
+        </a>
+
+        <a routerLink="/contact" class="navigation-cta">
+          Start Your Project
+
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+}

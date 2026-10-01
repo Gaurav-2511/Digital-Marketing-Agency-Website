@@ -1,0 +1,163 @@
+<!-- =========================================================
+     PORTFOLIO PAGE
+     Dynamic data comes from Spring Boot API
+     ========================================================= -->
+
+<section class="portfolio-page">
+  <!-- Page Hero -->
+  <div class="portfolio-hero">
+    <div class="container">
+      <div class="portfolio-hero-content text-center">
+        <span class="portfolio-hero-label"> OUR WORK </span>
+
+        <h1 class="portfolio-hero-title">Our Portfolio</h1>
+
+        <p class="portfolio-hero-description">
+          Explore some of the digital marketing projects we have worked on to help businesses
+          strengthen their online presence and achieve measurable growth.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Portfolio Listing -->
+  <section class="portfolio-list-section py-5">
+    <div class="container">
+      <!-- Loading State -->
+      @if (isLoading) {
+        <div class="portfolio-state text-center">
+          <div class="spinner-border text-primary portfolio-spinner" role="status">
+            <span class="visually-hidden"> Loading portfolio... </span>
+          </div>
+
+          <p class="portfolio-state-text">Loading our portfolio...</p>
+        </div>
+      }
+
+      <!-- Error State -->
+      @else if (hasError) {
+        <div class="portfolio-state text-center">
+          <div class="portfolio-state-icon error-icon">
+            <i class="bi bi-exclamation-triangle"></i>
+          </div>
+
+          <h2 class="portfolio-state-title">Unable to Load Portfolio</h2>
+
+          <p class="portfolio-state-text">
+            We couldn't load our portfolio right now. Please try again later.
+          </p>
+        </div>
+      }
+
+      <!-- Empty State -->
+      @else if (portfolios.length === 0) {
+        <div class="portfolio-state text-center">
+          <div class="portfolio-state-icon">
+            <i class="bi bi-briefcase"></i>
+          </div>
+
+          <h2 class="portfolio-state-title">Portfolio Coming Soon</h2>
+
+          <p class="portfolio-state-text">
+            Our portfolio is currently being updated. Please check back soon.
+          </p>
+        </div>
+      }
+
+      <!-- Portfolio Cards -->
+      @else {
+        <div class="row g-4">
+          @for (portfolio of portfolios; track portfolio.id) {
+            <div class="col-lg-4 col-md-6">
+              <article class="portfolio-card h-100">
+                <!-- Image -->
+                @if (portfolio.imageUrl) {
+                  <div class="portfolio-image-wrapper">
+                    <img
+                      [src]="portfolio.imageUrl"
+                      [alt]="portfolio.title"
+                      class="portfolio-image"
+                    />
+                  </div>
+
+                } @else {
+                  <div class="portfolio-image-placeholder">
+                    <i class="bi bi-image"></i>
+                  </div>
+                }
+
+                <!-- Content -->
+                <div class="portfolio-content">
+                  <!-- Category -->
+                  @if (portfolio.category) {
+                    <span class="portfolio-category">
+                      {{ portfolio.category }}
+                    </span>
+                  }
+
+                  <!-- Title -->
+                  <h2 class="portfolio-title">
+                    {{ portfolio.title }}
+                  </h2>
+
+                  <!-- Description -->
+                  <p class="portfolio-description">
+                    {{ portfolio.shortDescription }}
+                  </p>
+
+                  <!-- Client -->
+                  @if (portfolio.clientName) {
+                    <div class="portfolio-client">
+                      <i class="bi bi-building"></i>
+
+                      <span>
+                        {{ portfolio.clientName }}
+                      </span>
+                    </div>
+                  }
+
+                  <!-- Details -->
+                  <a [routerLink]="['/portfolio', portfolio.slug]" class="portfolio-link">
+                    View Project
+
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </article>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="portfolio-cta-section">
+    <div class="container">
+      <div class="portfolio-cta">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-8">
+            <span class="portfolio-cta-label"> HAVE A PROJECT IN MIND? </span>
+
+            <h2 class="portfolio-cta-title">Let's Build Something That Delivers Results</h2>
+
+            <p class="portfolio-cta-description">
+              Tell us about your business goals and let's create a digital marketing strategy
+              designed around your needs.
+            </p>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portfolio-cta-action">
+              <a routerLink="/contact" class="btn portfolio-cta-btn">
+                Start Your Project
+
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

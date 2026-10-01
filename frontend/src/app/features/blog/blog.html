@@ -1,0 +1,155 @@
+<!-- Blog Hero -->
+<section class="blog-hero">
+  <div class="container">
+    <div class="hero-content text-center">
+      <span class="hero-label"> DIGITAL MARKETING INSIGHTS </span>
+
+      <h1 class="hero-title">Our Blog</h1>
+
+      <p class="hero-description">
+        Explore practical digital marketing strategies, insights, trends and ideas to help your
+        business grow online.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Listing -->
+<section class="blog-section py-5">
+  <div class="container">
+    <!-- Loading State -->
+    @if (isLoading) {
+      <div class="state-wrapper">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden"> Loading... </span>
+        </div>
+
+        <h3>Loading Blogs...</h3>
+
+        <p>Please wait while we load the latest digital marketing insights.</p>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (!isLoading && hasError) {
+      <div class="state-wrapper error-state">
+        <div class="state-icon">
+          <i class="bi bi-exclamation-triangle"></i>
+        </div>
+
+        <h3>Unable to Load Blogs</h3>
+
+        <p>Something went wrong while loading our blog posts. Please try again later.</p>
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (!isLoading && !hasError && blogs.length === 0) {
+      <div class="state-wrapper">
+        <div class="state-icon">
+          <i class="bi bi-journal-text"></i>
+        </div>
+
+        <h3>No Blogs Available</h3>
+
+        <p>New articles and digital marketing insights will appear here soon.</p>
+      </div>
+    }
+
+    <!-- Blog Cards -->
+    @if (!isLoading && !hasError && blogs.length > 0) {
+      <div class="row g-4">
+        @for (blog of blogs; track blog.id) {
+          <div class="col-lg-4 col-md-6">
+            <article class="blog-card h-100">
+              <!-- Blog Image -->
+              <div class="blog-image-wrapper">
+                @if (blog.featuredImage) {
+                  <img [src]="blog.featuredImage" [alt]="blog.title" class="blog-image" />
+                } @else {
+                  <div class="blog-image-placeholder">
+                    <i class="bi bi-image"></i>
+                  </div>
+                }
+              </div>
+
+              <!-- Blog Content -->
+              <div class="blog-content">
+                <!-- Category -->
+                @if (blog.categoryName) {
+                  <span class="blog-category">
+                    {{ blog.categoryName }}
+                  </span>
+                }
+
+                <!-- Title -->
+                <h2 class="blog-title">
+                  {{ blog.title }}
+                </h2>
+
+                <!-- Description -->
+                <p class="blog-description">
+                  {{ blog.shortDescription }}
+                </p>
+
+                <!-- Meta -->
+                <div class="blog-meta">
+                  @if (blog.author) {
+                    <span>
+                      <i class="bi bi-person"></i>
+                      {{ blog.author }}
+                    </span>
+                  }
+
+                  <span>
+                    <i class="bi bi-calendar3"></i>
+                    {{ blog.createdAt | date: 'mediumDate' }}
+                  </span>
+                </div>
+
+                <!-- Read More -->
+                <a [routerLink]="['/blog', blog.slug]" class="blog-link">
+                  Read Article
+
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
+            </article>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="blog-cta-section">
+  <div class="container">
+    <div class="blog-cta-wrapper">
+      <div class="row align-items-center g-4">
+        <!-- CTA Content -->
+        <div class="col-lg-8">
+          <span class="cta-label"> NEED A DIGITAL STRATEGY? </span>
+
+          <h2 class="cta-title">Ready to Grow Your Business Online?</h2>
+
+          <p class="cta-description">
+            Let's create a digital marketing strategy that attracts the right audience, generates
+            quality leads and drives sustainable business growth.
+          </p>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="col-lg-4">
+          <div class="cta-action">
+            <a routerLink="/contact" class="btn cta-button">
+              Get Free Consultation
+
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

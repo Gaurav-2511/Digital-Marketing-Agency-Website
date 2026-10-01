@@ -1,0 +1,290 @@
+<!-- =========================================================
+     CASE STUDIES PAGE
+     Dynamic data comes from Spring Boot API
+     ========================================================= -->
+
+<section class="case-studies-page">
+
+  <!-- Page Hero -->
+  <div class="case-studies-hero">
+
+    <div class="container">
+
+      <div class="case-studies-hero-content text-center">
+
+        <span class="case-studies-hero-label">
+          PROVEN RESULTS
+        </span>
+
+        <h1 class="case-studies-hero-title">
+          Our Case Studies
+        </h1>
+
+        <p class="case-studies-hero-description">
+          Explore real-world digital marketing projects,
+          strategies and results that demonstrate how we help
+          businesses grow their online presence.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Case Studies Listing -->
+  <section class="case-studies-list-section py-5">
+
+    <div class="container">
+
+      <!-- Loading State -->
+      @if (isLoading) {
+
+        <div class="case-studies-state text-center">
+
+          <div
+            class="spinner-border text-primary case-studies-spinner"
+            role="status">
+
+            <span class="visually-hidden">
+              Loading case studies...
+            </span>
+
+          </div>
+
+          <p class="case-studies-state-text">
+            Loading our case studies...
+          </p>
+
+        </div>
+
+      }
+
+
+      <!-- Error State -->
+      @else if (hasError) {
+
+        <div class="case-studies-state text-center">
+
+          <div class="case-studies-state-icon error-icon">
+            <i class="bi bi-exclamation-triangle"></i>
+          </div>
+
+          <h2 class="case-studies-state-title">
+            Unable to Load Case Studies
+          </h2>
+
+          <p class="case-studies-state-text">
+            We couldn't load our case studies right now.
+            Please try again later.
+          </p>
+
+        </div>
+
+      }
+
+
+      <!-- Empty State -->
+      @else if (caseStudies.length === 0) {
+
+        <div class="case-studies-state text-center">
+
+          <div class="case-studies-state-icon">
+            <i class="bi bi-bar-chart-line"></i>
+          </div>
+
+          <h2 class="case-studies-state-title">
+            Case Studies Coming Soon
+          </h2>
+
+          <p class="case-studies-state-text">
+            Our case studies are currently being updated.
+            Please check back soon.
+          </p>
+
+        </div>
+
+      }
+
+
+      <!-- Case Studies -->
+      @else {
+
+        <div class="row g-4">
+
+          @for (caseStudy of caseStudies; track caseStudy.id) {
+
+            <div class="col-lg-4 col-md-6">
+
+              <article class="case-study-card h-100">
+
+                <!-- Image -->
+                @if (caseStudy.imageUrl) {
+
+                  <div class="case-study-image-wrapper">
+
+                    <img
+                      [src]="caseStudy.imageUrl"
+                      [alt]="caseStudy.title"
+                      class="case-study-image" />
+
+                  </div>
+
+                }
+
+                @else {
+
+                  <div class="case-study-image-placeholder">
+
+                    <i class="bi bi-bar-chart-line"></i>
+
+                  </div>
+
+                }
+
+
+                <!-- Content -->
+                <div class="case-study-content">
+
+                  <!-- Industry -->
+                  @if (caseStudy.industry) {
+
+                    <span class="case-study-industry">
+                      {{ caseStudy.industry }}
+                    </span>
+
+                  }
+
+
+                  <!-- Title -->
+                  <h2 class="case-study-title">
+                    {{ caseStudy.title }}
+                  </h2>
+
+
+                  <!-- Description -->
+                  <p class="case-study-description">
+                    {{ caseStudy.shortDescription }}
+                  </p>
+
+
+                  <!-- Client -->
+                  @if (caseStudy.clientName) {
+
+                    <div class="case-study-client">
+
+                      <i class="bi bi-building"></i>
+
+                      <span>
+                        {{ caseStudy.clientName }}
+                      </span>
+
+                    </div>
+
+                  }
+
+
+                  <!-- Results Preview -->
+                  @if (caseStudy.results) {
+
+                    <div class="case-study-results">
+
+                      <span class="case-study-results-label">
+                        RESULTS
+                      </span>
+
+                      <p>
+                        {{ caseStudy.results }}
+                      </p>
+
+                    </div>
+
+                  }
+
+
+                  <!-- Details -->
+                  <a
+                    [routerLink]="[
+                      '/case-studies',
+                      caseStudy.slug
+                    ]"
+                    class="case-study-link">
+
+                    View Case Study
+
+                    <i class="bi bi-arrow-right"></i>
+
+                  </a>
+
+                </div>
+
+              </article>
+
+            </div>
+
+          }
+
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+
+  <!-- CTA -->
+  <section class="case-studies-cta-section">
+
+    <div class="container">
+
+      <div class="case-studies-cta">
+
+        <div class="row align-items-center g-4">
+
+          <div class="col-lg-8">
+
+            <span class="case-study-cta-label">
+              READY TO GROW?
+            </span>
+
+            <h2 class="case-study-cta-title">
+              Let's Create Your Success Story
+            </h2>
+
+            <p class="case-study-cta-description">
+              Tell us about your business goals and let's build
+              a digital marketing strategy focused on measurable
+              growth.
+            </p>
+
+          </div>
+
+          <div class="col-lg-4">
+
+            <div class="case-study-cta-action">
+
+              <a
+                routerLink="/contact"
+                class="btn case-study-cta-btn">
+
+                Get Free Consultation
+
+                <i class="bi bi-arrow-right"></i>
+
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
