@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
-import { TestimonialApi } from '../../core/services/testimonial-api';
-import { Testimonial } from '../../core/models/testimonial.model';
+import { TestimonialApi } from '../../../core/services/testimonial-api';
+import { Testimonial } from '../../../core/models/testimonial.model';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -31,7 +31,7 @@ export class Testimonials implements OnInit {
 
     this.testimonialApi.getActiveTestimonials().subscribe({
 
-      next: (data) => {
+      next: (data:any) => {
 
         this.testimonials = data;
         this.isLoading = false;

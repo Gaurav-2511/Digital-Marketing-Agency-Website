@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { BlogApi } from '../../core/services/blog-api';
-import { Blog } from '../../core/models/blog.model';
+import { BlogApi } from '../../../core/services/blog-api';
+import { Blog } from '../../../core/models/blog.model';
 
 @Component({
   selector: 'app-blog-details',
@@ -49,7 +49,7 @@ export class BlogDetails implements OnInit {
 
     this.blogApi.getPublishedBlogBySlug(slug).subscribe({
 
-      next: (data: any) => {
+      next: (data) => {
 
         this.blog = data;
 

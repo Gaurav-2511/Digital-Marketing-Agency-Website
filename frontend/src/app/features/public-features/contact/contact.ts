@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { LeadApi } from '../../core/services/lead-api';
+import { LeadApi } from '../../../core/services/lead-api';
 
 @Component({
   selector: 'app-contact',

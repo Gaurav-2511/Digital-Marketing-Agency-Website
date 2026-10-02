@@ -2,8 +2,8 @@ import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import { BlogApi } from '../../core/services/blog-api';
-import { Blog as BlogModel } from '../../core/models/blog.model';
+import { BlogApi } from '../../../core/services/blog-api';
+import { Blog as BlogModel } from '../../../core/models/blog.model';
 
 @Component({
   selector: 'app-blog',
@@ -33,7 +33,7 @@ export class Blog implements OnInit {
 
     this.blogApi.getPublishedBlogs().subscribe({
 
-      next: (data:any) => {
+      next: (data) => {
 
         this.blogs = data;
         this.isLoading = false;

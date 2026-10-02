@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ServiceApi } from '../../core/services/service-api';
-import { Service } from '../../core/models/service.model';
+import { ServiceApi } from '../../../core/services/service-api';
+import { Service } from '../../../core/models/service.model';
 
 @Component({
   selector: 'app-services',

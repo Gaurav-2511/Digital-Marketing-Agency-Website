@@ -1,16 +1,17 @@
 import { Routes } from '@angular/router';
-import { Home } from './features/home/home';
-import { About } from './features/about/about';
-import { Services } from './features/services/services';
-import { Portfolio } from './features/portfolio/portfolio';
-import { CaseStudies } from './features/case-studies/case-studies';
-import { Testimonials } from './features/testimonials/testimonials';
-import { Blog } from './features/blog/blog';
-import { Contact } from './features/contact/contact';
-import { ServiceDetails } from './features/service-details/service-details';
-import { PortfolioDetails } from './features/portfolio-details/portfolio-details';
-import { CaseStudyDetails } from './features/case-study-details/case-study-details';
-import { BlogDetails } from './features/blog-details/blog-details';
+import { Home } from './features/public-features/home/home';
+import { About } from './features/public-features/about/about';
+import { Services } from './features/public-features/services/services';
+import { ServiceDetails } from './features/public-features/service-details/service-details';
+import { Portfolio } from './features/public-features/portfolio/portfolio';
+import { PortfolioDetails } from './features/public-features/portfolio-details/portfolio-details';
+import { CaseStudies } from './features/public-features/case-studies/case-studies';
+import { CaseStudyDetails } from './features/public-features/case-study-details/case-study-details';
+import { Testimonials } from './features/public-features/testimonials/testimonials';
+import { Blog } from './features/public-features/blog/blog';
+import { BlogDetails } from './features/public-features/blog-details/blog-details';
+import { Contact } from './features/public-features/contact/contact';
+
 
 export const routes: Routes =
   [

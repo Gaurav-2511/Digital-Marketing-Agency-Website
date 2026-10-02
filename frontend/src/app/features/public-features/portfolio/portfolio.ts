@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { PortfolioApi } from '../../core/services/portfolio-api';
-import { Portfolio as PortfolioModel } from '../../core/models/portfolio.model';
+import { PortfolioApi } from '../../../core/services/portfolio-api';
+import { Portfolio as PortfolioModel } from '../../../core/models/portfolio.model';
 
 @Component({
   selector: 'app-portfolio',

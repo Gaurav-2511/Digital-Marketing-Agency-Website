@@ -1,16 +1,16 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 
-import { Service } from '../../core/models/service.model';
-import { ServiceApi } from '../../core/services/service-api';
+import { Service } from '../../../core/models/service.model';
+import { ServiceApi } from '../../../core/services/service-api';
 import { RouterLink } from '@angular/router';
-import { PortfolioApi } from '../../core/services/portfolio-api';
-import { Portfolio } from '../../core/models/portfolio.model';
-import { CaseStudyApi } from '../../core/services/case-study-api';
-import { CaseStudy } from '../../core/models/case-study.model';
-import { TestimonialApi } from '../../core/services/testimonial-api';
-import { Testimonial } from '../../core/models/testimonial.model';
-import { BlogApi } from '../../core/services/blog-api';
-import { Blog as BlogModel } from '../../core/models/blog.model';
+import { PortfolioApi } from '../../../core/services/portfolio-api';
+import { Portfolio } from '../../../core/models/portfolio.model';
+import { CaseStudyApi } from '../../../core/services/case-study-api';
+import { CaseStudy } from '../../../core/models/case-study.model';
+import { TestimonialApi } from '../../../core/services/testimonial-api';
+import { Testimonial } from '../../../core/models/testimonial.model';
+import { BlogApi } from '../../../core/services/blog-api';
+import { Blog as BlogModel } from '../../../core/models/blog.model';
 import { DatePipe } from '@angular/common';
 
 @Component({

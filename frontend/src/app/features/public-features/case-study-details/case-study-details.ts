@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
-import { CaseStudyApi } from '../../core/services/case-study-api';
-import { CaseStudy } from '../../core/models/case-study.model';
+import { CaseStudyApi } from '../../../core/services/case-study-api';
+import { CaseStudy } from '../../../core/models/case-study.model';
 
 @Component({
   selector: 'app-case-study-details',
