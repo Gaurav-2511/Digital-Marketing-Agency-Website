@@ -1,1 +1,128 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <div>
+      <h1>Dashboard</h1>
+      <p>Overview of your digital marketing website.</p>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+
+      <p>Loading dashboard statistics...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  }
+
+  @if (!isLoading && dashboardData) {
+    <!-- Lead Statistics -->
+    <section class="dashboard-section">
+      <h2>Lead Overview</h2>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">L</div>
+          <div>
+            <span class="stat-label">Total Leads</span>
+            <h3>{{ dashboardData.totalLeads }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">N</div>
+          <div>
+            <span class="stat-label">New Leads</span>
+            <h3>{{ dashboardData.newLeads }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">C</div>
+          <div>
+            <span class="stat-label">Contacted</span>
+            <h3>{{ dashboardData.contactedLeads }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">P</div>
+          <div>
+            <span class="stat-label">In Progress</span>
+            <h3>{{ dashboardData.inProgressLeads }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">✓</div>
+          <div>
+            <span class="stat-label">Converted</span>
+            <h3>{{ dashboardData.convertedLeads }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">R</div>
+          <div>
+            <span class="stat-label">Rejected</span>
+            <h3>{{ dashboardData.rejectedLeads }}</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Website Statistics -->
+    <section class="dashboard-section">
+      <h2>Website Overview</h2>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">S</div>
+          <div>
+            <span class="stat-label">Services</span>
+            <h3>{{ dashboardData.totalServices }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">P</div>
+          <div>
+            <span class="stat-label">Portfolio Projects</span>
+            <h3>{{ dashboardData.totalPortfolioProjects }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">C</div>
+          <div>
+            <span class="stat-label">Case Studies</span>
+            <h3>{{ dashboardData.totalCaseStudies }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">B</div>
+          <div>
+            <span class="stat-label">Blogs</span>
+            <h3>{{ dashboardData.totalBlogs }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">T</div>
+          <div>
+            <span class="stat-label">Testimonials</span>
+            <h3>{{ dashboardData.totalTestimonials }}</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+</div>
