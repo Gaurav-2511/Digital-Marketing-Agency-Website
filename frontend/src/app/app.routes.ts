@@ -31,6 +31,7 @@ import { Portfolio as AdminPortfolio } from './features/admin-features/portfolio
 import { CaseStudies as AdminCaseStudies } from './features/admin-features/case-studies/case-studies';
 import { Testimonials as AdminTestimonials } from './features/admin-features/testimonials/testimonials';
 import { authGuard } from './core/guards/auth-guard';
+import { roleGuard } from './core/guards/role-guard';
 
 export const routes: Routes =
   [
@@ -55,7 +56,8 @@ export const routes: Routes =
     // =========================
     { path: 'admin/login', component: Login, title: 'Admin Login | Digital Marketing Agency' },
     {
-      path: 'admin', component: Layout, canActivate: [authGuard], children: [
+      path: 'admin', component: Layout, canActivate: [authGuard, roleGuard],
+      children: [
         { path: 'dashboard', component: Dashboard, title: 'Dashboard | Admin' },
         { path: 'services', component: AdminServices, title: 'Services | Admin' },
         { path: 'portfolio', component: AdminPortfolio, title: 'Portfolio | Admin' },

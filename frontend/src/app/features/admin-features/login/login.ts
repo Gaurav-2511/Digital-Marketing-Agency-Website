@@ -38,15 +38,12 @@ export class Login {
       next: (response) => {
         this.isLoading = false;
 
-        if (response.user.role !== 'ADMIN') {
-          this.authService.logout();
-
-          this.errorMessage = 'You are not authorized to access the admin panel.';
-
+        if (response.user.role === 'ADMIN') {
+          this.router.navigate(['/admin/dashboard']);
           return;
         }
 
-        this.router.navigate(['/admin/dashboard']);
+        this.router.navigate(['/']);
       },
 
       error: (error) => {
