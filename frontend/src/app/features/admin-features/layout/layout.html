@@ -1,0 +1,76 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-brand">
+      <h2>DM Agency</h2>
+      <span>Admin Panel</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="/admin/dashboard">
+        <i class="bi bi-speedometer2"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a routerLink="/admin/services">
+        <i class="bi bi-briefcase"></i>
+        <span>Services</span>
+      </a>
+
+      <a routerLink="/admin/portfolio">
+        <i class="bi bi-grid"></i>
+        <span>Portfolio</span>
+      </a>
+
+      <a routerLink="/admin/case-studies">
+        <i class="bi bi-file-earmark-text"></i>
+        <span>Case Studies</span>
+      </a>
+
+      <a routerLink="/admin/blogs">
+        <i class="bi bi-pencil-square"></i>
+        <span>Blogs</span>
+      </a>
+
+      <a routerLink="/admin/testimonials">
+        <i class="bi bi-chat-quote"></i>
+        <span>Testimonials</span>
+      </a>
+
+      <a routerLink="/admin/leads">
+        <i class="bi bi-person-lines-fill"></i>
+        <span>Leads</span>
+      </a>
+
+      <a routerLink="/admin/consultations">
+        <i class="bi bi-calendar-check"></i>
+        <span>Consultations</span>
+      </a>
+
+      <a routerLink="/admin/settings">
+        <i class="bi bi-gear"></i>
+        <span>Settings</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Area -->
+  <div class="admin-main">
+    <!-- Top Navbar -->
+    <header class="admin-navbar">
+      <div>
+        <h1>Admin Panel</h1>
+      </div>
+
+      <div class="admin-user">
+        <i class="bi bi-person-circle"></i>
+        <span>Admin</span>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="admin-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Admin Login</h1>
+
+      <p>Sign in to manage your digital marketing website.</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <!-- Email -->
+
+      <div class="form-group">
+        <label for="email"> Email Address </label>
+
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+        />
+
+        @if (loginForm.controls.email.touched && loginForm.controls.email.invalid) {
+          <small class="error-text">
+            @if (loginForm.controls.email.errors?.['required']) {
+              Email is required.
+            }
+
+            @if (loginForm.controls.email.errors?.['email']) {
+              Please enter a valid email address.
+            }
+          </small>
+        }
+      </div>
+
+      <!-- Password -->
+
+      <div class="form-group">
+        <label for="password"> Password </label>
+
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+        />
+
+        @if (loginForm.controls.password.touched && loginForm.controls.password.invalid) {
+          <small class="error-text"> Password is required. </small>
+        }
+      </div>
+
+      <!-- API Error -->
+
+      @if (errorMessage) {
+        <div class="alert-error">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <!-- Submit -->
+
+      <button type="submit" [disabled]="isLoading">
+        @if (isLoading) {
+          Signing in...
+        } @else {
+          Sign In
+        }
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,3 +1,7 @@
+// =========================
+// Public imports
+// =========================
+
 import { Routes } from '@angular/router';
 import { Home } from './features/public-features/home/home';
 import { About } from './features/public-features/about/about';
@@ -12,9 +16,27 @@ import { Blog } from './features/public-features/blog/blog';
 import { BlogDetails } from './features/public-features/blog-details/blog-details';
 import { Contact } from './features/public-features/contact/contact';
 
+// =========================
+// Admin imports
+// =========================
+import { Login } from './features/admin-features/login/login';
+import { Layout } from './features/admin-features/layout/layout';
+import { Dashboard } from './features/admin-features/dashboard/dashboard';
+import { Blogs } from './features/admin-features/blogs/blogs';
+import { Leads } from './features/admin-features/leads/leads';
+import { Consultations } from './features/admin-features/consultations/consultations';
+import { Settings } from './features/admin-features/settings/settings';
+import { Services as AdminServices } from './features/admin-features/services/services';
+import { Portfolio as AdminPortfolio } from './features/admin-features/portfolio/portfolio';
+import { CaseStudies as AdminCaseStudies } from './features/admin-features/case-studies/case-studies';
+import { Testimonials as AdminTestimonials } from './features/admin-features/testimonials/testimonials';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes =
   [
+    // =========================
+    // Admin Routes
+    // =========================
     { path: '', component: Home, title: 'Digital Marketing Agency' },
     { path: 'about', component: About, title: 'About Us | Digital Marketing Agency' },
     { path: 'services', component: Services, title: 'Services | Digital Marketing Agency' },
@@ -27,5 +49,23 @@ export const routes: Routes =
     { path: 'blog', component: Blog, title: 'Blog | Digital Marketing Agency' },
     { path: 'blog/:slug', component: BlogDetails, title: 'Blog Details | Digital Marketing Agency' },
     { path: 'contact', component: Contact, title: 'Contact Us | Digital Marketing Agency' },
+
+    // =========================
+    // Admin Routes
+    // =========================
+    { path: 'admin/login', component: Login, title: 'Admin Login | Digital Marketing Agency' },
+    {
+      path: 'admin', component: Layout, canActivate: [authGuard], children: [
+        { path: 'dashboard', component: Dashboard, title: 'Dashboard | Admin' },
+        { path: 'services', component: AdminServices, title: 'Services | Admin' },
+        { path: 'portfolio', component: AdminPortfolio, title: 'Portfolio | Admin' },
+        { path: 'case-studies', component: AdminCaseStudies, title: 'Case Studies | Admin' },
+        { path: 'blogs', component: Blogs, title: 'Blogs | Admin' },
+        { path: 'testimonials', component: AdminTestimonials, title: 'Testimonials | Admin' },
+        { path: 'leads', component: Leads, title: 'Leads | Admin' },
+        { path: 'consultations', component: Consultations, title: 'Consultations | Admin' },
+        { path: 'settings', component: Settings, title: 'Settings | Admin' }
+      ]
+    },
     { path: '**', redirectTo: '' }
   ];
