@@ -1,1 +1,459 @@
-<p>services works!</p>
+<div class="container-fluid py-4">
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold mb-1">Services</h2>
+      <p class="text-muted mb-0">Manage your digital marketing services.</p>
+    </div>
+
+    <button class="btn btn-primary" type="button" (click)="openAddForm()">
+      <i class="bi bi-plus-lg me-2"></i>
+      Add Service
+    </button>
+  </div>
+
+  <!-- Success Message -->
+  @if (successMessage) {
+    <div class="alert alert-success" role="alert">
+      <i class="bi bi-check-circle me-2"></i>
+      {{ successMessage }}
+    </div>
+  }
+
+  <!-- Error Message -->
+  @if (errorMessage && !isLoading) {
+    <div class="alert alert-danger" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i>
+      {{ errorMessage }}
+    </div>
+  }
+
+  <!-- Add / Edit Service Form -->
+  @if (showAddForm) {
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-white py-3">
+        <h5 class="mb-0 fw-semibold">
+          @if (isEditMode) {
+            <i class="bi bi-pencil-square me-2"></i>
+            Edit Service
+          } @else {
+            <i class="bi bi-plus-circle me-2"></i>
+            Add New Service
+          }
+        </h5>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="serviceForm" (ngSubmit)="isEditMode ? updateService() : createService()">
+          <div class="row g-3">
+            <!-- Title -->
+            <div class="col-md-6">
+              <label class="form-label" for="serviceTitle">
+                Title <span class="text-danger">*</span>
+              </label>
+
+              <input
+                id="serviceTitle"
+                type="text"
+                class="form-control"
+                formControlName="title"
+                placeholder="e.g. Search Engine Optimization"
+              />
+
+              @if (serviceForm.controls.title.touched && serviceForm.controls.title.invalid) {
+                <div class="text-danger small mt-1">
+                  @if (serviceForm.controls.title.errors?.['required']) {
+                    Title is required.
+                  }
+
+                  @if (serviceForm.controls.title.errors?.['maxlength']) {
+                    Title must not exceed 150 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Slug -->
+            <div class="col-md-6">
+              <label class="form-label" for="serviceSlug">
+                Slug <span class="text-danger">*</span>
+              </label>
+
+              <input
+                id="serviceSlug"
+                type="text"
+                class="form-control"
+                formControlName="slug"
+                placeholder="e.g. search-engine-optimization"
+              />
+
+              @if (serviceForm.controls.slug.touched && serviceForm.controls.slug.invalid) {
+                <div class="text-danger small mt-1">
+                  @if (serviceForm.controls.slug.errors?.['required']) {
+                    Slug is required.
+                  }
+
+                  @if (serviceForm.controls.slug.errors?.['maxlength']) {
+                    Slug must not exceed 180 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Short Description -->
+            <div class="col-12">
+              <label class="form-label" for="shortDescription">
+                Short Description <span class="text-danger">*</span>
+              </label>
+
+              <textarea
+                id="shortDescription"
+                class="form-control"
+                rows="3"
+                formControlName="shortDescription"
+                placeholder="Enter a short description"
+              ></textarea>
+
+              @if (
+                serviceForm.controls.shortDescription.touched &&
+                serviceForm.controls.shortDescription.invalid
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (serviceForm.controls.shortDescription.errors?.['required']) {
+                    Short description is required.
+                  }
+
+                  @if (serviceForm.controls.shortDescription.errors?.['maxlength']) {
+                    Short description must not exceed 300 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Description -->
+            <div class="col-12">
+              <label class="form-label" for="serviceDescription">
+                Description <span class="text-danger">*</span>
+              </label>
+
+              <textarea
+                id="serviceDescription"
+                class="form-control"
+                rows="6"
+                formControlName="description"
+                placeholder="Enter complete service description"
+              ></textarea>
+
+              @if (
+                serviceForm.controls.description.touched && serviceForm.controls.description.invalid
+              ) {
+                <div class="text-danger small mt-1">Description is required.</div>
+              }
+            </div>
+
+            <!-- Icon -->
+            <div class="col-md-6">
+              <label class="form-label" for="serviceIcon"> Icon </label>
+
+              <input
+                id="serviceIcon"
+                type="text"
+                class="form-control"
+                formControlName="icon"
+                placeholder="e.g. bi bi-search"
+              />
+
+              <small class="text-muted"> Bootstrap Icon class name. </small>
+            </div>
+
+            <!-- Image URL -->
+            <div class="col-md-6">
+              <label class="form-label" for="serviceImageUrl"> Image URL </label>
+
+              <input
+                id="serviceImageUrl"
+                type="url"
+                class="form-control"
+                formControlName="imageUrl"
+                placeholder="https://example.com/image.jpg"
+              />
+            </div>
+
+            <!-- Active -->
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input
+                  id="serviceActive"
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  formControlName="active"
+                />
+
+                <label class="form-check-label" for="serviceActive"> Active Service </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="d-flex justify-content-end gap-2 mt-4">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="cancelAddForm()"
+              [disabled]="isSubmitting"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="isSubmitting || serviceForm.invalid"
+            >
+              @if (isSubmitting) {
+                <span
+                  class="spinner-border spinner-border-sm me-2"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+
+                @if (isEditMode) {
+                  Updating...
+                } @else {
+                  Creating...
+                }
+              } @else {
+                <i class="bi bi-check-lg me-2"></i>
+
+                @if (isEditMode) {
+                  Update Service
+                } @else {
+                  Create Service
+                }
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Search and Filter -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-8">
+      <label for="serviceSearch" class="form-label"> Search Services </label>
+
+      <input
+        id="serviceSearch"
+        type="text"
+        class="form-control"
+        placeholder="Search by service title or slug..."
+        [value]="searchTerm"
+        (input)="searchTerm = $any($event.target).value"
+      />
+    </div>
+
+    <div class="col-md-4">
+      <label for="serviceStatusFilter" class="form-label"> Filter by Status </label>
+
+      <select
+        id="serviceStatusFilter"
+        class="form-select"
+        [value]="statusFilter"
+        (change)="statusFilter = $any($event.target).value"
+      >
+        <option value="ALL">All Services</option>
+        <option value="ACTIVE">Active Services</option>
+        <option value="INACTIVE">Inactive Services</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+
+      <p class="text-muted mt-3 mb-0">Loading services...</p>
+    </div>
+  }
+
+  <!-- Services Table -->
+  @if (!isLoading && !errorMessage) {
+    @if (filteredServices.length > 0) {
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Service</th>
+                  <th scope="col">Slug</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Status</th>
+                  <th scope="col" class="text-center">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @for (service of filteredServices; track service.id; let i = $index) {
+                  <tr>
+                    <!-- Index -->
+                    <td>{{ i + 1 }}</td>
+
+                    <!-- Service -->
+                    <td>
+                      <div class="service-info">
+                        @if (service.icon) {
+                          <div class="service-icon">
+                            <i [class]="service.icon"></i>
+                          </div>
+                        }
+
+                        <div>
+                          <div class="fw-semibold">
+                            {{ service.title }}
+                          </div>
+
+                          <small class="text-muted"> ID: {{ service.id }} </small>
+                        </div>
+                      </div>
+                    </td>
+
+                    <!-- Slug -->
+                    <td>
+                      <span class="text-muted">
+                        {{ service.slug }}
+                      </span>
+                    </td>
+
+                    <!-- Description -->
+                    <td class="description-cell">
+                      {{ service.shortDescription }}
+                    </td>
+
+                    <!-- Status -->
+                    <td>
+                      @if (service.active) {
+                        <span class="badge text-bg-success"> Active </span>
+                      } @else {
+                        <span class="badge text-bg-secondary"> Inactive </span>
+                      }
+
+                      <div class="form-check form-switch mt-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          role="switch"
+                          [id]="'service-status-' + service.id"
+                          [checked]="service.active"
+                          [disabled]="updatingStatusId !== null"
+                          (change)="toggleServiceStatus(service.id, $any($event.target).checked)"
+                        />
+
+                        <label
+                          class="form-check-label small"
+                          [for]="'service-status-' + service.id"
+                        >
+                          @if (updatingStatusId === service.id) {
+                            Updating...
+                          } @else {
+                            {{ service.active ? 'Enabled' : 'Disabled' }}
+                          }
+                        </label>
+                      </div>
+                    </td>
+
+                    <!-- Actions -->
+                    <td>
+                      <div class="d-flex justify-content-center gap-2">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-primary"
+                          title="Edit Service"
+                          aria-label="Edit service"
+                          (click)="openEditForm(service.id)"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </button>
+
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-danger"
+                          title="Delete Service"
+                          aria-label="Delete service"
+                          [disabled]="deletingServiceId === service.id"
+                          (click)="deleteService(service.id)"
+                        >
+                          @if (deletingServiceId === service.id) {
+                            <span
+                              class="spinner-border spinner-border-sm"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                          } @else {
+                            <i class="bi bi-trash"></i>
+                          }
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                } @empty {
+                  <!-- No Search Results -->
+                  <tr>
+                    <td colspan="6" class="text-center py-5">
+                      <i class="bi bi-search fs-3 text-muted"></i>
+
+                      <h5 class="mt-3">No services found</h5>
+
+                      <p class="text-muted mb-0">
+                        No services match your search or selected filter.
+                      </p>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <!-- No Services in the Database -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+          @if (searchTerm.trim() || statusFilter !== 'ALL') {
+            <i class="bi bi-search fs-1 text-muted"></i>
+
+            <h5 class="mt-3">No services found</h5>
+
+            <p class="text-muted mb-3">No services match your search or selected filter.</p>
+
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="searchTerm = ''; statusFilter = 'ALL'"
+            >
+              <i class="bi bi-arrow-counterclockwise me-2"></i>
+              Clear Search and Filter
+            </button>
+          } @else {
+            <i class="bi bi-briefcase fs-1 text-muted"></i>
+
+            <h5 class="mt-3">No services available</h5>
+
+            <p class="text-muted mb-3">Add your first service to get started.</p>
+
+            <button type="button" class="btn btn-primary" (click)="openAddForm()">
+              <i class="bi bi-plus-lg me-2"></i>
+              Add Service
+            </button>
+          }
+        </div>
+      </div>
+    }
+  }
+</div>
