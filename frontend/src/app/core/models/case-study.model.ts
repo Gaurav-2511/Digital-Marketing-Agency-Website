@@ -15,3 +15,19 @@ export interface CaseStudy {
   createdAt: string;
   updatedAt: string;
 }
+
+
+export interface CaseStudyRequest {
+  title: string;
+  slug: string;
+  shortDescription: string;
+  description: string;
+  clientName: string;
+  industry: string;
+  challenge: string;
+  solution: string;
+  results: string;
+  imageUrl: string;
+  projectUrl: string;
+  active: boolean;
+}

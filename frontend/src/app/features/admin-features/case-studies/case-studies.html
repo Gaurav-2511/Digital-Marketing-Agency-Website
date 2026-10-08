@@ -1,1 +1,526 @@
-<p>case-studies works!</p>
+<div class="case-study-admin">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h2>Case Studies Management</h2>
+      <p>Manage agency case studies and project results.</p>
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="openAddForm()" [disabled]="showAddForm">
+      <i class="bi bi-plus-lg me-1"></i>
+      Add Case Study
+    </button>
+  </div>
+
+  <!-- Success Message -->
+  @if (successMessage) {
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-2"></i>
+
+      {{ successMessage }}
+
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="successMessage = ''"
+      ></button>
+    </div>
+  }
+
+  <!-- Error Message -->
+  @if (errorMessage) {
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i>
+
+      {{ errorMessage }}
+
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="errorMessage = ''"
+      ></button>
+    </div>
+  }
+
+  <!-- Add / Edit Form -->
+  @if (showAddForm) {
+    <div class="card form-card mb-4">
+      <div class="card-header">
+        <h5>
+          {{ isEditMode ? 'Edit Case Study' : 'Add Case Study' }}
+        </h5>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="caseStudyForm" (ngSubmit)="submitForm()">
+          <div class="row g-3">
+            <!-- Title -->
+            <div class="col-md-6">
+              <label class="form-label"> Title <span class="text-danger">*</span> </label>
+
+              <input
+                type="text"
+                class="form-control"
+                formControlName="title"
+                placeholder="Enter case study title"
+              />
+
+              @if (caseStudyForm.controls.title.touched && caseStudyForm.controls.title.invalid) {
+                <div class="text-danger small mt-1">
+                  @if (caseStudyForm.controls.title.errors?.['required']) {
+                    Title is required.
+                  }
+
+                  @if (caseStudyForm.controls.title.errors?.['maxlength']) {
+                    Title must not exceed 150 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Slug -->
+            <div class="col-md-6">
+              <label class="form-label"> Slug <span class="text-danger">*</span> </label>
+
+              <input
+                type="text"
+                class="form-control"
+                formControlName="slug"
+                placeholder="case-study-slug"
+              />
+
+              @if (caseStudyForm.controls.slug.touched && caseStudyForm.controls.slug.invalid) {
+                <div class="text-danger small mt-1">
+                  @if (caseStudyForm.controls.slug.errors?.['required']) {
+                    Slug is required.
+                  }
+
+                  @if (caseStudyForm.controls.slug.errors?.['maxlength']) {
+                    Slug must not exceed 180 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Client -->
+            <div class="col-md-6">
+              <label class="form-label"> Client Name </label>
+
+              <input
+                type="text"
+                class="form-control"
+                formControlName="clientName"
+                placeholder="Enter client name"
+              />
+
+              @if (
+                caseStudyForm.controls.clientName.touched &&
+                caseStudyForm.controls.clientName.errors?.['maxlength']
+              ) {
+                <div class="text-danger small mt-1">
+                  Client name must not exceed 150 characters.
+                </div>
+              }
+            </div>
+
+            <!-- Industry -->
+            <div class="col-md-6">
+              <label class="form-label"> Industry <span class="text-danger">*</span> </label>
+
+              <input
+                type="text"
+                class="form-control"
+                formControlName="industry"
+                placeholder="E-commerce, Healthcare, Education..."
+              />
+
+              @if (
+                caseStudyForm.controls.industry.touched && caseStudyForm.controls.industry.invalid
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (caseStudyForm.controls.industry.errors?.['required']) {
+                    Industry is required.
+                  }
+
+                  @if (caseStudyForm.controls.industry.errors?.['maxlength']) {
+                    Industry must not exceed 100 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Short Description -->
+            <div class="col-12">
+              <label class="form-label">
+                Short Description
+                <span class="text-danger">*</span>
+              </label>
+
+              <textarea
+                class="form-control"
+                rows="3"
+                formControlName="shortDescription"
+                placeholder="Enter short case study summary"
+              ></textarea>
+
+              @if (
+                caseStudyForm.controls.shortDescription.touched &&
+                caseStudyForm.controls.shortDescription.invalid
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (caseStudyForm.controls.shortDescription.errors?.['required']) {
+                    Short description is required.
+                  }
+
+                  @if (caseStudyForm.controls.shortDescription.errors?.['maxlength']) {
+                    Short description must not exceed 300 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Description -->
+            <div class="col-12">
+              <label class="form-label"> Description <span class="text-danger">*</span> </label>
+
+              <textarea
+                class="form-control"
+                rows="5"
+                formControlName="description"
+                placeholder="Enter complete case study description"
+              ></textarea>
+
+              @if (
+                caseStudyForm.controls.description.touched &&
+                caseStudyForm.controls.description.invalid
+              ) {
+                <div class="text-danger small mt-1">Description is required.</div>
+              }
+            </div>
+
+            <!-- Challenge -->
+            <div class="col-md-4">
+              <label class="form-label"> Challenge <span class="text-danger">*</span> </label>
+
+              <textarea
+                class="form-control"
+                rows="6"
+                formControlName="challenge"
+                placeholder="What challenge did the client face?"
+              ></textarea>
+
+              @if (
+                caseStudyForm.controls.challenge.touched && caseStudyForm.controls.challenge.invalid
+              ) {
+                <div class="text-danger small mt-1">Challenge is required.</div>
+              }
+            </div>
+
+            <!-- Solution -->
+            <div class="col-md-4">
+              <label class="form-label"> Solution <span class="text-danger">*</span> </label>
+
+              <textarea
+                class="form-control"
+                rows="6"
+                formControlName="solution"
+                placeholder="What solution was implemented?"
+              ></textarea>
+
+              @if (
+                caseStudyForm.controls.solution.touched && caseStudyForm.controls.solution.invalid
+              ) {
+                <div class="text-danger small mt-1">Solution is required.</div>
+              }
+            </div>
+
+            <!-- Results -->
+            <div class="col-md-4">
+              <label class="form-label"> Results <span class="text-danger">*</span> </label>
+
+              <textarea
+                class="form-control"
+                rows="6"
+                formControlName="results"
+                placeholder="What results were achieved?"
+              ></textarea>
+
+              @if (
+                caseStudyForm.controls.results.touched && caseStudyForm.controls.results.invalid
+              ) {
+                <div class="text-danger small mt-1">Results are required.</div>
+              }
+            </div>
+
+            <!-- Image URL -->
+            <div class="col-md-6">
+              <label class="form-label"> Image URL </label>
+
+              <input
+                type="url"
+                class="form-control"
+                formControlName="imageUrl"
+                placeholder="https://example.com/image.jpg"
+              />
+
+              @if (
+                caseStudyForm.controls.imageUrl.touched &&
+                caseStudyForm.controls.imageUrl.errors?.['maxlength']
+              ) {
+                <div class="text-danger small mt-1">Image URL must not exceed 500 characters.</div>
+              }
+            </div>
+
+            <!-- Project URL -->
+            <div class="col-md-6">
+              <label class="form-label"> Project URL </label>
+
+              <input
+                type="url"
+                class="form-control"
+                formControlName="projectUrl"
+                placeholder="https://example.com"
+              />
+
+              @if (
+                caseStudyForm.controls.projectUrl.touched &&
+                caseStudyForm.controls.projectUrl.errors?.['maxlength']
+              ) {
+                <div class="text-danger small mt-1">
+                  Project URL must not exceed 500 characters.
+                </div>
+              }
+            </div>
+
+            <!-- Active -->
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="caseStudyActive"
+                  formControlName="active"
+                />
+
+                <label class="form-check-label" for="caseStudyActive"> Active Case Study </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions mt-4">
+            <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+              @if (isSubmitting) {
+                <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+              }
+
+              {{ isEditMode ? 'Update Case Study' : 'Create Case Study' }}
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="cancelForm()"
+              [disabled]="isSubmitting"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Filters -->
+  <div class="card filter-card mb-4">
+    <div class="card-body">
+      <div class="row g-3 align-items-center">
+        <!-- Search -->
+        <div class="col-md-7">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="searchTerm"
+              placeholder="Search by title, client or industry"
+            />
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="col-md-5">
+          <select class="form-select" [(ngModel)]="statusFilter">
+            <option value="ALL">All Case Studies</option>
+
+            <option value="ACTIVE">Active</option>
+
+            <option value="INACTIVE">Inactive</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (isLoading) {
+    <div class="loading-state">
+      <div class="spinner-border text-primary" role="status"></div>
+
+      <p>Loading case studies...</p>
+    </div>
+  }
+
+  <!-- Table -->
+  @if (!isLoading) {
+    <div class="card table-card">
+      <div class="card-header">
+        <div>
+          <h5>Case Studies</h5>
+
+          <span> {{ filteredCaseStudies.length }} case study(s) </span>
+        </div>
+      </div>
+
+      @if (filteredCaseStudies.length > 0) {
+        <div class="table-responsive">
+          <table class="table align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Case Study</th>
+                <th>Client</th>
+                <th>Industry</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (caseStudy of filteredCaseStudies; track caseStudy.id) {
+                <tr>
+                  <!-- Project -->
+                  <td>
+                    <div class="case-study-info">
+                      @if (caseStudy.imageUrl) {
+                        <img
+                          [src]="caseStudy.imageUrl"
+                          [alt]="caseStudy.title"
+                          class="case-study-image"
+                        />
+                      } @else {
+                        <div class="case-study-placeholder">
+                          <i class="bi bi-file-earmark-text"></i>
+                        </div>
+                      }
+
+                      <div>
+                        <strong>
+                          {{ caseStudy.title }}
+                        </strong>
+
+                        <small>
+                          {{ caseStudy.slug }}
+                        </small>
+                      </div>
+                    </div>
+                  </td>
+
+                  <!-- Client -->
+                  <td>
+                    {{ caseStudy.clientName || '—' }}
+                  </td>
+
+                  <!-- Industry -->
+                  <td>
+                    <span class="industry-badge">
+                      {{ caseStudy.industry }}
+                    </span>
+                  </td>
+
+                  <!-- Status -->
+                  <td>
+                    @if (caseStudy.active) {
+                      <span class="badge bg-success"> Active </span>
+                    } @else {
+                      <span class="badge bg-secondary"> Inactive </span>
+                    }
+                  </td>
+
+                  <!-- Actions -->
+                  <td class="text-end">
+                    <div class="action-buttons">
+                      <!-- Edit -->
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        title="Edit"
+                        (click)="editCaseStudy(caseStudy)"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+
+                      <!-- Status -->
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-warning"
+                        title="Change status"
+                        (click)="toggleStatus(caseStudy)"
+                        [disabled]="updatingStatusId === caseStudy.id"
+                      >
+                        @if (updatingStatusId === caseStudy.id) {
+                          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        } @else {
+                          <i
+                            class="bi"
+                            [class.bi-toggle-on]="caseStudy.active"
+                            [class.bi-toggle-off]="!caseStudy.active"
+                          ></i>
+                        }
+                      </button>
+
+                      <!-- Delete -->
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger"
+                        title="Delete"
+                        (click)="deleteCaseStudy(caseStudy)"
+                        [disabled]="deletingCaseStudyId === caseStudy.id"
+                      >
+                        @if (deletingCaseStudyId === caseStudy.id) {
+                          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        } @else {
+                          <i class="bi bi-trash"></i>
+                        }
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <i class="bi bi-file-earmark-text"></i>
+
+          <h5>No case studies found</h5>
+
+          <p>No case studies match your current search or filter.</p>
+
+          @if (!showAddForm) {
+            <button type="button" class="btn btn-primary" (click)="openAddForm()">
+              <i class="bi bi-plus-lg me-1"></i>
+
+              Add Case Study
+            </button>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
