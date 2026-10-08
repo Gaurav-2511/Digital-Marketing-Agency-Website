@@ -13,7 +13,7 @@ export class Services implements OnInit {
 
   private readonly serviceApi = inject(ServiceApi);
 
-  constructor(private cdr: ChangeDetectorRef){}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   services: Service[] = [];
 
@@ -23,8 +23,9 @@ export class Services implements OnInit {
   ngOnInit(): void {
     this.loadServices();
   }
-
-  private loadServices(): void {
+   
+  
+  loadServices(): void {
 
     this.isLoading = true;
     this.hasError = false;
@@ -36,7 +37,7 @@ export class Services implements OnInit {
         this.isLoading = false;
 
         console.log('Services Page API Response:', data);
-        this.cdr.detectChanges()
+        this.cdr.detectChanges();
       },
 
       error: (error) => {

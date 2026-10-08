@@ -1,60 +1,101 @@
+```html
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
   <div class="container">
     <!-- Brand -->
-    <a class="navbar-brand fw-bold" routerLink="/"> Digital<span>Agency</span> </a>
+    <a class="navbar-brand fw-bold" routerLink="/" (click)="closeMenu()">
+      Digital<span>Agency</span>
+    </a>
 
     <!-- Mobile Toggle -->
     <button
       class="navbar-toggler"
       type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#mainNavbar"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="isMenuOpen"
       aria-controls="mainNavbar"
-      aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- Navigation -->
-    <div class="collapse navbar-collapse" id="mainNavbar">
+    <div class="collapse navbar-collapse" [class.show]="isMenuOpen" id="mainNavbar">
       <ul class="navbar-nav ms-auto align-items-lg-center">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/" routerLinkActive="active"> Home </a>
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeMenu()"
+          >
+            Home
+          </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/about" routerLinkActive="active"> About </a>
+          <a class="nav-link" routerLink="/about" routerLinkActive="active" (click)="closeMenu()">
+            About
+          </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/services" routerLinkActive="active"> Services </a>
+          <a
+            class="nav-link"
+            routerLink="/services"
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
+            Services
+          </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/portfolio" routerLinkActive="active"> Portfolio </a>
+          <a
+            class="nav-link"
+            routerLink="/portfolio"
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
+            Portfolio
+          </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/case-studies" routerLinkActive="active">
+          <a
+            class="nav-link"
+            routerLink="/case-studies"
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
             Case Studies
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/testimonials" routerLinkActive="active">
+          <a
+            class="nav-link"
+            routerLink="/testimonials"
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
             Testimonials
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/blog" routerLinkActive="active"> Blog </a>
+          <a class="nav-link" routerLink="/blog" routerLinkActive="active" (click)="closeMenu()">
+            Blog
+          </a>
         </li>
 
         <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-          <a class="btn btn-primary px-4" routerLink="/contact"> Contact Us </a>
+          <a class="btn btn-primary px-4" routerLink="/contact" (click)="closeMenu()">
+            Contact Us
+          </a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+```

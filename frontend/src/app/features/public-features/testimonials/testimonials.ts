@@ -31,7 +31,7 @@ export class Testimonials implements OnInit {
 
     this.testimonialApi.getActiveTestimonials().subscribe({
 
-      next: (data:any) => {
+      next: (data) => {
 
         this.testimonials = data;
         this.isLoading = false;

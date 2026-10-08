@@ -29,6 +29,7 @@ public class PortfolioRequest {
 	    private String description;
 
 	    @Size(max = 150, message = "Client name must not exceed 150 characters")
+	    @NotBlank(message = "Client name is required")
 	    private String clientName;
 
 	    @NotBlank(message = "Category is required")
