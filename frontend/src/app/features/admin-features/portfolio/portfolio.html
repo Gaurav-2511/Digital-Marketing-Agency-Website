@@ -1,1 +1,468 @@
-<p>portfolio works!</p>
+<div class="portfolio-admin">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h2>Portfolio Management</h2>
+      <p>Manage agency portfolio projects.</p>
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="openAddForm()" [disabled]="showAddForm">
+      <i class="bi bi-plus-lg me-1"></i>
+      Add Portfolio
+    </button>
+  </div>
+
+  <!-- Success Message -->
+  @if (successMessage) {
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-2"></i>
+      {{ successMessage }}
+
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="successMessage = ''"
+      ></button>
+    </div>
+  }
+
+  <!-- Error Message -->
+  @if (errorMessage) {
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i>
+      {{ errorMessage }}
+
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="errorMessage = ''"
+      ></button>
+    </div>
+  }
+
+  <!-- Add / Edit Form -->
+  @if (showAddForm) {
+    <div class="card form-card mb-4">
+      <div class="card-header">
+        <h5>
+          {{ isEditMode ? 'Edit Portfolio' : 'Add Portfolio' }}
+        </h5>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="portfolioForm" (ngSubmit)="submitForm()">
+          <div class="row g-3">
+            <!-- Title -->
+            <div class="col-md-6">
+              <label class="form-label"> Title <span class="text-danger">*</span> </label>
+
+              <input
+                type="text"
+                class="form-control"
+                formControlName="title"
+                placeholder="Enter portfolio title"
+              />
+
+              @if (portfolioForm.controls.title.touched && portfolioForm.controls.title.invalid) {
+                <div class="text-danger small mt-1">
+                  @if (portfolioForm.controls.title.errors?.['required']) {
+                    Title is required.
+                  }
+
+                  @if (portfolioForm.controls.title.errors?.['maxlength']) {
+                    Title must not exceed 150 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Slug -->
+            <div class="col-md-6">
+              <label class="form-label"> Slug <span class="text-danger">*</span> </label>
+
+              <input
+                type="text"
+                class="form-control"
+                formControlName="slug"
+                placeholder="portfolio-project-slug"
+              />
+
+              @if (portfolioForm.controls.slug.touched && portfolioForm.controls.slug.invalid) {
+                <div class="text-danger small mt-1">
+                  @if (portfolioForm.controls.slug.errors?.['required']) {
+                    Slug is required.
+                  }
+
+                  @if (portfolioForm.controls.slug.errors?.['maxlength']) {
+                    Slug must not exceed 180 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Client -->
+            <div class="col-md-6">
+              <label class="form-label"> Client Name <span class="text-danger">*</span> </label>
+
+              <input
+                type="text"
+                class="form-control"
+                formControlName="clientName"
+                placeholder="Enter client name"
+              />
+
+              @if (
+                portfolioForm.controls.clientName.touched &&
+                portfolioForm.controls.clientName.invalid
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (portfolioForm.controls.clientName.errors?.['required']) {
+                    Client name is required.
+                  }
+
+                  @if (portfolioForm.controls.clientName.errors?.['maxlength']) {
+                    Client name must not exceed 150 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Category -->
+            <div class="col-md-6">
+              <label class="form-label"> Category <span class="text-danger">*</span> </label>
+
+              <input
+                type="text"
+                class="form-control"
+                formControlName="category"
+                placeholder="SEO, Social Media, Web Development..."
+              />
+
+              @if (
+                portfolioForm.controls.category.touched && portfolioForm.controls.category.invalid
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (portfolioForm.controls.category.errors?.['required']) {
+                    Category is required.
+                  }
+
+                  @if (portfolioForm.controls.category.errors?.['maxlength']) {
+                    Category must not exceed 100 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Short Description -->
+            <div class="col-12">
+              <label class="form-label">
+                Short Description
+                <span class="text-danger">*</span>
+              </label>
+
+              <textarea
+                class="form-control"
+                rows="3"
+                formControlName="shortDescription"
+                placeholder="Enter short description"
+              ></textarea>
+
+              @if (
+                portfolioForm.controls.shortDescription.touched &&
+                portfolioForm.controls.shortDescription.invalid
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (portfolioForm.controls.shortDescription.errors?.['required']) {
+                    Short description is required.
+                  }
+
+                  @if (portfolioForm.controls.shortDescription.errors?.['maxlength']) {
+                    Short description must not exceed 300 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Description -->
+            <div class="col-12">
+              <label class="form-label"> Description <span class="text-danger">*</span> </label>
+
+              <textarea
+                class="form-control"
+                rows="6"
+                formControlName="description"
+                placeholder="Enter complete project description"
+              ></textarea>
+
+              @if (
+                portfolioForm.controls.description.touched &&
+                portfolioForm.controls.description.invalid
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (portfolioForm.controls.description.errors?.['required']) {
+                    Description is required.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Image URL -->
+            <div class="col-md-6">
+              <label class="form-label"> Image URL </label>
+
+              <input
+                type="url"
+                class="form-control"
+                formControlName="imageUrl"
+                placeholder="https://example.com/image.jpg"
+              />
+
+              @if (
+                portfolioForm.controls.imageUrl.touched &&
+                portfolioForm.controls.imageUrl.errors?.['maxlength']
+              ) {
+                <div class="text-danger small mt-1">Image URL must not exceed 500 characters.</div>
+              }
+            </div>
+
+            <!-- Project URL -->
+            <div class="col-md-6">
+              <label class="form-label"> Project URL </label>
+
+              <input
+                type="url"
+                class="form-control"
+                formControlName="projectUrl"
+                placeholder="https://example.com"
+              />
+
+              @if (
+                portfolioForm.controls.projectUrl.touched &&
+                portfolioForm.controls.projectUrl.errors?.['maxlength']
+              ) {
+                <div class="text-danger small mt-1">
+                  Project URL must not exceed 500 characters.
+                </div>
+              }
+            </div>
+
+            <!-- Active -->
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="active"
+                  id="portfolioActive"
+                />
+
+                <label class="form-check-label" for="portfolioActive"> Active Portfolio </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="form-actions mt-4">
+            <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+              @if (isSubmitting) {
+                <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+              }
+
+              {{ isEditMode ? 'Update Portfolio' : 'Create Portfolio' }}
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="cancelForm()"
+              [disabled]="isSubmitting"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Filters -->
+  <div class="card filter-card mb-4">
+    <div class="card-body">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-7">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="searchTerm"
+              placeholder="Search by title, client or category"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <select class="form-select" [(ngModel)]="statusFilter">
+            <option value="ALL">All Portfolios</option>
+
+            <option value="ACTIVE">Active</option>
+
+            <option value="INACTIVE">Inactive</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (isLoading) {
+    <div class="loading-state">
+      <div class="spinner-border text-primary" role="status"></div>
+
+      <p>Loading portfolios...</p>
+    </div>
+  }
+
+  <!-- Portfolio Table -->
+  @if (!isLoading) {
+    <div class="card table-card">
+      <div class="card-header">
+        <div>
+          <h5>Portfolio Projects</h5>
+          <span> {{ filteredPortfolios.length }} project(s) </span>
+        </div>
+      </div>
+
+      @if (filteredPortfolios.length > 0) {
+        <div class="table-responsive">
+          <table class="table align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Client</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (portfolio of filteredPortfolios; track portfolio.id) {
+                <tr>
+                  <td>
+                    <div class="project-info">
+                      @if (portfolio.imageUrl) {
+                        <img
+                          [src]="portfolio.imageUrl"
+                          [alt]="portfolio.title"
+                          class="project-image"
+                        />
+                      } @else {
+                        <div class="project-placeholder">
+                          <i class="bi bi-image"></i>
+                        </div>
+                      }
+
+                      <div>
+                        <strong>
+                          {{ portfolio.title }}
+                        </strong>
+
+                        <small>
+                          {{ portfolio.slug }}
+                        </small>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td>
+                    {{ portfolio.clientName }}
+                  </td>
+
+                  <td>
+                    <span class="category-badge">
+                      {{ portfolio.category }}
+                    </span>
+                  </td>
+
+                  <td>
+                    @if (portfolio.active) {
+                      <span class="badge bg-success"> Active </span>
+                    } @else {
+                      <span class="badge bg-secondary"> Inactive </span>
+                    }
+                  </td>
+
+                  <td class="text-end">
+                    <div class="action-buttons">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        title="Edit"
+                        (click)="editPortfolio(portfolio)"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-warning"
+                        title="Change status"
+                        (click)="toggleStatus(portfolio)"
+                        [disabled]="updatingStatusId === portfolio.id"
+                      >
+                        @if (updatingStatusId === portfolio.id) {
+                          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        } @else {
+                          <i
+                            class="bi"
+                            [class.bi-toggle-on]="portfolio.active"
+                            [class.bi-toggle-off]="!portfolio.active"
+                          ></i>
+                        }
+                      </button>
+
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger"
+                        title="Delete"
+                        (click)="deletePortfolio(portfolio)"
+                        [disabled]="deletingPortfolioId === portfolio.id"
+                      >
+                        @if (deletingPortfolioId === portfolio.id) {
+                          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        } @else {
+                          <i class="bi bi-trash"></i>
+                        }
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <i class="bi bi-briefcase"></i>
+
+          <h5>No portfolios found</h5>
+
+          <p>No portfolio projects match your current search or filter.</p>
+
+          @if (!showAddForm) {
+            <button type="button" class="btn btn-primary" (click)="openAddForm()">
+              <i class="bi bi-plus-lg me-1"></i>
+              Add Portfolio
+            </button>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
