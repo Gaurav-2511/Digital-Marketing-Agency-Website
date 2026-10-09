@@ -1,1 +1,495 @@
-<p>testimonials works!</p>
+<div class="testimonial-admin">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h2>Testimonials Management</h2>
+      <p>Manage client feedback, ratings and testimonials.</p>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="openAddForm()"
+      [disabled]="showAddForm || isSubmitting"
+    >
+      <i class="bi bi-plus-lg me-1"></i>
+      Add Testimonial
+    </button>
+  </div>
+
+  <!-- Success Message -->
+  @if (successMessage) {
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-2"></i>
+      {{ successMessage }}
+
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="successMessage = ''"
+      ></button>
+    </div>
+  }
+
+  <!-- Error Message -->
+  @if (errorMessage) {
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i>
+      {{ errorMessage }}
+
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="errorMessage = ''"
+      ></button>
+    </div>
+  }
+
+  <!-- Add / Edit Form -->
+  @if (showAddForm) {
+    <div class="card form-card mb-4">
+      <div class="card-header">
+        <div>
+          <h5>{{ isEditMode ? 'Edit Testimonial' : 'Add Testimonial' }}</h5>
+          <p>
+            {{
+              isEditMode
+                ? 'Update the client testimonial details.'
+                : 'Enter the client information and feedback.'
+            }}
+          </p>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="testimonialForm" (ngSubmit)="submitForm()" novalidate>
+          <div class="row g-3">
+            <!-- Client Name -->
+            <div class="col-md-6">
+              <label for="clientName" class="form-label">
+                Client Name <span class="text-danger">*</span>
+              </label>
+
+              <input
+                id="clientName"
+                type="text"
+                class="form-control"
+                formControlName="clientName"
+                placeholder="Enter client name"
+                autocomplete="name"
+              />
+
+              @if (
+                testimonialForm.controls.clientName.touched &&
+                testimonialForm.controls.clientName.invalid
+              ) {
+                <div class="text-danger small mt-1">
+                  @if (testimonialForm.controls.clientName.errors?.['required']) {
+                    Client name is required.
+                  }
+                  @if (testimonialForm.controls.clientName.errors?.['maxlength']) {
+                    Client name must not exceed 150 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- Client Role -->
+            <div class="col-md-6">
+              <label for="clientRole" class="form-label">Client Role</label>
+
+              <input
+                id="clientRole"
+                type="text"
+                class="form-control"
+                formControlName="clientRole"
+                placeholder="e.g. Founder, CEO, Marketing Manager"
+              />
+
+              @if (
+                testimonialForm.controls.clientRole.touched &&
+                testimonialForm.controls.clientRole.invalid
+              ) {
+                <div class="text-danger small mt-1">
+                  Client role must not exceed 150 characters.
+                </div>
+              }
+            </div>
+
+            <!-- Company -->
+            <div class="col-md-6">
+              <label for="companyName" class="form-label">Company Name</label>
+
+              <input
+                id="companyName"
+                type="text"
+                class="form-control"
+                formControlName="companyName"
+                placeholder="Enter company name"
+                autocomplete="organization"
+              />
+
+              @if (
+                testimonialForm.controls.companyName.touched &&
+                testimonialForm.controls.companyName.invalid
+              ) {
+                <div class="text-danger small mt-1">
+                  Company name must not exceed 150 characters.
+                </div>
+              }
+            </div>
+
+            <!-- Rating -->
+            <div class="col-md-6">
+              <label for="rating" class="form-label">
+                Rating <span class="text-danger">*</span>
+              </label>
+
+              <select id="rating" class="form-select" formControlName="rating">
+                <option [ngValue]="5">5 - Excellent</option>
+                <option [ngValue]="4">4 - Very Good</option>
+                <option [ngValue]="3">3 - Good</option>
+                <option [ngValue]="2">2 - Average</option>
+                <option [ngValue]="1">1 - Poor</option>
+              </select>
+
+              @if (
+                testimonialForm.controls.rating.touched && testimonialForm.controls.rating.invalid
+              ) {
+                <div class="text-danger small mt-1">Rating must be between 1 and 5.</div>
+              }
+            </div>
+
+            <!-- Testimonial Content -->
+            <div class="col-12">
+              <label for="content" class="form-label">
+                Testimonial <span class="text-danger">*</span>
+              </label>
+
+              <textarea
+                id="content"
+                rows="5"
+                class="form-control"
+                formControlName="content"
+                placeholder="Enter the client's feedback..."
+              ></textarea>
+
+              @if (
+                testimonialForm.controls.content.touched && testimonialForm.controls.content.invalid
+              ) {
+                <div class="text-danger small mt-1">Testimonial content is required.</div>
+              }
+            </div>
+
+            <!-- Image URL -->
+            <div class="col-12">
+              <label for="imageUrl" class="form-label">Client Image URL</label>
+
+              <input
+                id="imageUrl"
+                type="url"
+                class="form-control"
+                formControlName="imageUrl"
+                placeholder="https://example.com/client-image.jpg"
+              />
+
+              @if (
+                testimonialForm.controls.imageUrl.touched &&
+                testimonialForm.controls.imageUrl.errors?.['maxlength']
+              ) {
+                <div class="text-danger small mt-1">Image URL must not exceed 500 characters.</div>
+              }
+            </div>
+
+            <!-- Active Status -->
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input
+                  id="testimonialActive"
+                  type="checkbox"
+                  class="form-check-input"
+                  formControlName="active"
+                />
+
+                <label class="form-check-label" for="testimonialActive"> Active Testimonial </label>
+
+                <div class="form-text">Active testimonials can appear on the public website.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions mt-4">
+            <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+              @if (isSubmitting) {
+                <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+              } @else {
+                <i
+                  class="bi me-1"
+                  [class.bi-check-lg]="isEditMode"
+                  [class.bi-plus-lg]="!isEditMode"
+                ></i>
+              }
+
+              {{ isEditMode ? 'Update Testimonial' : 'Create Testimonial' }}
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="cancelForm()"
+              [disabled]="isSubmitting"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Search and Filters -->
+  <div class="card filter-card mb-4">
+    <div class="card-body">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-7">
+          <label for="testimonialSearch" class="visually-hidden"> Search testimonials </label>
+
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+
+            <input
+              id="testimonialSearch"
+              type="search"
+              class="form-control"
+              [(ngModel)]="searchTerm"
+              placeholder="Search by client, role or company..."
+            />
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <label for="testimonialStatus" class="visually-hidden">
+            Filter testimonials by status
+          </label>
+
+          <select id="testimonialStatus" class="form-select" [(ngModel)]="statusFilter">
+            <option value="ALL">All Testimonials</option>
+            <option value="ACTIVE">Active</option>
+            <option value="INACTIVE">Inactive</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="loading-state">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p>Loading testimonials...</p>
+    </div>
+  }
+
+  <!-- Testimonials Table -->
+  @if (!isLoading) {
+    <div class="card table-card">
+      <div class="card-header">
+        <div>
+          <h5>Testimonials</h5>
+          <span>{{ filteredTestimonials.length }} testimonial(s)</span>
+        </div>
+      </div>
+
+      @if (filteredTestimonials.length > 0) {
+        <div class="table-responsive">
+          <table class="table align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Company</th>
+                <th>Testimonial</th>
+                <th>Rating</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (testimonial of filteredTestimonials; track testimonial.id) {
+                <tr>
+                  <!-- Client -->
+                  <td>
+                    <div class="client-info">
+                      @if (testimonial.imageUrl) {
+                        <img
+                          [src]="testimonial.imageUrl"
+                          [alt]="testimonial.clientName"
+                          class="client-image"
+                          loading="lazy"
+                        />
+                      } @else {
+                        <div class="client-placeholder" aria-hidden="true">
+                          {{
+                            testimonial.clientName
+                              ? testimonial.clientName.charAt(0).toUpperCase()
+                              : '?'
+                          }}
+                        </div>
+                      }
+
+                      <div class="client-details">
+                        <strong>{{ testimonial.clientName }}</strong>
+
+                        @if (testimonial.clientRole) {
+                          <small>{{ testimonial.clientRole }}</small>
+                        }
+                      </div>
+                    </div>
+                  </td>
+
+                  <!-- Company -->
+                  <td>
+                    {{ testimonial.companyName || '—' }}
+                  </td>
+
+                  <!-- Content -->
+                  <td>
+                    <div class="testimonial-content">
+                      {{ testimonial.content }}
+                    </div>
+                  </td>
+
+                  <!-- Rating -->
+                  <td>
+                    <div class="rating" [attr.aria-label]="testimonial.rating + ' out of 5 stars'">
+                      @for (star of [1, 2, 3, 4, 5]; track star) {
+                        <span
+                          class="star"
+                          [class.filled]="star <= testimonial.rating"
+                          [class.empty]="star > testimonial.rating"
+                          aria-hidden="true"
+                          >★</span
+                        >
+                      }
+
+                      <span class="rating-number"> {{ testimonial.rating }}/5 </span>
+                    </div>
+                  </td>
+
+                  <!-- Status -->
+                  <td>
+                    @if (testimonial.active) {
+                      <span class="badge bg-success">Active</span>
+                    } @else {
+                      <span class="badge bg-secondary">Inactive</span>
+                    }
+                  </td>
+
+                  <!-- Actions -->
+                  <td class="text-end">
+                    <div class="action-buttons">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        title="Edit testimonial"
+                        aria-label="Edit testimonial"
+                        (click)="editTestimonial(testimonial)"
+                        [disabled]="
+                          isSubmitting ||
+                          deletingTestimonialId === testimonial.id ||
+                          updatingStatusId === testimonial.id
+                        "
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-warning"
+                        [title]="
+                          testimonial.active ? 'Deactivate testimonial' : 'Activate testimonial'
+                        "
+                        [attr.aria-label]="
+                          testimonial.active ? 'Deactivate testimonial' : 'Activate testimonial'
+                        "
+                        (click)="toggleStatus(testimonial)"
+                        [disabled]="
+                          updatingStatusId === testimonial.id ||
+                          deletingTestimonialId === testimonial.id
+                        "
+                      >
+                        @if (updatingStatusId === testimonial.id) {
+                          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        } @else {
+                          <i
+                            class="bi"
+                            [class.bi-toggle-on]="testimonial.active"
+                            [class.bi-toggle-off]="!testimonial.active"
+                          ></i>
+                        }
+                      </button>
+
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger"
+                        title="Delete testimonial"
+                        aria-label="Delete testimonial"
+                        (click)="deleteTestimonial(testimonial)"
+                        [disabled]="
+                          deletingTestimonialId === testimonial.id ||
+                          updatingStatusId === testimonial.id
+                        "
+                      >
+                        @if (deletingTestimonialId === testimonial.id) {
+                          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        } @else {
+                          <i class="bi bi-trash"></i>
+                        }
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <!-- Empty State -->
+        <div class="empty-state">
+          <i class="bi bi-chat-square-quote" aria-hidden="true"></i>
+
+          <h5>No testimonials found</h5>
+
+          @if (searchTerm || statusFilter !== 'ALL') {
+            <p>No testimonials match your current search or filter.</p>
+
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="searchTerm = ''; statusFilter = 'ALL'"
+            >
+              <i class="bi bi-arrow-counterclockwise me-1"></i>
+              Clear Search &amp; Filter
+            </button>
+          } @else {
+            <p>No testimonials have been added yet.</p>
+
+            @if (!showAddForm) {
+              <button type="button" class="btn btn-primary" (click)="openAddForm()">
+                <i class="bi bi-plus-lg me-1"></i>
+                Add First Testimonial
+              </button>
+            }
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
