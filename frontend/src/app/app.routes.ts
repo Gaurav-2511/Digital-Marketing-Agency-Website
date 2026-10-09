@@ -1,3 +1,4 @@
+
 // =========================
 // Public imports
 // =========================
@@ -30,13 +31,14 @@ import { Services as AdminServices } from './features/admin-features/services/se
 import { Portfolio as AdminPortfolio } from './features/admin-features/portfolio/portfolio';
 import { CaseStudies as AdminCaseStudies } from './features/admin-features/case-studies/case-studies';
 import { Testimonials as AdminTestimonials } from './features/admin-features/testimonials/testimonials';
+import { BlogCategories } from './features/admin-features/blog-categories/blog-categories';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
 
 export const routes: Routes =
   [
     // =========================
-    // Admin Routes
+    // Public Routes
     // =========================
     { path: '', component: Home, title: 'Digital Marketing Agency' },
     { path: 'about', component: About, title: 'About Us | Digital Marketing Agency' },
@@ -63,6 +65,7 @@ export const routes: Routes =
         { path: 'portfolio', component: AdminPortfolio, title: 'Portfolio | Admin' },
         { path: 'case-studies', component: AdminCaseStudies, title: 'Case Studies | Admin' },
         { path: 'blogs', component: Blogs, title: 'Blogs | Admin' },
+        { path: 'blog-categories', component: BlogCategories, title: 'Blog Categories | Admin', },
         { path: 'testimonials', component: AdminTestimonials, title: 'Testimonials | Admin' },
         { path: 'leads', component: Leads, title: 'Leads | Admin' },
         { path: 'consultations', component: Consultations, title: 'Consultations | Admin' },

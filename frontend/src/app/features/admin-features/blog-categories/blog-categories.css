@@ -1,0 +1,36 @@
+.table th {
+  white-space: nowrap;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+.form-control,
+.form-select {
+  min-height: 42px;
+}
+
+.form-check-input,
+.form-check-label {
+  cursor: pointer;
+}
+
+code {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+  .container-fluid {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .table {
+    font-size: 0.9rem;
+  }
+}

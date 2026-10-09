@@ -1,0 +1,321 @@
+<div class="container-fluid py-4">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+      <h2 class="fw-bold mb-1">Blog Categories</h2>
+      <p class="text-muted mb-0">Organize and manage your blog categories.</p>
+    </div>
+
+    <button class="btn btn-primary" type="button" (click)="openAddForm()">
+      <i class="bi bi-plus-lg me-2"></i>
+      Add Category
+    </button>
+  </div>
+
+  @if (successMessage) {
+    <div class="alert alert-success" role="alert">
+      <i class="bi bi-check-circle me-2"></i>{{ successMessage }}
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-danger" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i>{{ errorMessage }}
+
+      @if (!isLoading) {
+        <button type="button" class="btn btn-sm btn-outline-danger ms-3" (click)="loadCategories()">
+          Try Again
+        </button>
+      }
+    </div>
+  }
+
+  @if (showForm) {
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-white py-3">
+        <h5 class="mb-0 fw-semibold">
+          <i
+            class="bi me-2"
+            [class.bi-pencil-square]="isEditMode"
+            [class.bi-plus-circle]="!isEditMode"
+          ></i>
+          {{ isEditMode ? 'Edit Category' : 'Add New Category' }}
+        </h5>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="categoryName" class="form-label">
+                Category Name <span class="text-danger">*</span>
+              </label>
+
+              <input
+                id="categoryName"
+                type="text"
+                class="form-control"
+                formControlName="name"
+                maxlength="100"
+                placeholder="e.g. Digital Marketing"
+                [class.is-invalid]="
+                  categoryForm.controls.name.touched && categoryForm.controls.name.invalid
+                "
+              />
+
+              @if (categoryForm.controls.name.touched && categoryForm.controls.name.invalid) {
+                <div class="invalid-feedback">
+                  @if (categoryForm.controls.name.errors?.['required']) {
+                    Category name is required.
+                  }
+                  @if (categoryForm.controls.name.errors?.['maxlength']) {
+                    Name must not exceed 100 characters.
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="col-md-6">
+              <label for="categorySlug" class="form-label">
+                Slug <span class="text-danger">*</span>
+              </label>
+
+              <input
+                id="categorySlug"
+                type="text"
+                class="form-control"
+                formControlName="slug"
+                maxlength="120"
+                placeholder="e.g. digital-marketing"
+                [class.is-invalid]="
+                  categoryForm.controls.slug.touched && categoryForm.controls.slug.invalid
+                "
+              />
+
+              @if (categoryForm.controls.slug.touched && categoryForm.controls.slug.invalid) {
+                <div class="invalid-feedback">
+                  @if (categoryForm.controls.slug.errors?.['required']) {
+                    Slug is required.
+                  }
+                  @if (categoryForm.controls.slug.errors?.['maxlength']) {
+                    Slug must not exceed 120 characters.
+                  }
+                  @if (categoryForm.controls.slug.errors?.['pattern']) {
+                    Use lowercase letters, numbers and single hyphens only.
+                  }
+                </div>
+              }
+
+              <small class="text-muted"> Example: <code>digital-marketing</code> </small>
+            </div>
+
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input
+                  id="categoryActive"
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  formControlName="active"
+                />
+                <label class="form-check-label" for="categoryActive"> Active Category </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end flex-wrap gap-2 mt-4">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="cancelForm()"
+              [disabled]="isSubmitting"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="isSubmitting || categoryForm.invalid"
+            >
+              @if (isSubmitting) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Saving...
+              } @else {
+                <i class="bi bi-check-lg me-2"></i>
+                {{ isEditMode ? 'Update Category' : 'Create Category' }}
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-8">
+      <label for="categorySearch" class="form-label">Search Categories</label>
+      <input
+        id="categorySearch"
+        type="search"
+        class="form-control"
+        placeholder="Search by category name or slug..."
+        [value]="searchTerm"
+        (input)="searchTerm = $any($event.target).value"
+      />
+    </div>
+
+    <div class="col-md-4">
+      <label for="categoryStatusFilter" class="form-label">Filter by Status</label>
+      <select
+        id="categoryStatusFilter"
+        class="form-select"
+        [value]="statusFilter"
+        (change)="statusFilter = $any($event.target).value"
+      >
+        <option value="ALL">All Categories</option>
+        <option value="ACTIVE">Active Categories</option>
+        <option value="INACTIVE">Inactive Categories</option>
+      </select>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="text-muted mt-3 mb-0">Loading blog categories...</p>
+    </div>
+  }
+
+  @if (!isLoading && !errorMessage) {
+    @if (filteredCategories.length > 0) {
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Slug</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Created</th>
+                  <th scope="col" class="text-center">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @for (category of filteredCategories; track category.id; let i = $index) {
+                  <tr>
+                    <td>{{ i + 1 }}</td>
+
+                    <td>
+                      <div class="fw-semibold">{{ category.name }}</div>
+                      <small class="text-muted">ID: {{ category.id }}</small>
+                    </td>
+
+                    <td>
+                      <code>{{ category.slug }}</code>
+                    </td>
+
+                    <td>
+                      @if (category.active) {
+                        <span class="badge text-bg-success">Active</span>
+                      } @else {
+                        <span class="badge text-bg-secondary">Inactive</span>
+                      }
+
+                      <div class="form-check form-switch mt-2">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          role="switch"
+                          [id]="'category-status-' + category.id"
+                          [checked]="category.active"
+                          [disabled]="updatingStatusId !== null"
+                          (change)="toggleCategoryStatus(category, $any($event.target).checked)"
+                        />
+                        <label
+                          class="form-check-label small"
+                          [for]="'category-status-' + category.id"
+                        >
+                          {{
+                            updatingStatusId === category.id
+                              ? 'Updating...'
+                              : category.active
+                                ? 'Enabled'
+                                : 'Disabled'
+                          }}
+                        </label>
+                      </div>
+                    </td>
+
+                    <td>
+                      {{ category.createdAt ? (category.createdAt | date: 'mediumDate') : '—' }}
+                    </td>
+
+                    <td>
+                      <div class="d-flex justify-content-center gap-2">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-primary"
+                          title="Edit Category"
+                          aria-label="Edit category"
+                          (click)="openEditForm(category)"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </button>
+
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-danger"
+                          title="Delete Category"
+                          aria-label="Delete category"
+                          [disabled]="deletingCategoryId === category.id"
+                          (click)="deleteCategory(category)"
+                        >
+                          @if (deletingCategoryId === category.id) {
+                            <span class="spinner-border spinner-border-sm"></span>
+                          } @else {
+                            <i class="bi bi-trash"></i>
+                          }
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+          <i class="bi bi-tags fs-1 text-muted"></i>
+
+          @if (searchTerm.trim() || statusFilter !== 'ALL') {
+            <h5 class="mt-3">No categories found</h5>
+            <p class="text-muted mb-3">No categories match your search or selected filter.</p>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="searchTerm = ''; statusFilter = 'ALL'"
+            >
+              <i class="bi bi-arrow-counterclockwise me-2"></i>
+              Clear Search and Filter
+            </button>
+          } @else {
+            <h5 class="mt-3">No blog categories available</h5>
+            <p class="text-muted mb-3">Create your first category to organize blog posts.</p>
+            <button type="button" class="btn btn-primary" (click)="openAddForm()">
+              <i class="bi bi-plus-lg me-2"></i>
+              Add Category
+            </button>
+          }
+        </div>
+      </div>
+    }
+  }
+</div>
