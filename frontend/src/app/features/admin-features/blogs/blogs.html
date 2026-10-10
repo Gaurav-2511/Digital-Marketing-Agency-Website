@@ -1,1 +1,382 @@
-<p>blogs works!</p>
+<div class="container-fluid blog-admin">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+      <h2 class="mb-1">Blog Management</h2>
+      <p class="text-secondary mb-0">Create, edit and manage your agency blogs.</p>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="openAddForm()"
+      [disabled]="isSubmitting || isLoadingCategories"
+    >
+      <i class="bi bi-plus-lg me-1"></i> Add Blog
+    </button>
+  </div>
+
+  @if (successMessage) {
+    <div class="alert alert-success alert-dismissible" role="status">
+      {{ successMessage }}
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Dismiss"
+        (click)="successMessage = ''"
+      ></button>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-danger" role="alert">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <span>{{ errorMessage }}</span>
+        <button type="button" class="btn btn-outline-danger btn-sm" (click)="loadBlogs()">
+          Try Again
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (categoryError) {
+    <div class="alert alert-warning" role="alert">
+      {{ categoryError }}
+      <button type="button" class="btn btn-outline-dark btn-sm ms-2" (click)="loadCategories()">
+        Retry categories
+      </button>
+    </div>
+  }
+
+  @if (showForm) {
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-white py-3">
+        <h5 class="mb-0">{{ isEditMode ? 'Edit Blog' : 'Create Blog' }}</h5>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="blogForm" (ngSubmit)="saveBlog()" novalidate>
+          <div class="row g-3">
+            <div class="col-12 col-lg-6">
+              <label for="blogTitle" class="form-label">Blog Title *</label>
+              <input
+                id="blogTitle"
+                type="text"
+                class="form-control"
+                formControlName="title"
+                maxlength="200"
+                [class.is-invalid]="
+                  blogForm.controls.title.touched && blogForm.controls.title.invalid
+                "
+              />
+              @if (
+                blogForm.controls.title.touched && blogForm.controls.title.hasError('required')
+              ) {
+                <div class="invalid-feedback">Blog title is required.</div>
+              }
+              @if (
+                blogForm.controls.title.touched && blogForm.controls.title.hasError('maxlength')
+              ) {
+                <div class="invalid-feedback">Title cannot exceed 200 characters.</div>
+              }
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <label for="blogSlug" class="form-label">Slug *</label>
+              <input
+                id="blogSlug"
+                type="text"
+                class="form-control"
+                formControlName="slug"
+                maxlength="220"
+                placeholder="example-digital-marketing-guide"
+                [class.is-invalid]="
+                  blogForm.controls.slug.touched && blogForm.controls.slug.invalid
+                "
+              />
+              @if (blogForm.controls.slug.touched && blogForm.controls.slug.invalid) {
+                <div class="invalid-feedback">
+                  Enter a lowercase slug using letters, numbers and single hyphens only.
+                </div>
+              }
+            </div>
+
+            <div class="col-12">
+              <label for="blogShortDescription" class="form-label">Short Description *</label>
+              <textarea
+                id="blogShortDescription"
+                class="form-control"
+                rows="2"
+                formControlName="shortDescription"
+                maxlength="500"
+                [class.is-invalid]="
+                  blogForm.controls.shortDescription.touched &&
+                  blogForm.controls.shortDescription.invalid
+                "
+              ></textarea>
+              @if (
+                blogForm.controls.shortDescription.touched &&
+                blogForm.controls.shortDescription.invalid
+              ) {
+                <div class="invalid-feedback">
+                  Short description is required and must not exceed 500 characters.
+                </div>
+              }
+            </div>
+
+            <div class="col-12">
+              <label for="blogContent" class="form-label">Blog Content *</label>
+              <textarea
+                id="blogContent"
+                class="form-control blog-content"
+                rows="8"
+                formControlName="content"
+                [class.is-invalid]="
+                  blogForm.controls.content.touched && blogForm.controls.content.invalid
+                "
+              ></textarea>
+              @if (
+                blogForm.controls.content.touched && blogForm.controls.content.hasError('required')
+              ) {
+                <div class="invalid-feedback">Blog content is required.</div>
+              }
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <label for="blogImage" class="form-label">Featured Image URL</label>
+              <input
+                id="blogImage"
+                type="url"
+                class="form-control"
+                formControlName="featuredImage"
+                maxlength="500"
+                placeholder="https://example.com/image.jpg"
+                [class.is-invalid]="
+                  blogForm.controls.featuredImage.touched && blogForm.controls.featuredImage.invalid
+                "
+              />
+              @if (
+                blogForm.controls.featuredImage.touched && blogForm.controls.featuredImage.invalid
+              ) {
+                <div class="invalid-feedback">Image URL cannot exceed 500 characters.</div>
+              }
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <label for="blogAuthor" class="form-label">Author *</label>
+              <input
+                id="blogAuthor"
+                type="text"
+                class="form-control"
+                formControlName="author"
+                maxlength="150"
+                [class.is-invalid]="
+                  blogForm.controls.author.touched && blogForm.controls.author.invalid
+                "
+              />
+              @if (blogForm.controls.author.touched && blogForm.controls.author.invalid) {
+                <div class="invalid-feedback">
+                  Author is required and must not exceed 150 characters.
+                </div>
+              }
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <label for="blogCategory" class="form-label">Category *</label>
+              <select
+                id="blogCategory"
+                class="form-select"
+                formControlName="categoryId"
+                [class.is-invalid]="
+                  blogForm.controls.categoryId.touched && blogForm.controls.categoryId.invalid
+                "
+              >
+                <option [ngValue]="0">Select a category</option>
+                @for (category of categories; track category.id) {
+                  <option [ngValue]="category.id">
+                    {{ category.name }}{{ category.active ? '' : ' (Inactive)' }}
+                  </option>
+                }
+              </select>
+              @if (blogForm.controls.categoryId.touched && blogForm.controls.categoryId.invalid) {
+                <div class="invalid-feedback">Please select a category.</div>
+              }
+              @if (categories.length === 0 && !isLoadingCategories) {
+                <small class="text-danger">Create a category before adding a blog.</small>
+              }
+            </div>
+
+            <div class="col-12 col-lg-6 d-flex align-items-center">
+              <div class="form-check mt-lg-3">
+                <input
+                  id="blogPublished"
+                  type="checkbox"
+                  class="form-check-input"
+                  formControlName="published"
+                />
+                <label for="blogPublished" class="form-check-label"> Publish this blog </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="isSubmitting || isLoadingCategories || categories.length === 0"
+            >
+              @if (isSubmitting) {
+                <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                Saving...
+              } @else {
+                {{ isEditMode ? 'Update Blog' : 'Create Blog' }}
+              }
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="cancelForm()"
+              [disabled]="isSubmitting"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <div class="card shadow-sm">
+    <div class="card-body border-bottom">
+      <div class="row g-3">
+        <div class="col-12 col-md-8">
+          <label for="blogSearch" class="form-label">Search Blogs</label>
+          <input
+            id="blogSearch"
+            type="search"
+            class="form-control"
+            placeholder="Search title, slug, author or category..."
+            [value]="searchTerm"
+            (input)="searchTerm = $any($event.target).value"
+          />
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label for="blogStatus" class="form-label">Publication Status</label>
+          <select
+            id="blogStatus"
+            class="form-select"
+            [value]="statusFilter"
+            (change)="statusFilter = $any($event.target).value"
+          >
+            <option value="ALL">All Blogs</option>
+            <option value="PUBLISHED">Published</option>
+            <option value="DRAFT">Drafts</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    @if (isLoading) {
+      <div class="text-center py-5" role="status">
+        <div class="spinner-border text-primary" aria-hidden="true"></div>
+        <p class="text-secondary mt-2 mb-0">Loading blogs...</p>
+      </div>
+    } @else if (filteredBlogs.length === 0) {
+      <div class="text-center py-5 px-3">
+        <i class="bi bi-journal-text display-5 text-secondary"></i>
+        <h5 class="mt-3">No blogs found</h5>
+        <p class="text-secondary mb-0">
+          {{
+            searchTerm || statusFilter !== 'ALL'
+              ? 'Try changing your search or filter.'
+              : 'Create your first blog to get started.'
+          }}
+        </p>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Blog</th>
+              <th scope="col">Category</th>
+              <th scope="col">Author</th>
+              <th scope="col">Status</th>
+              <th scope="col">Created</th>
+              <th scope="col" class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (blog of filteredBlogs; track blog.id) {
+              <tr>
+                <td>
+                  <div class="fw-semibold">{{ blog.title }}</div>
+                  <small class="text-secondary">{{ blog.slug }}</small>
+                </td>
+                <td>{{ blog.categoryName }}</td>
+                <td>{{ blog.author }}</td>
+                <td>
+                  <span
+                    class="badge"
+                    [class.text-bg-success]="blog.published"
+                    [class.text-bg-secondary]="!blog.published"
+                  >
+                    {{ blog.published ? 'Published' : 'Draft' }}
+                  </span>
+                </td>
+                <td>{{ blog.createdAt | date: 'mediumDate' }}</td>
+                <td>
+                  <div class="d-flex justify-content-end flex-wrap gap-1">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-primary"
+                      (click)="openEditForm(blog)"
+                      [disabled]="isSubmitting"
+                      [attr.aria-label]="'Edit ' + blog.title"
+                      title="Edit"
+                    >
+                      <i class="bi bi-pencil"></i>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-sm"
+                      [class.btn-outline-success]="!blog.published"
+                      [class.btn-outline-secondary]="blog.published"
+                      (click)="togglePublished(blog)"
+                      [disabled]="updatingStatusId !== null"
+                      [attr.aria-label]="(blog.published ? 'Unpublish ' : 'Publish ') + blog.title"
+                      [title]="blog.published ? 'Unpublish' : 'Publish'"
+                    >
+                      @if (updatingStatusId === blog.id) {
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                      } @else {
+                        <i [class]="blog.published ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                      }
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="deleteBlog(blog)"
+                      [disabled]="deletingBlogId !== null"
+                      [attr.aria-label]="'Delete ' + blog.title"
+                      title="Delete"
+                    >
+                      @if (deletingBlogId === blog.id) {
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                      } @else {
+                        <i class="bi bi-trash"></i>
+                      }
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

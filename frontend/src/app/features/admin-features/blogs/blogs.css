@@ -1,0 +1,71 @@
+.blog-admin {
+  padding-bottom: 2rem;
+}
+
+.blog-admin .card {
+  border-color: #e5e7eb;
+  border-radius: 0.75rem;
+}
+
+.blog-admin .card-header {
+  border-bottom-color: #e5e7eb;
+}
+
+.blog-admin .form-label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.blog-admin .form-control,
+.blog-admin .form-select {
+  min-height: 42px;
+}
+
+.blog-admin textarea.form-control {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.blog-admin .blog-content {
+  min-height: 220px;
+}
+
+.blog-admin .form-check-input,
+.blog-admin .form-check-label {
+  cursor: pointer;
+}
+
+.blog-admin .table th {
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+.blog-admin .table td {
+  vertical-align: middle;
+}
+
+.blog-admin .table td small {
+  overflow-wrap: anywhere;
+}
+
+.blog-admin .btn {
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+@media (max-width: 767.98px) {
+  .blog-admin {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  .blog-admin .table {
+    font-size: 0.875rem;
+  }
+
+  .blog-admin .table td,
+  .blog-admin .table th {
+    padding: 0.65rem;
+  }
+}
