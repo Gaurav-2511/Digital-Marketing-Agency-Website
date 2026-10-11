@@ -48,9 +48,51 @@ export class AuthService {
     }
   }
 
+
   isLoggedIn(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const payloadPart = token.split('.')[1];
+
+      if (!payloadPart) {
+        this.logout();
+        return false;
+      }
+
+      const normalizedPayload = payloadPart
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+
+      const paddedPayload = normalizedPayload.padEnd(
+        normalizedPayload.length +
+        ((4 - (normalizedPayload.length % 4)) % 4),
+        '=',
+      );
+
+      const payload = JSON.parse(atob(paddedPayload)) as {
+        exp?: number;
+      };
+
+      if (
+        typeof payload.exp !== 'number' ||
+        payload.exp * 1000 <= Date.now()
+      ) {
+        this.logout();
+        return false;
+      }
+
+      return true;
+    } catch {
+      this.logout();
+      return false;
+    }
   }
+
 
   isAdmin(): boolean {
     const user = this.getUser();
