@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Lead } from '../models/lead.model';
+import { Lead, LeadRequest } from '../models/lead.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +11,9 @@ export class LeadApi {
 
   private readonly apiUrl = 'http://localhost:8080/api/leads';
 
-  createLead(lead: Lead): Observable<unknown> {
+  createLead(lead: LeadRequest): Observable<Lead> {
 
-    return this.http.post<unknown>(
+    return this.http.post<Lead>(
       this.apiUrl,
       lead
     );

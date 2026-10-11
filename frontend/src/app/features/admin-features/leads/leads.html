@@ -1,1 +1,167 @@
-<p>leads works!</p>
+
+<section class="leads-page">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">ADMINISTRATION</p>
+      <h1>Lead Management</h1>
+      <p class="subtitle">
+        View incoming leads and manage their status.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="refresh-button"
+      (click)="loadLeads()"
+      [disabled]="isLoading"
+    >
+      {{ isLoading ? 'Loading...' : 'Refresh Leads' }}
+    </button>
+  </header>
+
+  @if (errorMessage) {
+    <div class="alert error-alert" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+
+  @if (successMessage) {
+    <div class="alert success-alert" role="status">
+      {{ successMessage }}
+    </div>
+  }
+
+  <div class="stats-grid">
+    <article class="stat-card">
+      <span>Total Leads</span>
+      <strong>{{ totalLeads }}</strong>
+    </article>
+
+    <article class="stat-card">
+      <span>New Leads</span>
+      <strong>{{ newLeads }}</strong>
+    </article>
+
+    <article class="stat-card">
+      <span>In Progress</span>
+      <strong>{{ inProgressLeads }}</strong>
+    </article>
+
+    <article class="stat-card">
+      <span>Converted</span>
+      <strong>{{ convertedLeads }}</strong>
+    </article>
+  </div>
+
+  <div class="filters">
+    <input
+      type="search"
+      [(ngModel)]="searchTerm"
+      placeholder="Search name, email, phone..."
+      aria-label="Search leads"
+    />
+
+    <select
+      [(ngModel)]="statusFilter"
+      aria-label="Filter leads by status"
+    >
+      <option value="ALL">All statuses</option>
+      @for (status of statusOptions; track status) {
+        <option [value]="status">{{ formatStatus(status) }}</option>
+      }
+    </select>
+
+    <button
+      type="button"
+      class="secondary-button"
+      (click)="clearFilters()"
+    >
+      Clear Filters
+    </button>
+  </div>
+
+  @if (isLoading && leads.length === 0) {
+    <div class="empty-state">Loading leads...</div>
+  } @else if (!isLoading && errorMessage && leads.length === 0) {
+    <div class="empty-state">
+      Leads could not be loaded. Check the error above and try again.
+    </div>
+  } @else if (filteredLeads.length === 0) {
+    <div class="empty-state">
+      No leads found for the selected search or filter.
+    </div>
+  } @else {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Lead</th>
+            <th>Contact</th>
+            <th>Service</th>
+            <th>Budget</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (lead of filteredLeads; track lead.id) {
+            <tr>
+              <td>
+                <strong>{{ lead.name }}</strong>
+                <small>{{ lead.company || 'Individual' }}</small>
+              </td>
+
+              <td>
+                <span>{{ lead.email }}</span>
+                <small>{{ lead.phone }}</small>
+              </td>
+
+              <td>{{ lead.service || '—' }}</td>
+              <td>{{ lead.budget || '—' }}</td>
+
+              <td>
+                <select
+                  class="status-select"
+                  [class.status-new]="lead.status === 'NEW'"
+                  [class.status-contacted]="lead.status === 'CONTACTED'"
+                  [class.status-progress]="lead.status === 'IN_PROGRESS'"
+                  [class.status-converted]="lead.status === 'CONVERTED'"
+                  [class.status-rejected]="lead.status === 'REJECTED'"
+                  [ngModel]="lead.status"
+                  (ngModelChange)="updateStatus(lead, $event)"
+                  [disabled]="updatingStatusId === lead.id || deletingLeadId === lead.id"
+                  [attr.aria-label]="'Status for ' + lead.name"
+                >
+                  @for (status of statusOptions; track status) {
+                    <option [ngValue]="status">
+                      {{ formatStatus(status) }}
+                    </option>
+                  }
+                </select>
+
+                @if (updatingStatusId === lead.id) {
+                  <small class="inline-progress">Saving...</small>
+                }
+              </td>
+
+              <td>{{ lead.createdAt | date:'mediumDate' }}</td>
+
+              <td>
+                <button
+                  type="button"
+                  class="delete-button"
+                  (click)="deleteLead(lead)"
+                  [disabled]="deletingLeadId === lead.id || updatingStatusId === lead.id"
+                >
+                  {{ deletingLeadId === lead.id ? 'Deleting...' : 'Delete' }}
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>
