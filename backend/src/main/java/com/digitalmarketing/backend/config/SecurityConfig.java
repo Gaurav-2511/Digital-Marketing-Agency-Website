@@ -52,6 +52,7 @@ public class SecurityConfig {
 	               "/api/blogs/**",
 	               "/api/testimonials/**",
 	               "/api/leads/**",
+	               "/api/consultations/**",
 	                "/error"
 	        ).permitAll()
 	        .requestMatchers("/api/admin/**").hasRole("ADMIN")
