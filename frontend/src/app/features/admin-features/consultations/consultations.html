@@ -1,1 +1,303 @@
-<p>consultations works!</p>
+<section class="consultations-page">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">ADMINISTRATION</p>
+      <h1>Consultation Management</h1>
+      <p class="subtitle">Review consultation requests, manage statuses and schedule meetings.</p>
+    </div>
+
+    <button
+      type="button"
+      class="primary-button"
+      (click)="loadConsultations()"
+      [disabled]="isLoading"
+    >
+      {{ isLoading ? 'Loading...' : 'Refresh Consultations' }}
+    </button>
+  </header>
+
+  @if (errorMessage) {
+    <div class="alert error-alert" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+
+  @if (successMessage) {
+    <div class="alert success-alert" role="status">
+      {{ successMessage }}
+    </div>
+  }
+
+  <div class="stats-grid">
+    <article class="stat-card">
+      <span>Total Consultations</span>
+      <strong>{{ totalConsultations }}</strong>
+    </article>
+
+    <article class="stat-card">
+      <span>Requested</span>
+      <strong>{{ requestedCount }}</strong>
+    </article>
+
+    <article class="stat-card">
+      <span>Scheduled</span>
+      <strong>{{ scheduledCount }}</strong>
+    </article>
+
+    <article class="stat-card">
+      <span>Completed</span>
+      <strong>{{ completedCount }}</strong>
+    </article>
+  </div>
+
+  <div class="filters">
+    <input
+      type="search"
+      [(ngModel)]="searchTerm"
+      placeholder="Search name, email, phone, company..."
+      aria-label="Search consultations"
+    />
+
+    <select [(ngModel)]="statusFilter" aria-label="Filter consultations by status">
+      <option value="ALL">All statuses</option>
+      @for (status of statusOptions; track status) {
+        <option [value]="status">{{ formatStatus(status) }}</option>
+      }
+    </select>
+
+    <button type="button" class="secondary-button" (click)="clearFilters()">Clear Filters</button>
+  </div>
+
+  @if (isLoading && consultations.length === 0) {
+    <div class="empty-state">Loading consultation requests...</div>
+  } @else if (!isLoading && errorMessage && consultations.length === 0) {
+    <div class="empty-state">
+      Consultations could not be loaded. Check the error above and try again.
+    </div>
+  } @else if (filteredConsultations.length === 0) {
+    <div class="empty-state">No consultation requests match your search or filter.</div>
+  } @else {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Contact</th>
+            <th>Service</th>
+            <th>Meeting</th>
+            <th>Preferred Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (item of filteredConsultations; track item.id) {
+            <tr>
+              <td>
+                <strong>{{ item.name }}</strong>
+                <small>{{ item.company || 'Individual' }}</small>
+              </td>
+
+              <td>
+                <span>{{ item.email }}</span>
+                <small>{{ item.phone }}</small>
+              </td>
+
+              <td>{{ item.service }}</td>
+
+              <td>
+                <span class="meeting-badge">
+                  {{ formatMeetingType(item.meetingType) }}
+                </span>
+              </td>
+
+              <td>
+                {{ item.preferredDateTime | date: 'medium' }}
+              </td>
+
+              <td>
+                <select
+                  class="status-select"
+                  [class.status-requested]="item.status === 'REQUESTED'"
+                  [class.status-contacted]="item.status === 'CONTACTED'"
+                  [class.status-scheduled]="item.status === 'SCHEDULED'"
+                  [class.status-completed]="item.status === 'COMPLETED'"
+                  [class.status-cancelled]="item.status === 'CANCELLED'"
+                  [ngModel]="item.status"
+                  (ngModelChange)="updateStatus(item, $event)"
+                  [disabled]="updatingStatusId === item.id || deletingId === item.id"
+                  [attr.aria-label]="'Status for ' + item.name"
+                >
+                  @for (status of statusOptions; track status) {
+                    <option [ngValue]="status">
+                      {{ formatStatus(status) }}
+                    </option>
+                  }
+                </select>
+
+                @if (updatingStatusId === item.id) {
+                  <small class="inline-progress">Saving...</small>
+                }
+              </td>
+
+              <td>
+                <div class="action-buttons">
+                  <button
+                    type="button"
+                    class="secondary-button action-button"
+                    (click)="viewDetails(item)"
+                    [disabled]="detailsLoadingId === item.id"
+                  >
+                    {{ detailsLoadingId === item.id ? 'Loading...' : 'Details' }}
+                  </button>
+
+                  <button
+                    type="button"
+                    class="schedule-button action-button"
+                    (click)="openScheduleForm(item)"
+                    [disabled]="deletingId === item.id"
+                  >
+                    Schedule
+                  </button>
+
+                  <button
+                    type="button"
+                    class="delete-button action-button"
+                    (click)="deleteConsultation(item)"
+                    [disabled]="deletingId === item.id || updatingStatusId === item.id"
+                  >
+                    {{ deletingId === item.id ? 'Deleting...' : 'Delete' }}
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (selectedConsultation) {
+    <section class="details-panel" aria-labelledby="details-heading">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">CONSULTATION DETAILS</p>
+          <h2 id="details-heading">{{ selectedConsultation.name }}</h2>
+        </div>
+
+        <button type="button" class="secondary-button" (click)="closeDetails()">Close</button>
+      </div>
+
+      <div class="details-grid">
+        <div>
+          <span>Email</span>
+          <strong>{{ selectedConsultation.email }}</strong>
+        </div>
+
+        <div>
+          <span>Phone</span>
+          <strong>{{ selectedConsultation.phone }}</strong>
+        </div>
+
+        <div>
+          <span>Company</span>
+          <strong>{{ selectedConsultation.company || 'Not provided' }}</strong>
+        </div>
+
+        <div>
+          <span>Service</span>
+          <strong>{{ selectedConsultation.service }}</strong>
+        </div>
+
+        <div>
+          <span>Meeting type</span>
+          <strong>{{ formatMeetingType(selectedConsultation.meetingType) }}</strong>
+        </div>
+
+        <div>
+          <span>Preferred date</span>
+          <strong>{{ selectedConsultation.preferredDateTime | date: 'medium' }}</strong>
+        </div>
+
+        <div>
+          <span>Current status</span>
+          <strong>{{ formatStatus(selectedConsultation.status) }}</strong>
+        </div>
+
+        <div>
+          <span>Scheduled at</span>
+          <strong>
+            {{
+              selectedConsultation.scheduledAt
+                ? (selectedConsultation.scheduledAt | date: 'medium')
+                : 'Not scheduled'
+            }}
+          </strong>
+        </div>
+      </div>
+
+      <div class="message-block">
+        <span>Client message</span>
+        <p>{{ selectedConsultation.message || 'No message provided.' }}</p>
+      </div>
+
+      <div class="message-block">
+        <span>Admin notes</span>
+        <p>{{ selectedConsultation.adminNotes || 'No admin notes yet.' }}</p>
+      </div>
+
+      @if (showScheduleForm) {
+        <form class="schedule-form" (ngSubmit)="saveSchedule()">
+          <h3>Schedule Consultation</h3>
+
+          <label for="scheduledAt">Meeting date and time</label>
+          <input
+            id="scheduledAt"
+            type="datetime-local"
+            name="scheduledAt"
+            [(ngModel)]="scheduledAt"
+            required
+          />
+
+          <label for="adminNotes">Internal admin notes</label>
+          <textarea
+            id="adminNotes"
+            name="adminNotes"
+            [(ngModel)]="adminNotes"
+            rows="4"
+            maxlength="5000"
+            placeholder="Add internal notes for this consultation..."
+          ></textarea>
+
+          <div class="form-actions">
+            <button
+              type="submit"
+              class="primary-button"
+              [disabled]="schedulingId === selectedConsultation.id"
+            >
+              {{ schedulingId === selectedConsultation.id ? 'Saving...' : 'Save Schedule' }}
+            </button>
+
+            <button
+              type="button"
+              class="secondary-button"
+              (click)="showScheduleForm = false"
+              [disabled]="schedulingId === selectedConsultation.id"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      } @else {
+        <button
+          type="button"
+          class="schedule-button"
+          (click)="openScheduleForm(selectedConsultation)"
+        >
+          {{ selectedConsultation.scheduledAt ? 'Reschedule Meeting' : 'Schedule Meeting' }}
+        </button>
+      }
+    </section>
+  }
+</section>
