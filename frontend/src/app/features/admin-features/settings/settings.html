@@ -1,1 +1,321 @@
-<p>settings works!</p>
+<div class="settings-page">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">ADMINISTRATION</p>
+      <h1>Website Settings</h1>
+      <p class="subtitle">
+        Manage your agency information, contact details, social links and SEO defaults.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-outline"
+      (click)="loadSettings()"
+      [disabled]="isLoading || isSaving"
+    >
+      ↻ Refresh
+    </button>
+  </div>
+
+  @if (errorMessage) {
+    <div class="alert alert-error" role="alert">
+      <span>{{ errorMessage }}</span>
+      <button
+        type="button"
+        class="alert-close"
+        aria-label="Dismiss error"
+        (click)="errorMessage = ''"
+      >
+        ×
+      </button>
+    </div>
+  }
+
+  @if (successMessage) {
+    <div class="alert alert-success" role="status">
+      <span>{{ successMessage }}</span>
+      <button
+        type="button"
+        class="alert-close"
+        aria-label="Dismiss success"
+        (click)="successMessage = ''"
+      >
+        ×
+      </button>
+    </div>
+  }
+
+  @if (isLoading) {
+    <div class="loading-state" role="status">
+      <span class="spinner"></span>
+      <p>Loading website settings...</p>
+    </div>
+  } @else {
+    <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()" novalidate>
+      <section class="settings-card">
+        <div class="section-heading">
+          <span class="section-icon">✦</span>
+          <div>
+            <h2>Agency Information</h2>
+            <p>Basic details displayed across your website.</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="agencyName">Agency Name <span class="required">*</span></label>
+            <input
+              id="agencyName"
+              type="text"
+              formControlName="agencyName"
+              maxlength="150"
+              autocomplete="organization"
+            />
+            @if (getFieldError('agencyName')) {
+              <small class="field-error">{{ getFieldError('agencyName') }}</small>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="tagline">Tagline</label>
+            <input
+              id="tagline"
+              type="text"
+              formControlName="tagline"
+              maxlength="300"
+              placeholder="Your brand's promise"
+            />
+            @if (getFieldError('tagline')) {
+              <small class="field-error">{{ getFieldError('tagline') }}</small>
+            }
+          </div>
+
+          <div class="form-field full-width">
+            <label for="logoUrl">Logo URL</label>
+            <input
+              id="logoUrl"
+              type="url"
+              formControlName="logoUrl"
+              maxlength="500"
+              placeholder="https://example.com/logo.png"
+            />
+            @if (getFieldError('logoUrl')) {
+              <small class="field-error">{{ getFieldError('logoUrl') }}</small>
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-card">
+        <div class="section-heading">
+          <span class="section-icon">⌖</span>
+          <div>
+            <h2>Contact Information</h2>
+            <p>How potential clients can reach your agency.</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="contactEmail">Contact Email</label>
+            <input
+              id="contactEmail"
+              type="email"
+              formControlName="contactEmail"
+              maxlength="150"
+              autocomplete="email"
+              placeholder="hello@example.com"
+            />
+            @if (getFieldError('contactEmail')) {
+              <small class="field-error">{{ getFieldError('contactEmail') }}</small>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="phone">Phone Number</label>
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              maxlength="30"
+              autocomplete="tel"
+              placeholder="+91 ..."
+            />
+            @if (getFieldError('phone')) {
+              <small class="field-error">{{ getFieldError('phone') }}</small>
+            }
+          </div>
+
+          <div class="form-field full-width">
+            <label for="address">Office Address</label>
+            <textarea
+              id="address"
+              formControlName="address"
+              maxlength="500"
+              rows="3"
+              placeholder="Enter your agency address"
+            ></textarea>
+            @if (getFieldError('address')) {
+              <small class="field-error">{{ getFieldError('address') }}</small>
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-card">
+        <div class="section-heading">
+          <span class="section-icon">◎</span>
+          <div>
+            <h2>Social Media</h2>
+            <p>Connect visitors to your official social profiles.</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="facebookUrl">Facebook URL</label>
+            <input
+              id="facebookUrl"
+              type="url"
+              formControlName="facebookUrl"
+              maxlength="500"
+              placeholder="https://facebook.com/..."
+            />
+            @if (getFieldError('facebookUrl')) {
+              <small class="field-error">{{ getFieldError('facebookUrl') }}</small>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="instagramUrl">Instagram URL</label>
+            <input
+              id="instagramUrl"
+              type="url"
+              formControlName="instagramUrl"
+              maxlength="500"
+              placeholder="https://instagram.com/..."
+            />
+            @if (getFieldError('instagramUrl')) {
+              <small class="field-error">{{ getFieldError('instagramUrl') }}</small>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="linkedinUrl">LinkedIn URL</label>
+            <input
+              id="linkedinUrl"
+              type="url"
+              formControlName="linkedinUrl"
+              maxlength="500"
+              placeholder="https://linkedin.com/..."
+            />
+            @if (getFieldError('linkedinUrl')) {
+              <small class="field-error">{{ getFieldError('linkedinUrl') }}</small>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="youtubeUrl">YouTube URL</label>
+            <input
+              id="youtubeUrl"
+              type="url"
+              formControlName="youtubeUrl"
+              maxlength="500"
+              placeholder="https://youtube.com/..."
+            />
+            @if (getFieldError('youtubeUrl')) {
+              <small class="field-error">{{ getFieldError('youtubeUrl') }}</small>
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-card">
+        <div class="section-heading">
+          <span class="section-icon">⌕</span>
+          <div>
+            <h2>SEO Defaults</h2>
+            <p>Default metadata for pages that don't define their own.</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-field full-width">
+            <label for="defaultMetaTitle">Default Meta Title</label>
+            <input
+              id="defaultMetaTitle"
+              type="text"
+              formControlName="defaultMetaTitle"
+              maxlength="200"
+              placeholder="Digital Marketing Agency | Grow Your Business"
+            />
+            <small class="field-hint">Maximum 200 characters.</small>
+            @if (getFieldError('defaultMetaTitle')) {
+              <small class="field-error">{{ getFieldError('defaultMetaTitle') }}</small>
+            }
+          </div>
+
+          <div class="form-field full-width">
+            <label for="defaultMetaDescription">Default Meta Description</label>
+            <textarea
+              id="defaultMetaDescription"
+              formControlName="defaultMetaDescription"
+              maxlength="500"
+              rows="3"
+              placeholder="Describe your agency and its services"
+            ></textarea>
+            <small class="field-hint">Maximum 500 characters.</small>
+            @if (getFieldError('defaultMetaDescription')) {
+              <small class="field-error">{{ getFieldError('defaultMetaDescription') }}</small>
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-card">
+        <div class="section-heading">
+          <span class="section-icon">▤</span>
+          <div>
+            <h2>Footer</h2>
+            <p>Manage the text displayed in your website footer.</p>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="footerText">Footer Text</label>
+          <textarea
+            id="footerText"
+            formControlName="footerText"
+            maxlength="500"
+            rows="3"
+            placeholder="© Your Agency. All rights reserved."
+          ></textarea>
+          @if (getFieldError('footerText')) {
+            <small class="field-error">{{ getFieldError('footerText') }}</small>
+          }
+        </div>
+      </section>
+
+      <div class="form-actions">
+        <button
+          type="button"
+          class="btn btn-outline"
+          (click)="loadSettings()"
+          [disabled]="isSaving"
+        >
+          Discard Changes
+        </button>
+
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving || settingsForm.invalid">
+          @if (isSaving) {
+            <span class="button-spinner"></span>
+            Saving...
+          } @else {
+            Save Settings
+          }
+        </button>
+      </div>
+    </form>
+  }
+</div>
