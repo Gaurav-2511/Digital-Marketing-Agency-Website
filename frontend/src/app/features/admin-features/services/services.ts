@@ -68,8 +68,6 @@ export class Services implements OnInit {
       next: (data) => {
         this.services = data;
         this.isLoading = false;
-
-        console.log('Admin services:', data);
         this.cdr.detectChanges();
       },
 

@@ -32,7 +32,6 @@ export class Dashboard implements OnInit {
         this.dashboardData = data;
         this.isLoading = false;
 
-        console.log('Dashboard statistics:', data);
         this.cdr.detectChanges();
       },
 
