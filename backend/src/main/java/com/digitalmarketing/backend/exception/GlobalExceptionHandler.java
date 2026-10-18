@@ -1,4 +1,4 @@
-package com.digitalmarketing.backend.exception;
+﻿package com.digitalmarketing.backend.exception;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -35,6 +36,20 @@ public class GlobalExceptionHandler {
 				"Validation failed", errors);
 
 		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	public ResponseEntity<ApiErrorResponse> handleMethodNotSupportedException(
+	        HttpRequestMethodNotSupportedException exception) {
+
+	    ApiErrorResponse response = new ApiErrorResponse(
+	            LocalDateTime.now(),
+	            HttpStatus.METHOD_NOT_ALLOWED.value(),
+	            "HTTP method not supported for this endpoint",
+	            null
+	    );
+
+	    return new ResponseEntity<>(response, HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
 	@ExceptionHandler(Exception.class)
